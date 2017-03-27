@@ -56,7 +56,8 @@ export default class Home extends Component {
 
     }
     renderHeaderScrooll(){
-        return(<HomeBannar  {...this.props}/>)
+        const {bannar,navigator} = this.props
+        return(<HomeBannar  bannar = {bannar} navigator={navigator}/>)
     }
 
     render(){
@@ -68,6 +69,7 @@ export default class Home extends Component {
                 enableEmptySections={true}
                 renderRow={this._renderRow.bind(this)}
                 renderHeader={this.renderHeaderScrooll.bind(this)}
+
                 style={styles.listView}
                 />
             </View>

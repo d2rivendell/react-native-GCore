@@ -14,37 +14,40 @@ import {
 import Constants from '../../common/constants'
 import Commom from '../../common/constants'
 
-// class NewsBannar extends  Component {
-//     render(){
-//         const {news} = this.props
-//         return(
-//
-//         )
-//     }
-//
-// }
-// NewsBannar.propTypes = {
-//     news: React.PropTypes.object,
-// }
+import NewsDetail  from '../news/NewsDetail'
 
 export default  class  NewsScrooll extends Component{
-    _onPress(){
+    _onPress(homeNews){
+      const {navigator} = this.props
+        console.log(homeNews)
+      if(navigator){
+       navigator.push({
+           name:'NewsDetail',
+           component:NewsDetail,
+           news:homeNews
+       })
 
+      }
     }
     render(){
         const {homeNews} = this.props
-        console.log(homeNews)
+
         return(
 
-        <View style={styles.container}>
-            <Text style={styles.headerTitle} >新闻联播</Text>
-            <ScrollView style={styles.scrollContainer}
+          <View style={styles.container}>
+             <Text style={styles.headerTitle} >新闻联播</Text>
+             <ScrollView style={styles.scrollContainer}
                         showsHorizontalScrollIndicator={false}
                         horizontal={true}
-            >
+             >
                 {homeNews.map((data,index) => {
                     return(
-                        <View key= {index} style={styles.bgView}>
+                        <TouchableHighlight
+                            onPress={this._onPress.bind(this,data)}
+                            underlayColor = 'transparent'
+                            key= {index}
+                        >
+                        <View style={styles.bgView}>
                             <Image  style={styles.bgImage} source={{uri:data.thumb_url}}>
 
                                 <View style={styles.markView}>
@@ -65,21 +68,18 @@ export default  class  NewsScrooll extends Component{
                                 </View>
                             </Image>
                         </View>
-
+                        </TouchableHighlight>
                     )
                 })
                 }
             </ScrollView>
         </View>
 
+
         )
     }
 }
-{/*<TouchableHighlight*/}
-{/*onPress={this._onPress}*/}
-{/*underlayColor = 'transparent'*/}
-{/*key={index}*/}
-{/*>*/}
+
 NewsScrooll.propTypes = {
     homeNews:React.PropTypes.array
 }

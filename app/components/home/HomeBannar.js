@@ -11,6 +11,7 @@ import {
     Image
 } from 'react-native';
 import  Commom from '../../common/constants'
+import  BannarDetail from './BannarDetail'
 
 export class Page extends Component{
     renderPageCircle(){
@@ -54,9 +55,21 @@ export default class  HomeBannar extends Component{
              currentPage:index
          })
     }
+    _onPress(bannar){
+        const {navigator} = this.props
+        console.log(bannar)
+        if(navigator){
+            navigator.push({
+                name:'BannarDetail',
+                component:BannarDetail,
+                bannar
+            })
+
+        }
+    }
     render(){
         const  {bannar} = this.props
-        // console.log(bannar)
+
         return(
            <View  style={styles.container}>
                <ScrollView
@@ -67,7 +80,15 @@ export default class  HomeBannar extends Component{
                    onMomentumScrollEnd = {this._onTouchEnd.bind(this)}
                >
                    { bannar.data.map( (data,index) => {
-                   return (<Image key= {index} style={styles.image} source={{uri:data.image}}/>)
+                   return (
+                       <TouchableHighlight
+                           onPress={this._onPress.bind(this,data)}
+                           underlayColor = 'transparent'
+                           key= {index}
+                       >
+                       <Image  style={styles.image} source={{uri:data.image}}/>
+                       </TouchableHighlight>
+                   )
                    })
                    }
                </ScrollView>

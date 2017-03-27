@@ -25,8 +25,8 @@ export default class News extends Component {
     }
 
     renderRow(data,index){
-        const {news} = this.props
-          return(<NewsCell news = {data}/>)
+
+          return(<NewsCell newsList = {data} {...this.props}/>)
     }
     render() {
           const {news} = this.props

@@ -7,31 +7,40 @@ import {
     TouchableHighlight
 }from 'react-native'
 import  Common from '../../common/constants'
+import NewsDetail from './NewsDetail'
 export  default  class  NewsCell extends  Component {
 
-    onPress(){
-
+    onPress(news){
+        const {navigator} = this.props
+        console.log(news)
+           if(navigator){
+             navigator.push({
+                 name:'NewsDetail',
+                 component:NewsDetail,
+                 news
+             })
+           }
     }
     render(){
-        const {news} = this.props
+        const {newsList} = this.props
         return(
             <TouchableHighlight
-                onPress={this.onPress}
+                onPress={this.onPress.bind(this,newsList)}
                 underlayColor = 'transparent'
             >
                 <View style={styles.container}>
                     <View style={styles.leftZone}>
-                        <Image style={styles.image} source={{uri:news.thumb_url}}/>
+                        <Image style={styles.image} source={{uri:newsList.thumb_url}}/>
                     </View>
                     <View style={styles.rightZone}>
-                        <Text style={styles.title}>{news.title}</Text>
-                        <Text style={styles.desc}>{news.desc}</Text>
+                        <Text style={styles.title}>{newsList.title}</Text>
+                        <Text style={styles.desc}>{newsList.desc}</Text>
                         <View style={styles.bottomView}>
-                            <Text style={styles.category}>{news.category.name}</Text>
+                            <Text style={styles.category}>{newsList.category.name}</Text>
                             <Image style={styles.LCIcon} source={require('../../resource/icon-like.png')}/>
-                            <Text style={styles.LCNum}>{news.likes_num}</Text>
+                            <Text style={styles.LCNum}>{newsList.likes_num}</Text>
                             <Image style={styles.LCIcon} source={require('../../resource/icon-comment.png')}/>
-                            <Text style={styles.LCNum}>{news.comments_num}</Text>
+                            <Text style={styles.LCNum}>{newsList.comments_num}</Text>
                         </View>
                     </View>
                 </View>

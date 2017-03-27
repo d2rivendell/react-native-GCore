@@ -25,7 +25,6 @@ export default class Airticle extends Component {
     }
 
     renderRow(data,index){
-        console.log(data)
         return(<Original original = {data} {...this.props}/>)
     }
     render() {

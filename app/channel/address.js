@@ -14,6 +14,15 @@ const address = {
     },
     news:(page,auth = Common.AUTH_KEY.auth_key ) =>{
         return `http://www.g-cores.com/api/categories/2/originals?page=${page}&auth_exclusive=${auth}`
+    },
+    articleDetail:(id,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/originals/${id}/html_content?auth_exclusive=${auth}&auth_token= &quickdownload=1`
+    },
+    newsDetail: (id,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/originals/${id}/html_content?auth_exclusive=${auth}&auth_token=(null)&quickdownload=1`
+    },
+    bannarDetail: (id,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/originals/${id}/html_content?auth_exclusive=${auth}&auth_token=(null)&quickdownload=1`
     }
 }
 export default address

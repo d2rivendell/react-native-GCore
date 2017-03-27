@@ -61,7 +61,7 @@ export default  class TabBarView extends  Component {
             onChangeTab={this._onChangeTab}
             >
                  <Home  {...home} actions={homeAction} navigator = {navigator}/>
-                 <News {...news} actions = {newsAction}/>
+                 <News {...news} actions = {newsAction}  navigator = {navigator}/>
                  <Article  {...article} actions = {articleAction} navigator = {navigator}/>
             </ScrollableTabView>
         )
