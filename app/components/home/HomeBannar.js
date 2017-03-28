@@ -62,7 +62,9 @@ export default class  HomeBannar extends Component{
             navigator.push({
                 name:'BannarDetail',
                 component:BannarDetail,
-                bannar
+                params:{
+                    bannar:bannar
+                }
             })
 
         }

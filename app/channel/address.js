@@ -23,6 +23,9 @@ const address = {
     },
     bannarDetail: (id,auth = Common.AUTH_KEY.auth_key) => {
         return `http://www.g-cores.com/api/originals/${id}/html_content?auth_exclusive=${auth}&auth_token=(null)&quickdownload=1`
+    },
+    getComment :(type,page,id,auth = Common.AUTH_KEY.auth_key) => {
+      return `http://www.g-cores.com/api/comments?auth_exclusive=${auth}&commentable_id=${id}&commentable_type=original&page=${page}&sort=${type}`
     }
 }
 export default address

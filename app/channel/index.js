@@ -35,7 +35,7 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-                console.log('~~~~~~~ news ')
+
                 console.log(data['results'])
                 return data['results']
             })
@@ -50,6 +50,20 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getComment(type,page,id){
+        const gen_url = address.getComment(type,page,id)
+        console.log('comment is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                console.log('~~~~~~~ comment ')
                 console.log(data)
                 return data['results']
             })
@@ -58,5 +72,6 @@ export default class Channel {
             })
 
     }
+
 
 }

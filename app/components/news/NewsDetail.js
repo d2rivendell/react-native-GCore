@@ -35,8 +35,8 @@ export default class NewsDetail extends Component {
         return false
     }
     render() {
-        const {news} = this.props.route
-        const uri = address.newsDetail(news.id)
+        const {newsDetail} = this.props
+        const uri = address.newsDetail(newsDetail.id)
         console.log(uri)
         return (
             <View style={styles.container}>

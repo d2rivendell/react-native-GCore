@@ -35,9 +35,10 @@ export default class BannarDetail extends Component {
         return false
     }
     render() {
-        const {bannar} = this.props.route
-        const uri = address.bannarDetail(bannar.original_id)
+        const {bannar} = this.props
         console.log(bannar)
+        const uri = address.bannarDetail(bannar.original_id)
+
         console.log(uri)
         return (
             <View style={styles.container}>

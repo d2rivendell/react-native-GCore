@@ -15,12 +15,13 @@ import {connect} from 'react-redux'
 import Constants from '../common/constants';
 
 
+
 import applicationActions from '../actions/application'
 import homeAction from '../actions/home'
 import newsAction from '../actions/news'
 import articleAction from '../actions/article'
-
-global.Common = Constants;
+import commentAction from '../actions/comment'
+    global.Common = Constants;
 
 
 export  class App extends Component{
@@ -34,7 +35,7 @@ export  class App extends Component{
 
     _renderScene = (route, navigator) => {
         let Component = route.component
-        return <Component navigator={navigator} route={route} {...this.props}/>
+        return <Component navigator={navigator} {...route.params} {...this.props}/>
     }
 
     render(){
@@ -71,7 +72,8 @@ export default connect (
             home:{
                 application:state.application,
                 bannar:state.bannar,
-                homeInfo:state.homeInfo
+                homeInfo:state.homeInfo,
+                comment:state.comment
             },
             article:{
                 article:state.article
@@ -84,9 +86,9 @@ export default connect (
     dispatch => {
         return {
             ApplicationActions:bindActionCreators(Object.assign({},applicationActions), dispatch),
-            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction), dispatch),
-            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction), dispatch),
-            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction), dispatch)
+            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction), dispatch),
+            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction), dispatch),
+            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction), dispatch),
        }
     }
 )(App)

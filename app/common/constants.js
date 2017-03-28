@@ -33,12 +33,16 @@ const ARTICLE = {
     INFO: 'ARTICLE.INFO',
     DETAIL: 'ARTICLE.DETAIL',
 }
-
+const COMMENT = {
+    HOT: 'ARTICLE.INFO',
+    TIME: 'ARTICLE.DETAIL',
+}
 export default {
     APP,
     AUTH_KEY,
     WINDOW,
     HOME,
     ARTICLE,
-    NEWS
+    NEWS,
+    COMMENT
 }

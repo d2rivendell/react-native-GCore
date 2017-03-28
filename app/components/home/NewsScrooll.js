@@ -24,7 +24,10 @@ export default  class  NewsScrooll extends Component{
        navigator.push({
            name:'NewsDetail',
            component:NewsDetail,
-           news:homeNews
+           params:{
+               newsDetail:homeNews
+           }
+
        })
 
       }

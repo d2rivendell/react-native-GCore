@@ -12,20 +12,9 @@ import {
 
 import address from '../../channel/address'
 import ToolNavigationBar from '../../containers/ToolNavigationBar'
+import  Comment from '../../components/other/Comment'
 export default class AirticleDetail extends Component {
 
-    onError(){
-        console.log('onError')
-    }
-    onLoad(){
-        console.log('onLoad')
-    }
-    onLoadEnd(){
-        console.log('onLoadEnd')
-    }
-    onMessage(){
-        console.log('onMessage')
-    }
 
     onShouldStartLoadWithRequest= (e) => {
 
@@ -48,13 +37,38 @@ export default class AirticleDetail extends Component {
         console.log('onContentSizeChange~~~~~')
         // console.log(e)
     }
+    onback(){
+        const {navigator} = this.props
+        if(navigator){
+            navigator.pop()
+        }
+    }
+    gotoComment(original){
+        const {navigator,actions} = this.props
+        if(navigator){
+            navigator.push({
+                name:'Comment',
+                component:Comment,
+                params:{
+                    id:original.id,
+                    actions:actions
+                }
 
+            })
+        }
+    }
     render() {
-        const {original} = this.props.route
+        const {original,navigator} = this.props
         const uri = address.articleDetail(original.id)
-        console.log(uri)
         return (
             <View style={styles.container}>
+                <ToolNavigationBar
+                    alpha = {0.8}
+                    navigator = {navigator}
+                    object = {original}
+                    onBack = {this.onback.bind(this)}
+                    gotoComment = {this.gotoComment.bind(this,original)}
+                    />
                <WebView
                    style={styles.webView}
                    source={{uri: uri}}
@@ -63,13 +77,9 @@ export default class AirticleDetail extends Component {
                    onLoad={this.onLoad}
                    scrollEventThrottle={16}
                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-                   onLoadEnd={this.onLoadEnd}
-                   onMessage={this.onMessage}
-                   onScroll={this.onScroll}
-                   onMomentumScrollEnd={this.onScroll}
                >
                </WebView>
-                <ToolNavigationBar alpha = {0.8}/>
+
             </View>
         );
     }
