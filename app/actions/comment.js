@@ -11,6 +11,7 @@ const  getComment = (type = 'hot',page = 1,id) => {
         const  channel = new Channel()
         return channel.getComment(type,page,id)
             .then(data =>{
+                console.log('dispatch' + requestType)
                 return dispatch({
                     type:requestType,
                     data:data

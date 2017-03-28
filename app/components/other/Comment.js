@@ -8,12 +8,21 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    Button
+    Button,
+    ListView
 }from 'react-native'
 import  CommentNavigationBar from '../../containers/CommentNavigationBar'
-
+import CommentCell from './CommentCell'
 export  default  class Comment extends  Component{
-
+   // 构造
+     constructor(props) {
+       super(props);
+       // 初始状态
+       this.state = {
+           dataSource:new ListView.DataSource({
+               rowHasChanged:(row1,row2) => row1 !== row2})
+       }
+   }
     componentDidMount() {
         const {id,actions} = this.props
         actions.getComment('hot',1,id)
@@ -25,21 +34,37 @@ export  default  class Comment extends  Component{
         }
     }
     _segmentDidSelectIndex(index){
-        console.log(index)
+        const {id,actions} = this.props
+        switch (index){
+            case 0:
+                actions.getComment('hot',1,id)
+            case 1:
+                actions.getComment('time',1,id)
+        }
     }
     _gotoComment(){
         console.log('_gotoComment')
     }
+    _renderRow(data){
+        return (
+        <CommentCell comment = {data}/>
+        )
+    }
     render(){
-
+        const  {comment} =  this.props
+        console.log(comment)
         return(
             <View style={styles.container}>
                <CommentNavigationBar
                onBack = {this.onBack.bind(this)}
-               segmentDidSelectIndex = {this._segmentDidSelectIndex}
+               segmentDidSelectIndex = {this._segmentDidSelectIndex.bind(this)}
                gotoComment = {this._gotoComment}
                />
-               <Text>comment</Text>
+               <ListView
+               dataSource={this.state.dataSource.cloneWithRows(comment.comment.data)}
+               renderRow={this._renderRow}
+               enableEmptySections={true}
+               />
             </View>
         )
     }

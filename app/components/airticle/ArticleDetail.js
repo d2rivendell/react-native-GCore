@@ -44,16 +44,13 @@ export default class AirticleDetail extends Component {
         }
     }
     gotoComment(original){
-        const {navigator,actions} = this.props
+        const {navigator,actions,comments} = this.props
         if(navigator){
             navigator.push({
                 name:'Comment',
                 component:Comment,
-                params:{
-                    id:original.id,
-                    actions:actions
-                }
-
+                params: {
+                    id:original.id,actions},
             })
         }
     }

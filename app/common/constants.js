@@ -34,8 +34,8 @@ const ARTICLE = {
     DETAIL: 'ARTICLE.DETAIL',
 }
 const COMMENT = {
-    HOT: 'ARTICLE.INFO',
-    TIME: 'ARTICLE.DETAIL',
+    HOT: 'COMMENT.HOT',
+    TIME: 'COMMENT.TIME',
 }
 export default {
     APP,

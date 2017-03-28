@@ -4,11 +4,14 @@
 import createReducer from '../utils/create-reducer'
 import  Commom from '../common/constants'
 const initialState = {
+    ctype:Commom.COMMENT.HOT,
     data: []
 }
 
 const actionHandler = {
     [Commom.COMMENT.HOT]: (state, action) => {
+        console.log('handle' + Commom.COMMENT.HOT)
+        console.log(action.data)
         return Object.assign({}, state, {
             type:Commom.COMMENT.HOT,
             data: action.data
@@ -16,9 +19,11 @@ const actionHandler = {
     },
 
     [Commom.COMMENT.TIME]: (state, action) => {
+        console.log('handle  ' + Commom.COMMENT.TIME)
+        console.log(action.data)
         return Object.assign({}, state, {
-            data: action.data,
-            type:Commom.COMMENT.TIME
+            type:Commom.COMMENT.TIME,
+            data: action.data
         })
     }
 }

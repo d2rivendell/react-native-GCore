@@ -15,14 +15,14 @@ import Constants from '../../common/constants'
 import ArticleDetail from '../airticle/ArticleDetail'
 export default  class  Original extends Component{
     _onPress(original){
-      const  {navigator,actions} = this.props
+      const  {navigator,actions,comment} = this.props
       if(navigator){
           actions.toNavigation('ArticleDetail')
               .then(() =>{
                   navigator.push({
                       name:'ArticleDetail',
                       component:ArticleDetail,
-                      params : {...this.props}
+                      params : {...this.props,comment}
 
                   })
               })

@@ -73,13 +73,15 @@ export default connect (
                 application:state.application,
                 bannar:state.bannar,
                 homeInfo:state.homeInfo,
-                comment:state.comment
             },
             article:{
                 article:state.article
             },
             news:{
                 news:state.news
+            },
+            comment:{
+                comment:state.comment
             }
         }
     },

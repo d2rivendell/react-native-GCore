@@ -8,7 +8,7 @@ import homeInfo from '../reducers/home'
 import bannar from '../reducers/bannar'
 import news from '../reducers/news'
 import article from '../reducers/article'
-import comment from '../reducers/article'
+import comment from '../reducers/comment'
 const  reducers = combineReducers({
     application,
     homeInfo,
