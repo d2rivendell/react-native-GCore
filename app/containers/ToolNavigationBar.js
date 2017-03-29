@@ -41,6 +41,7 @@ export  default  class ToolNavigationBar extends  Component{
     }
     render(){
         const {object} = this.props
+        console.log(object)
         return(
                  <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
                   <Button

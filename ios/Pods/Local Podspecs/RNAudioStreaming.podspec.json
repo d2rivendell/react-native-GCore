@@ -1,0 +1,35 @@
+{
+  "name": "RNAudioStreaming",
+  "version": "2.3.2",
+  "summary": "React native audio streaming library for android and iOS",
+  "homepage": "https://github.com/tlenclos/react-native-audio-streaming",
+  "license": "MIT",
+  "authors": {
+    "name": "Thibault Lenclos"
+  },
+  "source": {
+    "git": "git+ssh://git@github.com/tlenclos/react-native-audio-streaming.git",
+    "tag": "v2.3.2"
+  },
+  "default_subspecs": "Main",
+  "requires_arc": true,
+  "platforms": {
+    "ios": "7.0"
+  },
+  "preserve_paths": "**/*.js",
+  "subspecs": [
+    {
+      "name": "Main",
+      "source_files": "ios/ReactNativeAudioStreaming.{h,m}",
+      "dependencies": {
+        "RNAudioStreaming/StreamingKit": [
+
+        ]
+      }
+    },
+    {
+      "name": "StreamingKit",
+      "source_files": "ios/Pods/StreamingKit/StreamingKit/StreamingKit/**/*.{h,m}"
+    }
+  ]
+}

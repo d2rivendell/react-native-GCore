@@ -11,7 +11,7 @@ import {
     Image
 } from 'react-native';
 import  Commom from '../../common/constants'
-import  BannarDetail from './BannarDetail'
+import  ArticleDetail from '../airticle/ArticleDetail'
 
 export class Page extends Component{
     renderPageCircle(){
@@ -56,15 +56,13 @@ export default class  HomeBannar extends Component{
          })
     }
     _onPress(bannar){
-        const {navigator} = this.props
+        const {navigator,comment} = this.props
         console.log(bannar)
         if(navigator){
             navigator.push({
                 name:'BannarDetail',
-                component:BannarDetail,
-                params:{
-                    bannar:bannar
-                }
+                component:ArticleDetail,
+                params : {...this.props,comment,object:bannar,id:bannar.original_id}
             })
 
         }

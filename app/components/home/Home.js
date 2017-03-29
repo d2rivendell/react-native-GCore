@@ -56,8 +56,8 @@ export default class Home extends Component {
 
     }
     renderHeaderScrooll(){
-        const {bannar,navigator} = this.props
-        return(<HomeBannar  bannar = {bannar} navigator={navigator}/>)
+        const {bannar,navigator,comment} = this.props
+        return(<HomeBannar  bannar = {bannar} navigator={navigator} {...comment}/>)
     }
 
     render(){

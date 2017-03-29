@@ -14,7 +14,7 @@ import {
 import Constants from '../../common/constants'
 import Commom from '../../common/constants'
 
-import NewsDetail  from '../news/NewsDetail'
+import ArticleDetail  from '../airticle/ArticleDetail'
 
 export default  class  NewsScrooll extends Component{
     _onPress(homeNews){
@@ -23,9 +23,11 @@ export default  class  NewsScrooll extends Component{
       if(navigator){
        navigator.push({
            name:'NewsDetail',
-           component:NewsDetail,
+           component:ArticleDetail,
            params:{
-               newsDetail:homeNews
+               ...this.props,
+               object:homeNews,
+               id:homeNews.id
            }
 
        })

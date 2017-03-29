@@ -17,12 +17,23 @@ export default class AirticleDetail extends Component {
 
 
     onShouldStartLoadWithRequest= (e) => {
+      var msg = e.url.split('://')
+      var scheme = msg[0]
+      var response = msg[1]
+      console.log(scheme + ' ' + response)
 
-      var scheme = e.url.split('://')[0]
       if(scheme === 'http' || scheme === 'https'){
-      return true
+       return true
+      }else{
+          const {id} = this.props
+          switch (response){
+              case 'showComments':
+                  this.gotoComment(id)
+              default:
+          }
+          return false
       }
-      return false
+
    }
     onScroll(){
         console.log('onScroll~~~~~')
@@ -43,28 +54,29 @@ export default class AirticleDetail extends Component {
             navigator.pop()
         }
     }
-    gotoComment(original){
+    gotoComment(id){
         const {navigator,actions,comments} = this.props
         if(navigator){
             navigator.push({
                 name:'Comment',
                 component:Comment,
                 params: {
-                    id:original.id,actions},
+                    id:id,actions},
             })
         }
     }
     render() {
-        const {original,navigator} = this.props
-        const uri = address.articleDetail(original.id)
+        const {object,navigator,id} = this.props
+        // console.log(object)
+        const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>
                 <ToolNavigationBar
                     alpha = {0.8}
                     navigator = {navigator}
-                    object = {original}
+                    object = {object}
                     onBack = {this.onback.bind(this)}
-                    gotoComment = {this.gotoComment.bind(this,original)}
+                    gotoComment = {this.gotoComment.bind(this,id)}
                     />
                <WebView
                    style={styles.webView}

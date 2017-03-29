@@ -7,17 +7,22 @@ import {
     TouchableHighlight
 }from 'react-native'
 import  Common from '../../common/constants'
-import NewsDetail from './NewsDetail'
+import ArticleDetail from '../airticle/ArticleDetail'
 export  default  class  NewsCell extends  Component {
 
     onPress(news){
         const {navigator} = this.props
-        console.log(news)
+        // console.log(news)
            if(navigator){
              navigator.push({
-                 name:'NewsDetail',
-                 component:NewsDetail,
-                 news
+                 name:'ArticleDetail',
+                 component:ArticleDetail,
+                 params:{
+                     ...this.props,
+                     object:news,
+                     id:news.id
+                 }
+
              })
            }
     }

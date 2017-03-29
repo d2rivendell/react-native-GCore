@@ -22,7 +22,7 @@ export default  class  Original extends Component{
                   navigator.push({
                       name:'ArticleDetail',
                       component:ArticleDetail,
-                      params : {...this.props,comment}
+                      params : {...this.props,comment,object:original,id:original.id}
 
                   })
               })
