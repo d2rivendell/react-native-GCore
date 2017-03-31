@@ -25,5 +25,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "optionalDependencies": {}
 }

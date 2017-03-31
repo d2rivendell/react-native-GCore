@@ -1,6 +1,0 @@
-framework module RNAudioStreaming {
-  umbrella header "RNAudioStreaming-umbrella.h"
-
-  export *
-  module * { export * }
-}

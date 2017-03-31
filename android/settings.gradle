@@ -1,5 +1,4 @@
 rootProject.name = 'GCore'
 include ':react-native-audio-streaming'
 project(':react-native-audio-streaming').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-audio-streaming/android')
-
 include ':app'

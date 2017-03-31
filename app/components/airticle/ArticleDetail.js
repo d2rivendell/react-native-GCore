@@ -67,7 +67,7 @@ export default class AirticleDetail extends Component {
     }
     render() {
         const {object,navigator,id} = this.props
-        // console.log(object)
+        console.log(object)
         const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>

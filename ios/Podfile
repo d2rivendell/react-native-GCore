@@ -1,5 +1,0 @@
-platform :ios, ‘8.0’
-use_frameworks!
-target ‘GCore’ do
-pod 'RNAudioStreaming', :path => '../node_modules/react-native-audio-streaming'
-end
