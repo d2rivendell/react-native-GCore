@@ -45,7 +45,7 @@ export default  class TabBarView extends  Component {
         }
      };
     render(){
-        const {home,news,article,comment,homeAction,newsAction,articleAction,navigator} = this.props
+        const {home,news,article,comment,pageInfo,homeAction,newsAction,articleAction,navigator} = this.props
         return(
             <ScrollableTabView
                 renderTabBar={() =>
@@ -60,9 +60,9 @@ export default  class TabBarView extends  Component {
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
             >
-                 <Home  {...home}  {...comment} actions={homeAction} navigator = {navigator}/>
-                 <News {...news} {...comment}actions = {newsAction}  navigator = {navigator}/>
-                 <Article  {...article} {...comment} actions = {articleAction} navigator = {navigator}/>
+                 <Home  {...home} {...pageInfo} {...comment} actions={homeAction} navigator = {navigator}/>
+                 <News {...news} {...pageInfo} {...comment}actions = {newsAction}  navigator = {navigator}/>
+                 <Article  {...article} {...pageInfo}  {...comment} actions = {articleAction} navigator = {navigator}/>
             </ScrollableTabView>
         )
 

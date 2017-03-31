@@ -9,13 +9,15 @@ import bannar from '../reducers/bannar'
 import news from '../reducers/news'
 import article from '../reducers/article'
 import comment from '../reducers/comment'
+import pageInfo from '../reducers/pageInfo'
 const  reducers = combineReducers({
     application,
     homeInfo,
     bannar,
     news,
     article,
-    comment
+    comment,
+    pageInfo
 });
 
 export  default  reducers

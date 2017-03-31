@@ -1,6 +1,7 @@
 /**
  * Created by Leon.Hwa on 17/3/21.
  */
+
 const address = {
     banner: (auth = Common.AUTH_KEY.auth_key) => {
         return `http://www.g-cores.com/api/originals/home_slideshow?auth_exclusive=${auth}`
@@ -26,6 +27,9 @@ const address = {
     },
     getComment :(type,page,id,auth = Common.AUTH_KEY.auth_key) => {
       return `http://www.g-cores.com/api/comments?auth_exclusive=${auth}&commentable_id=${id}&commentable_type=original&page=${page}&sort=${type}`
+    },
+    getPageInfo:(id,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/originals/${id}?auth_exclusive=${auth}`
     }
 }
 export default address

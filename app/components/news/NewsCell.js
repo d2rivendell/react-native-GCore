@@ -8,6 +8,7 @@ import {
 }from 'react-native'
 import  Common from '../../common/constants'
 import ArticleDetail from '../airticle/ArticleDetail'
+
 export  default  class  NewsCell extends  Component {
 
     onPress(news){

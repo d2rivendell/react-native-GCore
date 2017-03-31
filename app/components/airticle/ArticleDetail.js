@@ -13,6 +13,7 @@ import {
 import address from '../../channel/address'
 import ToolNavigationBar from '../../containers/ToolNavigationBar'
 import  Comment from '../../components/other/Comment'
+import  TimeLine from '../../components/other/TimeLine'
 export default class AirticleDetail extends Component {
 
 
@@ -29,6 +30,10 @@ export default class AirticleDetail extends Component {
           switch (response){
               case 'showComments':
                   this.gotoComment(id)
+                  break;
+              case 'playAudio':
+                  this.gotoTimeLine(id)
+                   break;
               default:
           }
           return false
@@ -65,9 +70,28 @@ export default class AirticleDetail extends Component {
             })
         }
     }
+
+    gotoTimeLine(id){
+        const {navigator,actions,pageInfo} = this.props
+        console.log(pageInfo)
+        if(navigator){
+            navigator.push({
+                name:'TimeLine',
+                component:TimeLine,
+                params: {
+                    id:id,actions:actions,pageInfo:pageInfo},
+            })
+        }
+    }
+
+    componentWillReceiveProps(prop) {
+        const {pageInfo}  = prop
+        if(pageInfo){
+            console.log(pageInfo)
+        }
+    }
     render() {
         const {object,navigator,id} = this.props
-        console.log(object)
         const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>

@@ -21,6 +21,9 @@ import homeAction from '../actions/home'
 import newsAction from '../actions/news'
 import articleAction from '../actions/article'
 import commentAction from '../actions/comment'
+
+import pageInfoAction from '../actions/pageInfo'
+
     global.Common = Constants;
 
 
@@ -67,16 +70,20 @@ App.propTypes = {
 
 export default connect (
     state => {
-        return{
-            application:state.application,
-            home:{
-                application:state.application,
-                bannar:state.bannar,
-                homeInfo:state.homeInfo,
+        return {
+            application: state.application,
+            home: {
+                application: state.application,
+                bannar: state.bannar,
+                homeInfo: state.homeInfo,
+                pageInfo: state.pageInfo
             },
-            article:{
-                article:state.article
+            article: {
+                article: state.article,
             },
+            pageInfo: {
+                pageInfo: state.pageInfo,
+           },
             news:{
                 news:state.news
             },
@@ -88,9 +95,9 @@ export default connect (
     dispatch => {
         return {
             ApplicationActions:bindActionCreators(Object.assign({},applicationActions), dispatch),
-            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction), dispatch),
-            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction), dispatch),
-            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction), dispatch),
+            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction), dispatch),
+            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction), dispatch),
+            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction), dispatch),
        }
     }
 )(App)

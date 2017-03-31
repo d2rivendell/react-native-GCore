@@ -37,6 +37,9 @@ const COMMENT = {
     HOT: 'COMMENT.HOT',
     TIME: 'COMMENT.TIME',
 }
+const PAGEINFO = {
+    INFO: 'PAGEINFO'
+}
 export default {
     APP,
     AUTH_KEY,
@@ -44,5 +47,6 @@ export default {
     HOME,
     ARTICLE,
     NEWS,
-    COMMENT
+    COMMENT,
+    PAGEINFO
 }

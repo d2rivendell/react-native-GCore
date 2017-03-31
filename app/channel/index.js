@@ -21,6 +21,7 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
+              console.log(data)
                 return data['results']
             })
             .catch((error) => {
@@ -64,6 +65,21 @@ export default class Channel {
             .then((res) => res.json())
             .then((data) =>{
                 console.log('~~~~~~~ comment ')
+                console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getPageInfo(id){
+        const gen_url = address.getPageInfo(id)
+        console.log('getPageInfo is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                console.log('~~~~~~~ getPageInfo ')
                 console.log(data)
                 return data['results']
             })
