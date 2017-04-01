@@ -10,6 +10,7 @@ import news from '../reducers/news'
 import article from '../reducers/article'
 import comment from '../reducers/comment'
 import pageInfo from '../reducers/pageInfo'
+import timeLine from '../reducers/timeLine'
 const  reducers = combineReducers({
     application,
     homeInfo,
@@ -17,7 +18,8 @@ const  reducers = combineReducers({
     news,
     article,
     comment,
-    pageInfo
+    pageInfo,
+    timeLine
 });
 
 export  default  reducers

@@ -40,6 +40,11 @@ const COMMENT = {
 const PAGEINFO = {
     INFO: 'PAGEINFO'
 }
+const TIMELINE = {
+    INFO: 'TIMELINE.INFO',
+    CATEGORY:'TIMELINE.CATEGORY',
+    DOWNLOAD: 'TIMELINE.DOWNLOAD'
+}
 export default {
     APP,
     AUTH_KEY,
@@ -48,5 +53,6 @@ export default {
     ARTICLE,
     NEWS,
     COMMENT,
-    PAGEINFO
+    PAGEINFO,
+    TIMELINE
 }

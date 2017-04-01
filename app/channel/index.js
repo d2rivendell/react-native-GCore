@@ -7,7 +7,7 @@ export default class Channel {
         return window.fetch(gen_url)
                 .then((res) => res.json())
                 .then((data) =>{
-                  console.log(data['results'])
+                  // console.log(data['results'])
                   return data['results']
                 })
             .catch((error) => {
@@ -37,7 +37,7 @@ export default class Channel {
             .then((res) => res.json())
             .then((data) =>{
 
-                console.log(data['results'])
+                // console.log(data['results'])
                 return data['results']
             })
             .catch((error) => {
@@ -64,8 +64,8 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-                console.log('~~~~~~~ comment ')
-                console.log(data)
+                // console.log('~~~~~~~ comment ')
+                // console.log(data)
                 return data['results']
             })
             .catch((error) => {
@@ -79,7 +79,37 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-                console.log('~~~~~~~ getPageInfo ')
+                // console.log('~~~~~~~ getPageInfo ')
+                // console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getTimeLine(id){
+        const gen_url = address.getTimeLine(id)
+        console.log('getTimeLine is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                // console.log('~~~~~~~ getTimeLine ')
+                // console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getTimeLineCategories(page){
+        const gen_url = address.getTimeLineCategories(page)
+        console.log('getTimeLineCategories is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                console.log('~~~~~~~ getTimeLineCategories ')
                 console.log(data)
                 return data['results']
             })

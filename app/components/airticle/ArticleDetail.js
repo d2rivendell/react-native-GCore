@@ -7,13 +7,14 @@ import {
     PropTypes,
     StyleSheet,
     View,
-    Text
+    Text,
+    StatusBar
 } from  'react-native'
 
 import address from '../../channel/address'
 import ToolNavigationBar from '../../containers/ToolNavigationBar'
 import  Comment from '../../components/other/Comment'
-import  TimeLine from '../../components/other/TimeLine'
+import  TimeLine from '../other/timeLine/TimeLine'
 export default class AirticleDetail extends Component {
 
 
@@ -72,29 +73,39 @@ export default class AirticleDetail extends Component {
     }
 
     gotoTimeLine(id){
-        const {navigator,actions,pageInfo} = this.props
-        console.log(pageInfo)
+        const {navigator,actions,pageInfo,timeLine} = this.props
         if(navigator){
             navigator.push({
                 name:'TimeLine',
                 component:TimeLine,
                 params: {
-                    id:id,actions:actions,pageInfo:pageInfo},
+                    id:id,actions:actions,pageInfo:pageInfo,timeLine:timeLine},
             })
         }
     }
 
+    componentDidMount() {
+        const {id,actions} = this.props
+        actions.getPageInfo(id)
+    }
     componentWillReceiveProps(prop) {
-        const {pageInfo}  = prop
-        if(pageInfo){
-            console.log(pageInfo)
-        }
+        // const {pageInfo}  = prop
+        // if(pageInfo){
+        //     console.log(pageInfo)
+        // }
     }
     render() {
         const {object,navigator,id} = this.props
         const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>
+
+                <StatusBar
+                    animated={true}
+                    hidden={true}
+                    translucent={true}
+                    barStyle={'default'}
+                />
                 <ToolNavigationBar
                     alpha = {0.8}
                     navigator = {navigator}

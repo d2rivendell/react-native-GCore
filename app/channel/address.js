@@ -30,6 +30,12 @@ const address = {
     },
     getPageInfo:(id,auth = Common.AUTH_KEY.auth_key) => {
         return `http://www.g-cores.com/api/originals/${id}?auth_exclusive=${auth}`
-    }
+    },
+    getTimeLine:(id,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/volumes/${id}/timelines?auth_exclusive=${auth}`
+    },
+    getTimeLineCategories:(page = 1,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/categories/9/originals?page=${page}&auth_exclusive=${auth}`
+    },
 }
 export default address
