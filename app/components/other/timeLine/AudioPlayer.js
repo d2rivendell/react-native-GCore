@@ -11,18 +11,52 @@ import {
     Slider
 }from 'react-native'
 import Common from '../../../common/constants'
+import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 export  default  class AudioPlayer extends  Component {
   // 构造
     constructor(props) {
       super(props);
       // 初始状态
       this.state = {
-          value:30
+          play:true
       };
     }
-  render(){
+    mixins: [TimerMixin]
+    componentDidMount() {
+        const {getProgress} = this.props
+        if(getProgress){
+         this.timer = setInterval(
+             ()=>{
+                 ReactNativeAudioStreaming.getStatus((nu,dict)=>{
+                     console.log(dict)
+                     getProgress(dict.status,dict.progress,dict.duration)
+                 })},
+             1000)
+        }
+    }
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer);
+    }
+    _play(){
         const {pageInfo} = this.props
-      console.log(pageInfo)
+        this.setState({
+            play:!this.state.play
+        })
+        if(this.state.play){
+            console.log('play')
+            ReactNativeAudioStreaming.play(pageInfo.data.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+        }else{
+            console.log('stop')
+            ReactNativeAudioStreaming.pause();
+        }
+    }
+    _onValueChange(v){
+        ReactNativeAudioStreaming.seekToTime(v)
+    }
+  render(){
+        console.log('render')
+        const {pageInfo} = this.props
+
       return(
           <View style={styles.container}>
               <View style={styles.contentView}>
@@ -32,17 +66,23 @@ export  default  class AudioPlayer extends  Component {
                       <Text numberOfLines = {1}  style={styles.desc}>{pageInfo.data.desc}</Text>
                   </View>
                   <View style={styles.toolView}>
-                      <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-pause~iphone.png')}/>
+                      <TouchableHighlight
+                          underlayColor = 'transparent'
+                          onPress={this._play.bind(this)}
+                      >
+                       <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-pause~iphone.png')}/>
+                      </TouchableHighlight>
                       <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-list~iphone.png')}/>
                       <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-share~iphone.png')}/>
                   </View>
               </View>
               <Slider
                   style={styles.slider}
-                  maximumValue={100}
-                  disabled={true}
-                  value={this.state.value}
+                  maximumValue={this.props.maxVallue}
+                  disabled={false}
+                  value={this.props.value}
                   thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
+                  onValueChange = {this._onValueChange}
               />
           </View>
       )

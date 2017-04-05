@@ -55,10 +55,11 @@ export default class AirticleDetail extends Component {
         // console.log(e)
     }
     onback(){
-        const {navigator} = this.props
-        if(navigator){
-            navigator.pop()
-        }
+        const {navigator,id} = this.props
+        // if(navigator){
+        //     navigator.pop()
+        // }
+        this.gotoTimeLine(id)
     }
     gotoComment(id){
         const {navigator,actions,comments} = this.props

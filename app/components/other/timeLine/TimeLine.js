@@ -24,7 +24,10 @@ export  default  class TimeLine extends  Component {
             uri:'',
             dataSource:new ListView.DataSource({
                 rowHasChanged:(row1,row2) => row1 !== row2
-            })
+            }),
+            progress:0,
+            playerState:'',
+            value:0
         };
       }
     componentDidMount() {
@@ -36,6 +39,7 @@ export  default  class TimeLine extends  Component {
             })
         }
         actions.getTimeLine(id)
+
     }
 
     componentWillReceiveProps(prop) {
@@ -54,7 +58,8 @@ export  default  class TimeLine extends  Component {
     _getTime(timestamp){
         var hour = Math.floor(timestamp/60)
         var sec = timestamp - (hour * 60)
-        sec = (Array(2).join(0)+sec).slice(-2)
+        hour = (Array(2).join(0)+parseInt(hour)).slice(-2)
+        sec = (Array(2).join(0)+parseInt(sec)).slice(-2)
         return  hour + ":" + sec
     }
     _renderSectionHeader(sectionData, sectionID){
@@ -62,11 +67,37 @@ export  default  class TimeLine extends  Component {
         // console.log(pageInfo)
         return (
              <View style={styles.sectionHeader}>
-              <Text style={styles.sectionStatus}>停止</Text>
-              <Text style={styles.sectionTime}>{this._getTime(pageInfo.data.duration)}</Text>
+              <Text style={styles.sectionStatus}>{this.state.playerState}</Text>
+              <View style={{flexDirection:'row'}}>
+                  <Text style={styles.sectionTime}>{this._getTime(this.state.progress)}/</Text>
+                  <Text style={styles.sectionTime}>{this._getTime(pageInfo.data.duration)}</Text>
+              </View>
              </View>
         )
      }
+    _getProgress(status,progress,duration){
+        var ss = ''
+        switch (status){
+            case 'ERROR':
+                ss = '播放出错'
+                break;
+            case 'PLAYING':
+                ss = '播放中'
+                break;
+            case 'PAUSED':
+                ss = '暂停'
+                break;
+            case 'BUFFERING':
+                ss = '加载中'
+                break;
+        }
+     var value = parseInt(progress)
+    this.setState({
+        progress:progress,
+        playerState:ss,
+        value:value
+    })
+    }
     render() {
         const {timeLine,pageInfo} = this.props
         return (
@@ -77,7 +108,13 @@ export  default  class TimeLine extends  Component {
                 enableEmptySections={true}
                 renderSectionHeader={this._renderSectionHeader.bind(this)}
                 />
-                <AudioPlayer pageInfo={pageInfo}/>
+                <AudioPlayer
+                    pageInfo={pageInfo}
+                    getProgress = {this._getProgress.bind(this)}
+                    value={this.state.value}
+                    disabled = {false}
+                    maxVallue = {pageInfo.data.duration}
+                />
             </View>
         );
     }
