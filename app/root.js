@@ -5,14 +5,15 @@ import React,{Component}from 'react'
 
 import {
     View,
-    Text
+    Text,
+    StyleSheet
 } from 'react-native'
 import {createStore,applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import  thunk from 'redux-thunk'//
 import  reducers from  './reducers'
 import App from './containers/app'
-
+import MusicTool from './components/other/MusicTool'
 const  createStoreWithWM = applyMiddleware(thunk)(createStore)
 const  store = createStoreWithWM(reducers)
 
@@ -20,9 +21,21 @@ const  store = createStoreWithWM(reducers)
 export default class  Root extends Component {
    render() {
        return (
+           <View style={{flex: 1}}>
            <Provider store={store}>
               <App />
            </Provider>
+
+            <MusicTool style={styles.tool}/>
+           </View>
        )
    }
 }
+const styles = StyleSheet.create({
+    container:{
+        flex:1
+    },
+    tool:{
+
+    }
+})

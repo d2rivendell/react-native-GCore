@@ -8,7 +8,8 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    Slider
+    Slider,
+    Platform
 }from 'react-native'
 import Common from '../../../common/constants'
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
@@ -24,66 +25,93 @@ export  default  class AudioPlayer extends  Component {
     mixins: [TimerMixin]
     componentDidMount() {
         const {getProgress} = this.props
-        if(getProgress){
-         this.timer = setInterval(
-             ()=>{
-                 ReactNativeAudioStreaming.getStatus((nu,dict)=>{
-                     console.log(dict)
-                     getProgress(dict.status,dict.progress,dict.duration)
-                 })},
-             1000)
+        // if(getProgress){
+        //  this.timer = setInterval(
+        //      ()=>{
+        //          if(Platform.OS === 'ios' ){
+        //              ReactNativeAudioStreaming.getStatus((nu,dict)=>{
+        //                  // console.log(dict)
+        //                  getProgress(dict.status,dict.progress,dict.duration)
+        //              })
+        //          }
+        //         },
+        //      1000)
+        // }
+    }
+
+    componentWillReceiveProps(props) {
+        const {timeLineInfo} = props
+        if(timeLineInfo){
+            console.log(timeLineInfo)
         }
+
     }
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
     _play(){
-        const {pageInfo} = this.props
+        const {timeLineInfo} = this.props
+
         this.setState({
             play:!this.state.play
         })
         if(this.state.play){
             console.log('play')
-            ReactNativeAudioStreaming.play(pageInfo.data.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+            ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
         }else{
             console.log('stop')
             ReactNativeAudioStreaming.pause();
+        }
+    }
+    _list(){
+        const {onList} = this.props
+        if(onList){
+            onList()
         }
     }
     _onValueChange(v){
         ReactNativeAudioStreaming.seekToTime(v)
     }
   render(){
-        console.log('render')
-        const {pageInfo} = this.props
-
+      const {timeLineInfo} = this.props
+      console.log(timeLineInfo)
       return(
           <View style={styles.container}>
-              <View style={styles.contentView}>
-                  <Image style={styles.cover} source={{uri:pageInfo.data.thumb_url}}/>
+              { timeLineInfo && <View style={styles.contentView}>
+                  <Image style={styles.cover} source={{uri:timeLineInfo.thumb_url}}/>
                   <View style={styles.textView}>
-                       <Text numberOfLines = {1} style={styles.title}>{pageInfo.data.title}</Text>
-                      <Text numberOfLines = {1}  style={styles.desc}>{pageInfo.data.desc}</Text>
+                      <Text numberOfLines={1} style={styles.title}>{timeLineInfo.title}</Text>
+                      <Text numberOfLines={1} style={styles.desc}>{timeLineInfo.desc}</Text>
                   </View>
                   <View style={styles.toolView}>
                       <TouchableHighlight
-                          underlayColor = 'transparent'
+                          underlayColor='transparent'
                           onPress={this._play.bind(this)}
                       >
-                       <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-pause~iphone.png')}/>
+                          <Image resizeMode='contain' style={styles.icon}
+                                 source={require('../../../resource/icon-pause~iphone.png')}/>
                       </TouchableHighlight>
-                      <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-list~iphone.png')}/>
-                      <Image resizeMode= 'contain' style={styles.icon} source={require('../../../resource/icon-share~iphone.png')}/>
+                      <TouchableHighlight
+                          underlayColor='transparent'
+                          onPress={this._list.bind(this)}
+                      >
+                          <Image resizeMode='contain' style={styles.icon}
+                                 source={require('../../../resource/icon-list~iphone.png')}/>
+                      </TouchableHighlight>
+                      <Image resizeMode='contain' style={styles.icon}
+                             source={require('../../../resource/icon-share~iphone.png')}/>
                   </View>
               </View>
-              <Slider
-                  style={styles.slider}
-                  maximumValue={this.props.maxVallue}
-                  disabled={false}
-                  value={this.props.value}
-                  thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
-                  onValueChange = {this._onValueChange}
+              }
+              < Slider
+              style={styles.slider}
+              maximumValue={this.props.maxVallue}
+              disabled={false}
+              value={this.props.value}
+              thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
+              onValueChange = {this._onValueChange}
               />
+
           </View>
       )
   }

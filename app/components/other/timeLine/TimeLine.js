@@ -14,6 +14,7 @@ import {
 import {Player}  from  'react-native-audio-streaming'
 import TimeLinePanel from './TimeLinePanel'
 import AudioPlayer from './AudioPlayer'
+import TimeLineList from './TimeLineList'
 export  default  class TimeLine extends  Component {
 
     // 构造
@@ -21,35 +22,30 @@ export  default  class TimeLine extends  Component {
         super(props);
         // 初始状态
         this.state = {
-            uri:'',
             dataSource:new ListView.DataSource({
                 rowHasChanged:(row1,row2) => row1 !== row2
             }),
             progress:0,
             playerState:'',
-            value:0
+            value:0,
+            mode:'timeLine',
+            pageInfo:null
         };
       }
     componentDidMount() {
-        const {id,actions,pageInfo} = this.props
-        console.log(pageInfo)
-        if(pageInfo.data){
-            this.setState({
-                uri:pageInfo.data.media.mp3[0]
-            })
-        }
+        const {id,actions} = this.props
         actions.getTimeLine(id)
-
     }
 
     componentWillReceiveProps(prop) {
         const {pageInfo} = prop
-        // console.log(pageInfo)
-        if(pageInfo.data){
-            this.setState({
-                uri:pageInfo.data.media.mp3[0]
-            })
-        }
+        //初始化时需要 重新在列表选择后不再需要
+        if (pageInfo && this.state.pageInfo === null) {
+            console.log(pageInfo)
+        this.setState({
+            pageInfo:pageInfo.data
+        })
+      }
     }
     _renderRow(data){
           // console.log(data)
@@ -63,14 +59,12 @@ export  default  class TimeLine extends  Component {
         return  hour + ":" + sec
     }
     _renderSectionHeader(sectionData, sectionID){
-        const {pageInfo}  = this.props
-        // console.log(pageInfo)
         return (
              <View style={styles.sectionHeader}>
               <Text style={styles.sectionStatus}>{this.state.playerState}</Text>
               <View style={{flexDirection:'row'}}>
                   <Text style={styles.sectionTime}>{this._getTime(this.state.progress)}/</Text>
-                  <Text style={styles.sectionTime}>{this._getTime(pageInfo.data.duration)}</Text>
+                  <Text style={styles.sectionTime}>{this._getTime(this.state.pageInfo.duration)}</Text>
               </View>
              </View>
         )
@@ -98,22 +92,49 @@ export  default  class TimeLine extends  Component {
         value:value
     })
     }
+    _onList(){
+        var mode = 'timeLine'
+        this.state.mode === 'timeLine' ? mode = 'timeLineList':mode = 'timeLine'
+        this.setState({
+            mode:mode
+        })
+        console.log(this.state.mode)
+    }
+    _reLoad(pageInfo){
+        //获取id 重新请求数据刷新界面
+        const {actions} = this.props
+        actions.getTimeLine(pageInfo.id)
+        this.setState({
+            pageInfo:pageInfo,
+            mode:'timeLine',
+            value:0
+        })
+       console.log(this.state.pageInfo)
+    }
     render() {
-        const {timeLine,pageInfo} = this.props
+        const {timeLine} = this.props
         return (
             <View style={styles.container}>
+                {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&
                 <ListView
-                dataSource={this.state.dataSource.cloneWithRows(timeLine.data)}
-                renderRow={this._renderRow.bind(this)}
-                enableEmptySections={true}
-                renderSectionHeader={this._renderSectionHeader.bind(this)}
+                    dataSource={this.state.dataSource.cloneWithRows(timeLine.data)}
+                    renderRow={this._renderRow.bind(this)}
+                    enableEmptySections={true}
+                    renderSectionHeader={this._renderSectionHeader.bind(this)}
                 />
+                }
+                {
+                    this.state.mode === 'timeLineList' && <TimeLineList {...this.props} onPress={this._reLoad.bind(this)}/>
+                }
+
                 <AudioPlayer
-                    pageInfo={pageInfo}
+                    timeLineInfo ={this.state.pageInfo}
                     getProgress = {this._getProgress.bind(this)}
                     value={this.state.value}
                     disabled = {false}
-                    maxVallue = {pageInfo.data.duration}
+                    maxVallue = {100}
+                    onList = {this._onList.bind(this)}
+                    {...this.props}
                 />
             </View>
         );

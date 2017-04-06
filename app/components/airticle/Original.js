@@ -28,7 +28,6 @@ export default  class  Original extends Component{
               })
 
       }
-
     }
     render() {
         const {original,actions} = this.props

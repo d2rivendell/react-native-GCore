@@ -6,7 +6,8 @@ import  React,{Component} from 'react'
 import {
     View,
     Text,
-    PropTypes
+    PropTypes,
+    StyleSheet
 } from 'react-native'
 
 import  ScrollableTabView from 'react-native-scrollable-tab-view'
@@ -75,3 +76,5 @@ TabBarView.propTypes = {
     article:React.PropTypes.object,
     ApplicationActions:React.PropTypes.object
 }
+
+

@@ -15,7 +15,7 @@ const actionHandler = {
     },
     [Commom.TIMELINE.CATEGORY]: (state, action) => {
         return Object.assign({}, state, {
-            data: action.data
+            list_data: action.data
         })
     }
 }

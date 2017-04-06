@@ -8,7 +8,8 @@ import {
     StyleSheet,
     View,
     Text,
-    StatusBar
+    StatusBar,
+    Navigator
 } from  'react-native'
 
 import address from '../../channel/address'
@@ -62,27 +63,24 @@ export default class AirticleDetail extends Component {
         this.gotoTimeLine(id)
     }
     gotoComment(id){
-        const {navigator,actions,comments} = this.props
-        if(navigator){
-            navigator.push({
-                name:'Comment',
+        const {actions,comments} = this.props
+            this.props.navigator.push({
                 component:Comment,
                 params: {
                     id:id,actions},
             })
-        }
     }
 
     gotoTimeLine(id){
-        const {navigator,actions,pageInfo,timeLine} = this.props
-        if(navigator){
-            navigator.push({
+        const {actions,pageInfo,timeLine} = this.props
+        this.props.navigator.push({
                 name:'TimeLine',
                 component:TimeLine,
+            sceneConfig: Navigator.SceneConfigs.PushFromLeft,
                 params: {
                     id:id,actions:actions,pageInfo:pageInfo,timeLine:timeLine},
             })
-        }
+
     }
 
     componentDidMount() {
