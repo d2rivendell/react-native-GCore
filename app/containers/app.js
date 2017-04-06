@@ -26,10 +26,20 @@ import pageInfoAction from '../actions/pageInfo'
 
     global.Common = Constants;
 
-
+import TLView from '../components/other/TLView'
 export  class App extends Component{
 
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            navigator:null
+        };
+      }
     _configureScene = route => {
+        //有这句后后面修改 sceneConfig 才有效 否则不起作用
+        if (route.sceneConfig) return route.sceneConfig
         return {
             ...Navigator.SceneConfigs.PushFromRight,
            // gestures: {}    // 禁用左滑返回手势
@@ -37,6 +47,7 @@ export  class App extends Component{
     }
 
     _renderScene = (route, navigator) => {
+
         let Component = route.component
         return <Component navigator={navigator} {...route.params} {...this.props}/>
     }
@@ -50,6 +61,7 @@ export  class App extends Component{
               configureScene={this._configureScene}
               renderScene={this._renderScene}
              />
+         <TLView timeLine={this.props.timeLine}/>
          </View>
       )
     }
@@ -76,7 +88,8 @@ export default connect (
                 application: state.application,
                 bannar: state.bannar,
                 homeInfo: state.homeInfo,
-                pageInfo: state.pageInfo
+                pageInfo: state.pageInfo,
+                comment:state.comment
             },
             article: {
                 article: state.article,
@@ -86,9 +99,7 @@ export default connect (
             news:{
                 news:state.news
             },
-            comment:{
-                comment:state.comment
-            },
+            comment:state.comment,
             timeLine:state.timeLine
         }
     },
@@ -101,4 +112,3 @@ export default connect (
        }
     }
 )(App)
-

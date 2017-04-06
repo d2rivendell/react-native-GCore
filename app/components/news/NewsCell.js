@@ -20,7 +20,7 @@ export  default  class  NewsCell extends  Component {
                  component:ArticleDetail,
                  params:{
                      ...this.props,
-                     object:news,
+                     likes_num:news.likes_num,
                      id:news.id
                  }
 

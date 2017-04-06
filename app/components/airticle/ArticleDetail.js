@@ -14,6 +14,7 @@ import {
 
 import address from '../../channel/address'
 import ToolNavigationBar from '../../containers/ToolNavigationBar'
+import BanarNavigationBar from '../../containers/BanarNavigationBar'
 import  Comment from '../../components/other/Comment'
 import  TimeLine from '../other/timeLine/TimeLine'
 export default class AirticleDetail extends Component {
@@ -42,28 +43,8 @@ export default class AirticleDetail extends Component {
       }
 
    }
-    onScroll(){
-        console.log('onScroll~~~~~')
-        // console.log(e)
-    }
-    onPress(e){
-        console.log('onPress~~~~~')
-        // console.log(e)
-    }
-
-    onMomentumScrollEnd(){
-        console.log('onContentSizeChange~~~~~')
-        // console.log(e)
-    }
-    onback(){
-        const {navigator,id} = this.props
-        // if(navigator){
-        //     navigator.pop()
-        // }
-        this.gotoTimeLine(id)
-    }
     gotoComment(id){
-        const {actions,comments} = this.props
+        const {actions} = this.props
             this.props.navigator.push({
                 component:Comment,
                 params: {
@@ -76,25 +57,20 @@ export default class AirticleDetail extends Component {
         this.props.navigator.push({
                 name:'TimeLine',
                 component:TimeLine,
-            sceneConfig: Navigator.SceneConfigs.PushFromLeft,
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
                 params: {
-                    id:id,actions:actions,pageInfo:pageInfo,timeLine:timeLine},
+                    ...this.props,id:id,likes_num:pageInfo.data.likes_num},
             })
 
     }
 
     componentDidMount() {
         const {id,actions} = this.props
-        actions.getPageInfo(id)
+         actions.getPageInfo(id)
     }
-    componentWillReceiveProps(prop) {
-        // const {pageInfo}  = prop
-        // if(pageInfo){
-        //     console.log(pageInfo)
-        // }
-    }
+
     render() {
-        const {object,navigator,id} = this.props
+        const {likes_num,navigator,id,pageInfo} = this.props
         const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>
@@ -105,34 +81,36 @@ export default class AirticleDetail extends Component {
                     translucent={true}
                     barStyle={'default'}
                 />
-                <ToolNavigationBar
+                { likes_num && <ToolNavigationBar
                     alpha = {0.8}
                     navigator = {navigator}
-                    object = {object}
-                    onBack = {this.onback.bind(this)}
+                    likes_num = {likes_num}
                     gotoComment = {this.gotoComment.bind(this,id)}
-                    />
+                />
+                }
+
                <WebView
                    style={styles.webView}
                    source={{uri: uri}}
                    automaticallyAdjustContentInsets={false}
                    javaScriptEnabled={true}
-                   onLoad={this.onLoad}
                    scrollEventThrottle={16}
                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
                >
                </WebView>
-
+                {
+                    !likes_num &&  <BanarNavigationBar
+                        alpha = {0.8}
+                        navigator = {navigator}
+                        likes_num = {pageInfo.data.likes_num}
+                        gotoComment = {this.gotoComment.bind(this,id)}
+                    />
+                }
             </View>
         );
     }
 }
-// renderError={ (e) => {
-//     if (e === 'WebKitErrorDomain') {
-//         console.log('happen~~~~~')
-//         return
-//     }
-// }}
+
 
 AirticleDetail.propTypes = {
     original:React.PropTypes.object

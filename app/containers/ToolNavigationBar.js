@@ -28,20 +28,20 @@ export  default  class ToolNavigationBar extends  Component{
 
     }
     _back() {
-        const {onBack} = this.props
-        if (onBack) {
-            onBack()
+        const {navigator} = this.props
+        if (navigator) {
+            navigator.pop()
         }
     }
-    _gotoComment(object){
+    _gotoComment(){
         const  {gotoComment} = this.props
         if (gotoComment) {
             gotoComment()
         }
     }
     render(){
-        const {object} = this.props
-        console.log(object)
+        const {likes_num} = this.props
+        console.log(likes_num)
         return(
                  <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
                   <Button
@@ -54,11 +54,11 @@ export  default  class ToolNavigationBar extends  Component{
                      <Image style={styles.icon} source={require('../resource/icon-like.png')}/>
                      <Image style={styles.icon} source={require('../resource/icon-mark~iphone.png')}/>
                      <Image style={styles.icon} source={require('../resource/icon-share~iphone.png')}/>
-                     <TouchableHighlight onPress={this._gotoComment.bind(this,object)}  underlayColor = 'transparent'>
+                     <TouchableHighlight onPress={this._gotoComment.bind(this)}  underlayColor = 'transparent'>
                      <Image style={styles.icon} source={require('../resource/icon-comment.png')}/>
                      </TouchableHighlight>
 
-                      <Text style={styles.likeText}>{object.likes_num}</Text>
+                      <Text style={styles.likeText}>{likes_num}</Text>
                    </View>
                 </Animated.View>
         )
@@ -72,7 +72,7 @@ const  styles = StyleSheet.create({
         left: 0,
         right: 0,
      // width:Common.WINDOW.width,
-     height:60,
+     height:50,
      flexDirection:'row',
      justifyContent:'space-between',
      backgroundColor:'white',

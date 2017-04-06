@@ -61,10 +61,11 @@ export default  class TabBarView extends  Component {
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
             >
-                 <Home  {...home} {...pageInfo} {...comment} {...timeLine} actions={homeAction} navigator = {navigator}/>
+                 <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
                  <News {...news} {...pageInfo} {...comment} {...timeLine} actions = {newsAction}  navigator = {navigator}/>
                  <Article  {...article} {...pageInfo}  {...comment} {...timeLine} actions = {articleAction} navigator = {navigator}/>
             </ScrollableTabView>
+
         )
 
     }

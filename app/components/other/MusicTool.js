@@ -10,7 +10,7 @@ import {
     Animated,
     Easing     //引入Easing渐变函数
 }from 'react-native'
-
+import  Blank from './Blank'
 export  default  class MusicTool extends  Component {
     // 构造
       constructor(props) {
@@ -34,9 +34,25 @@ export  default  class MusicTool extends  Component {
               ).start(()=>this.startAnimation() )
       }
 
+    _onPress(){
+        const {timeLine,navigator} = this.props
+        console.log(navigator)
+        if(navigator){
+            navigator.push({
+                component:Blank,
+                params:{
+                    ...this.props
+                }
+            })
+        }
+    }
  render(){
+
      return(
          <View style={styles.container}>
+             <TouchableHighlight
+                 onPress={this._onPress.bind(this)}
+             >
              <Animated.Image
                  style={[styles.music,{//使用interpolate插值函数,实现了从数值单位的映射转换,上面角度从0到1，这里把它变成0-360的变化
         transform:[{rotate:this.state.rotateValue.interpolate(
@@ -46,18 +62,18 @@ export  default  class MusicTool extends  Component {
                  source= {require('../../resource/GGG.jpg')}
              >
              </Animated.Image>
+             </TouchableHighlight>
          </View>
      )
  }
 }
 const styles = StyleSheet.create({
+    container:{
 
+    },
     music:{
-        position:'absolute',
-        borderRadius:22,
-        right:10,
-        bottom:60,
         width:44,
-        height:44
+        height:44,
+        borderRadius:22
     }
 })

@@ -9,12 +9,15 @@ import {
     StyleSheet,
     TouchableHighlight,
     Button,
-    ListView
+    ListView,
+    Navigator
 }from 'react-native'
 import {Player}  from  'react-native-audio-streaming'
 import TimeLinePanel from './TimeLinePanel'
 import AudioPlayer from './AudioPlayer'
 import TimeLineList from './TimeLineList'
+import ToolNavigationBar from '../../../containers/ToolNavigationBar'
+import  Comment from '../../../components/other/Comment'
 export  default  class TimeLine extends  Component {
 
     // 构造
@@ -111,10 +114,31 @@ export  default  class TimeLine extends  Component {
         })
        console.log(this.state.pageInfo)
     }
+    _onback(){
+        const {navigator} = this.props
+        if(navigator){
+            navigator.pop()
+        }
+    }
+    gotoComment(id){
+        this.props.navigator.push({
+            component:Comment,
+            sceneConfig: Navigator.SceneConfigs.PushFromRight,
+            params: {
+                ...this.props},
+        })
+    }
     render() {
-        const {timeLine} = this.props
+        const {timeLine,navigator,likes_num} = this.props
         return (
             <View style={styles.container}>
+                <ToolNavigationBar
+                    alpha = {0.8}
+                    navigator = {navigator}
+                    likes_num = {likes_num}
+                    gotoComment = {this.gotoComment.bind(this)}
+                />
+
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&
                 <ListView
                     dataSource={this.state.dataSource.cloneWithRows(timeLine.data)}

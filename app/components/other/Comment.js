@@ -61,7 +61,7 @@ export  default  class Comment extends  Component{
                gotoComment = {this._gotoComment}
                />
                <ListView
-               dataSource={this.state.dataSource.cloneWithRows(comment.comment.data)}
+               dataSource={this.state.dataSource.cloneWithRows(comment.data)}
                renderRow={this._renderRow}
                enableEmptySections={true}
                />

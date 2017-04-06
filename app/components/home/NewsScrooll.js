@@ -26,7 +26,7 @@ export default  class  NewsScrooll extends Component{
            component:ArticleDetail,
            params:{
                ...this.props,
-               object:homeNews,
+               likes_num:homeNews.likes_num,
                id:homeNews.id
            }
 
