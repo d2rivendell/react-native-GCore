@@ -41,7 +41,7 @@ export  default  class ToolNavigationBar extends  Component{
     }
     render(){
         const {likes_num} = this.props
-        console.log(likes_num)
+        // console.log(likes_num)
         return(
                  <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
                   <Button

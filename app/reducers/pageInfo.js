@@ -6,8 +6,6 @@ const initialState = {
 
 const actionHandler = {
     [Commom.PAGEINFO.INFO]: (state, action) => {
-        console.log(Commom.PAGEINFO.INFO +'收到' + action.data)
-        console.log(action.data)
         return Object.assign({}, state, {
             data: action.data
         })

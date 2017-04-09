@@ -57,7 +57,6 @@ export default class  HomeBannar extends Component{
     }
     _onPress(bannar){
         const {navigator,comment} = this.props
-        console.log(bannar)
         if(navigator){
             navigator.push({
                 name:'BannarDetail',

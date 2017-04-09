@@ -8,7 +8,8 @@ import {
     StyleSheet,
     TouchableHighlight,
     Animated,
-    Easing     //引入Easing渐变函数
+    Easing ,    //引入Easing渐变函数
+    DeviceEventEmitter
 }from 'react-native'
 import  Blank from './Blank'
 export  default  class MusicTool extends  Component {
@@ -35,34 +36,31 @@ export  default  class MusicTool extends  Component {
       }
 
     _onPress(){
-        const {timeLine,navigator} = this.props
-        console.log(navigator)
-        if(navigator){
-            navigator.push({
-                component:Blank,
-                params:{
-                    ...this.props
-                }
-            })
+        const {play} = this.props
+        if(play.show){
+            DeviceEventEmitter.emit('timeLine',play)
         }
+
     }
  render(){
-
+  const {play} = this.props
+     // console.log(play)
      return(
          <View style={styles.container}>
-             <TouchableHighlight
+             { play.show && <TouchableHighlight
                  onPress={this._onPress.bind(this)}
              >
-             <Animated.Image
-                 style={[styles.music,{//使用interpolate插值函数,实现了从数值单位的映射转换,上面角度从0到1，这里把它变成0-360的变化
+                 <Animated.Image
+                     style={[styles.music,{//使用interpolate插值函数,实现了从数值单位的映射转换,上面角度从0到1，这里把它变成0-360的变化
         transform:[{rotate:this.state.rotateValue.interpolate(
             {inputRange: [0,1],
             outputRange: ['0deg', '360deg']}
             ) }]}]}
-                 source= {require('../../resource/GGG.jpg')}
-             >
-             </Animated.Image>
+                     source={{uri:play.pageInfo.thumb_url}}
+                 >
+                 </Animated.Image>
              </TouchableHighlight>
+             }
          </View>
      )
  }
@@ -70,10 +68,13 @@ export  default  class MusicTool extends  Component {
 const styles = StyleSheet.create({
     container:{
 
-    },
+         },
     music:{
+        position:'absolute',
+        borderRadius:22,
+        right:10,
+        bottom:60,
         width:44,
-        height:44,
-        borderRadius:22
+        height:44
     }
 })

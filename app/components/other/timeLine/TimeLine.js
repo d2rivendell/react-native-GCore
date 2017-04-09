@@ -36,17 +36,40 @@ export  default  class TimeLine extends  Component {
         };
       }
     componentDidMount() {
-        const {id,actions} = this.props
+        const {id,actions,timeLine} = this.props
         actions.getTimeLine(id)
+            .then(()=>{
+            console.log('then finish')
+            })
+        actions.hidden(id)
     }
+    componentWillUnmount(){
+          const {actions,id} = this.props
+         console.log(actions)
+          switch (this.state.playerState){
+              case '播放出错':
+                  actions.hidden(id)
+                  break;
+              case '播放中':
+                  actions.show(id,this.state.pageInfo)
+                  break;
+              case '暂停':
+                  actions.hidden(id)
+                  break;
+              case '加载中':
+                  actions.hidden(id)
+                  break;
 
+          }
+
+    }
     componentWillReceiveProps(prop) {
         const {pageInfo} = prop
         //初始化时需要 重新在列表选择后不再需要
         if (pageInfo && this.state.pageInfo === null) {
-            console.log(pageInfo)
+            let truePageInfo = (pageInfo.data ? pageInfo.data:pageInfo)
         this.setState({
-            pageInfo:pageInfo.data
+            pageInfo:truePageInfo
         })
       }
     }
@@ -88,7 +111,7 @@ export  default  class TimeLine extends  Component {
                 ss = '加载中'
                 break;
         }
-     var value = parseInt(progress)
+     var value = (progress/this.state.pageInfo.duration) * 100
     this.setState({
         progress:progress,
         playerState:ss,
@@ -130,6 +153,7 @@ export  default  class TimeLine extends  Component {
     }
     render() {
         const {timeLine,navigator,likes_num} = this.props
+        console.log('render')
         return (
             <View style={styles.container}>
                 <ToolNavigationBar

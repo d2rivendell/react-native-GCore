@@ -9,10 +9,12 @@ import {
     StyleSheet,
     TouchableHighlight,
     Button,
-    ListView
+    ListView,
+    Navigator
 }from 'react-native'
 import  CommentNavigationBar from '../../containers/CommentNavigationBar'
 import CommentCell from './CommentCell'
+import Signin from '../../components/other/Signin'
 export  default  class Comment extends  Component{
    // 构造
      constructor(props) {
@@ -43,7 +45,13 @@ export  default  class Comment extends  Component{
         }
     }
     _gotoComment(){
-        console.log('_gotoComment')
+        const {navigator} = this.props
+        if(navigator){
+            navigator.push({
+                component:Signin,
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom
+            })
+        }
     }
     _renderRow(data){
         return (
@@ -58,7 +66,7 @@ export  default  class Comment extends  Component{
                <CommentNavigationBar
                onBack = {this.onBack.bind(this)}
                segmentDidSelectIndex = {this._segmentDidSelectIndex.bind(this)}
-               gotoComment = {this._gotoComment}
+               gotoComment = {this._gotoComment.bind(this)}
                />
                <ListView
                dataSource={this.state.dataSource.cloneWithRows(comment.data)}

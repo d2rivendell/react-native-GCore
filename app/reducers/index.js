@@ -11,6 +11,7 @@ import article from '../reducers/article'
 import comment from '../reducers/comment'
 import pageInfo from '../reducers/pageInfo'
 import timeLine from '../reducers/timeLine'
+import play from '../reducers/play'
 const  reducers = combineReducers({
     application,
     homeInfo,
@@ -19,7 +20,8 @@ const  reducers = combineReducers({
     article,
     comment,
     pageInfo,
-    timeLine
+    timeLine,
+    play
 });
 
 export  default  reducers

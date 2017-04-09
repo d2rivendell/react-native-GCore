@@ -18,51 +18,61 @@ export  default  class AudioPlayer extends  Component {
     constructor(props) {
       super(props);
       // 初始状态
-      this.state = {
-          play:true
-      };
+      this.play = true
+      this.over = false
     }
+
     mixins: [TimerMixin]
     componentDidMount() {
         const {getProgress} = this.props
-        // if(getProgress){
-        //  this.timer = setInterval(
-        //      ()=>{
-        //          if(Platform.OS === 'ios' ){
-        //              ReactNativeAudioStreaming.getStatus((nu,dict)=>{
-        //                  // console.log(dict)
-        //                  getProgress(dict.status,dict.progress,dict.duration)
-        //              })
-        //          }
-        //         },
-        //      1000)
-        // }
+        if(getProgress){
+         this.timer = setInterval(
+             ()=>{
+                 if(Platform.OS === 'ios'){
+                     ReactNativeAudioStreaming.getStatus((nu,dict)=>{
+                         getProgress(dict.status,dict.progress,dict.duration)
+                     })
+                 }
+                },
+             1000)
+        }
+
     }
 
     componentWillReceiveProps(props) {
-        const {timeLineInfo} = props
+        const {timeLineInfo,play} = props
         if(timeLineInfo){
-            console.log(timeLineInfo)
+            if(this.over){
+                return
+            }
+            this.over = true
+            if(play.id !== timeLineInfo.id){
+                ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+            }
+
         }
 
     }
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
+
     _play(){
         const {timeLineInfo} = this.props
-
-        this.setState({
-            play:!this.state.play
-        })
-        if(this.state.play){
-            console.log('play')
-            ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
-        }else{
-            console.log('stop')
-            ReactNativeAudioStreaming.pause();
-        }
+        console.log(timeLineInfo)
+     if(timeLineInfo){
+         console.log('will play')
+         this.play = !this.play
+         if(this.play){
+             console.log('play')
+             ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+         }else{
+             console.log('stop')
+             ReactNativeAudioStreaming.pause();
+         }
+     }
     }
+
     _list(){
         const {onList} = this.props
         if(onList){
@@ -70,11 +80,14 @@ export  default  class AudioPlayer extends  Component {
         }
     }
     _onValueChange(v){
-        ReactNativeAudioStreaming.seekToTime(v)
+        const {timeLineInfo} = this.props
+        let value = timeLineInfo.duration * (v/100)
+        ReactNativeAudioStreaming.seekToTime(value)
     }
   render(){
       const {timeLineInfo} = this.props
-      console.log(timeLineInfo)
+      // console.log(timeLineInfo)
+      var icon = this.play ? require('../../../resource/icon-pause~iphone.png'):require('../../../resource/icon-play~iphone.png')
       return(
           <View style={styles.container}>
               { timeLineInfo && <View style={styles.contentView}>
@@ -89,7 +102,7 @@ export  default  class AudioPlayer extends  Component {
                           onPress={this._play.bind(this)}
                       >
                           <Image resizeMode='contain' style={styles.icon}
-                                 source={require('../../../resource/icon-pause~iphone.png')}/>
+                                 source={icon}/>
                       </TouchableHighlight>
                       <TouchableHighlight
                           underlayColor='transparent'
@@ -109,7 +122,7 @@ export  default  class AudioPlayer extends  Component {
               disabled={false}
               value={this.props.value}
               thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
-              onValueChange = {this._onValueChange}
+              onValueChange = {this._onValueChange.bind(this)}
               />
 
           </View>

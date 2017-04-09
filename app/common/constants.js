@@ -45,6 +45,10 @@ const TIMELINE = {
     CATEGORY:'TIMELINE.CATEGORY',
     DOWNLOAD: 'TIMELINE.DOWNLOAD'
 }
+const PLAY = {
+    SHOW: 'PLAY.SHOW',
+    HIDDEN:'PLAY.HIDDEN'
+}
 export default {
     APP,
     AUTH_KEY,
@@ -54,5 +58,6 @@ export default {
     NEWS,
     COMMENT,
     PAGEINFO,
-    TIMELINE
+    TIMELINE,
+    PLAY
 }

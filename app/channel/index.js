@@ -21,7 +21,6 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-              console.log(data)
                 return data['results']
             })
             .catch((error) => {

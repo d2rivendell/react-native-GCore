@@ -7,7 +7,9 @@ import {
     View,
     Text,
     PropTypes,
-    StyleSheet
+    StyleSheet,
+    DeviceEventEmitter,
+    Navigator
 } from 'react-native'
 
 import  ScrollableTabView from 'react-native-scrollable-tab-view'
@@ -15,6 +17,8 @@ import  Article from '../components/airticle/Article'
 import  Home from '../components/home/Home'
 import  News from '../components/news/News'
 
+
+import TimeLine from '../components/other/timeLine/TimeLine'
 import TabBar from '../containers/TabBar'
 const tabTitles = ['首页', '新闻', '文章']
 const tabIcons = [
@@ -45,6 +49,27 @@ export default  class TabBarView extends  Component {
                 break
         }
      };
+
+    componentDidMount() {
+        DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
+    }
+    _gotoTimeLine(play){
+        const {homeAction} =  this.props
+        this.props.navigator.push({
+            name:'TimeLine',
+            component:TimeLine,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            params: {
+                actions:homeAction,
+                id:play.pageInfo.id,
+                likes_num:play.pageInfo.likes_num},
+                play:play
+            })
+        }
+
+    componentWillUnmount() {
+        this.subscription.remove();
+    }
     render(){
         const {home,news,article,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,navigator} = this.props
         return(

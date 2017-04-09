@@ -10,8 +10,6 @@ const initialState = {
 
 const actionHandler = {
     [Commom.COMMENT.HOT]: (state, action) => {
-        console.log('handle' + Commom.COMMENT.HOT)
-        console.log(action.data)
         return Object.assign({}, state, {
             type:Commom.COMMENT.HOT,
             data: action.data
@@ -19,8 +17,6 @@ const actionHandler = {
     },
 
     [Commom.COMMENT.TIME]: (state, action) => {
-        console.log('handle  ' + Commom.COMMENT.TIME)
-        console.log(action.data)
         return Object.assign({}, state, {
             type:Commom.COMMENT.TIME,
             data: action.data

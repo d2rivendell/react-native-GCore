@@ -48,20 +48,19 @@ export default class AirticleDetail extends Component {
             this.props.navigator.push({
                 component:Comment,
                 params: {
-                    id:id,actions},
+                    id:id,...this.props},
             })
     }
 
     gotoTimeLine(id){
-        const {actions,pageInfo,timeLine} = this.props
+        const {pageInfo} = this.props
         this.props.navigator.push({
-                name:'TimeLine',
-                component:TimeLine,
-                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-                params: {
-                    ...this.props,id:id,likes_num:pageInfo.data.likes_num},
-            })
-
+            name:'TimeLine',
+            component:TimeLine,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            params: {
+                ...this.props,id:id,likes_num:pageInfo.data.likes_num},
+        })
     }
 
     componentDidMount() {

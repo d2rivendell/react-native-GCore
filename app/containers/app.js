@@ -23,10 +23,10 @@ import articleAction from '../actions/article'
 import commentAction from '../actions/comment'
 import timeLineAction from '../actions/timeLine'
 import pageInfoAction from '../actions/pageInfo'
-
+import playAction from '../actions/play'
     global.Common = Constants;
 
-import TLView from '../components/other/TLView'
+import MusicTool from '../components/other/MusicTool'
 export  class App extends Component{
 
     // 构造
@@ -52,6 +52,7 @@ export  class App extends Component{
         return <Component navigator={navigator} {...route.params} {...this.props}/>
     }
 
+
     render(){
       const component = TabBarView
       return(
@@ -61,7 +62,7 @@ export  class App extends Component{
               configureScene={this._configureScene}
               renderScene={this._renderScene}
              />
-         <TLView timeLine={this.props.timeLine}/>
+         <MusicTool pageInfo = {this.props.pageInfo} play = {this.props.play} />
          </View>
       )
     }
@@ -89,13 +90,14 @@ export default connect (
                 bannar: state.bannar,
                 homeInfo: state.homeInfo,
                 pageInfo: state.pageInfo,
-                comment:state.comment
+                comment:state.comment,
+                play:state.play
             },
             article: {
                 article: state.article,
             },
             pageInfo: state.pageInfo,
-
+            play:state.play,
             news:{
                 news:state.news
             },
@@ -106,9 +108,9 @@ export default connect (
     dispatch => {
         return {
             ApplicationActions:bindActionCreators(Object.assign({},applicationActions), dispatch),
-            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction), dispatch),
-            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction), dispatch),
-            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction), dispatch),
+            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
        }
     }
 )(App)
