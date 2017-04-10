@@ -29,8 +29,16 @@ export default  class  Original extends Component{
 
       }
     }
+    _getTime(timestamp){
+        var hour = Math.floor(timestamp/60)
+        var sec = timestamp - (hour * 60)
+        hour = (Array(2).join(0)+parseInt(hour)).slice(-2)
+        sec = (Array(2).join(0)+parseInt(sec)).slice(-2)
+        return  hour + "'" + sec +"''"
+    }
     render() {
-        const {original,actions} = this.props
+        const {original,actions,type} = this.props
+        let icon = type === 'radio' ? require('../../resource/player-audio~iphone.png'):require('../../resource/player-video~iphone.png')
         return(
             <TouchableHighlight
                 onPress={this._onPress.bind(this,original)}
@@ -38,13 +46,18 @@ export default  class  Original extends Component{
             >
             <View style={styles.container}>
                 <Image style={styles.Poster} source ={{uri: original.thumb_url}}>
-                    <View style={styles.userInfo}>
-                        <Image style={styles.icon} source ={{uri: original.user.thumb_url}}/>
+                    { type === 'default' ? <View style={styles.typeInfo}>
+                        <Image style={styles.icon} source={{uri: original.user.thumb_url}}/>
                         <View style={styles.userContainer}>
                             <Text style={styles.userName}>{original.user.nickname}</Text>
                             <Text style={styles.createDate}>{original.created_at}</Text>
                         </View>
-                    </View>
+                     </View>:
+                      <View style={styles.typeInfo}>
+                          <Image resizeMode='contain' style={styles.typeIcon} source={icon} />
+                          <Text style={styles.duration} >{this._getTime(original.duration)}</Text>
+                      </View>
+                    }
                     <View style={styles.category}>
                        <Text style={styles.categoryName}>{original.category.name}</Text>
                         <View style={styles.likeAndComment}>
@@ -54,6 +67,7 @@ export default  class  Original extends Component{
                           <Text style={styles.LCNum}>{original.comments_num}</Text>
                         </View>
                     </View>
+                    { type !== 'default' && <Image resizeMode='contain' style={styles.play} source={require('../../resource/player-w~iphone.png')} />}
                 </Image>
                 <Text style={styles.title}>{original.title}</Text>
                 <Text style={styles.desc}>{original.desc}</Text>
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
          height:160,
          justifyContent:'space-between',
      },
-    userInfo:{
+    typeInfo:{
         height:50,
         margin:0,
         padding:10,
@@ -136,6 +150,21 @@ const styles = StyleSheet.create({
         fontSize:13,
         color:'#888888',
         marginTop:10
+    },
+    typeIcon:{
+        width:30
+    },
+    duration:{
+        fontSize:10,
+        color:'#fff',
+
+    },
+    play:{
+        width:60,
+        position:'absolute',
+        top:50,
+        left:(Constants.WINDOW.width - 16 * 2 - 60)/2
+
     }
 })
 

@@ -9,18 +9,24 @@ import {
     PropTypes,
     StyleSheet,
     DeviceEventEmitter,
-    Navigator
+    Navigator,
+    ScrollView
 } from 'react-native'
 
-import  ScrollableTabView from 'react-native-scrollable-tab-view'
+import  ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
 import  Article from '../components/airticle/Article'
 import  Home from '../components/home/Home'
 import  News from '../components/news/News'
-
+import  Radio from '../components/radio/Radio'
+import  Video from '../components/video/Video'
 
 import TimeLine from '../components/other/timeLine/TimeLine'
-import TabBar from '../containers/TabBar'
-const tabTitles = ['首页', '新闻', '文章']
+// import TabBar from '../containers/TabBar'
+import ControllerTabBar from '../containers/ControllerTabBar'
+
+import HomeBannar from '../components/home/HomeBannar'
+
+const tabTitles = ['首页', '新闻', '文章','电台','视频']
 const tabIcons = [
     require('../resource/ic_tab_search.png'),
     require('../resource/ic_tab_homepage.png'),
@@ -52,6 +58,8 @@ export default  class TabBarView extends  Component {
 
     componentDidMount() {
         DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
+        const {homeAction} = this.props
+        homeAction.getBanner()
     }
     _gotoTimeLine(play){
         const {homeAction} =  this.props
@@ -71,26 +79,30 @@ export default  class TabBarView extends  Component {
         this.subscription.remove();
     }
     render(){
-        const {home,news,article,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,navigator} = this.props
+        const {home,news,article,radio,video,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
         return(
+            <ScrollView
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            >
+            <HomeBannar  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
+
             <ScrollableTabView
-                renderTabBar={() =>
-                    <TabBar
-                        tabNames={tabTitles}
-                        tabIconNames={tabIcons}
-                        selectedTabIconNames={tabSelectedIcon}
-                    />
-                }
-            tabBarPosition= 'bottom'
+                renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
+            tabBarPosition= 'top'
             locked
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
+                style={{height:Common.WINDOW.height}}
+
             >
                  <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
                  <News {...news} {...pageInfo} {...comment} {...timeLine} actions = {newsAction}  navigator = {navigator}/>
                  <Article  {...article} {...pageInfo}  {...comment} {...timeLine} actions = {articleAction} navigator = {navigator}/>
+                 <Radio    radio={radio} {...pageInfo}  {...comment} {...timeLine} actions = {radioAction} navigator = {navigator}/>
+                <Video    video={video} {...pageInfo}  {...comment} {...timeLine} actions = {videoAction} navigator = {navigator}/>
             </ScrollableTabView>
-
+            </ScrollView>
         )
 
     }

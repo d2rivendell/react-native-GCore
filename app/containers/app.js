@@ -24,6 +24,8 @@ import commentAction from '../actions/comment'
 import timeLineAction from '../actions/timeLine'
 import pageInfoAction from '../actions/pageInfo'
 import playAction from '../actions/play'
+import radioAction from '../actions/radio'
+import videoAction from '../actions/video'
     global.Common = Constants;
 
 import MusicTool from '../components/other/MusicTool'
@@ -102,7 +104,9 @@ export default connect (
                 news:state.news
             },
             comment:state.comment,
-            timeLine:state.timeLine
+            timeLine:state.timeLine,
+            radio:state.radio,
+            video:state.video
         }
     },
     dispatch => {
@@ -111,6 +115,8 @@ export default connect (
             homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            radioAction:bindActionCreators(Object.assign({},applicationActions,radioAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
        }
     }
 )(App)

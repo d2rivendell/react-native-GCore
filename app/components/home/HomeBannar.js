@@ -71,27 +71,29 @@ export default class  HomeBannar extends Component{
 
         return(
            <View  style={styles.container}>
-               <ScrollView
+               {   bannar && <ScrollView
                    horizontal={true}
                    showsHorizontalScrollIndicator={false}
                    style={styles.scrollview}
                    pagingEnabled={true}
-                   onMomentumScrollEnd = {this._onTouchEnd.bind(this)}
-               >
-                   { bannar.data.map( (data,index) => {
-                   return (
-                       <TouchableHighlight
-                           onPress={this._onPress.bind(this,data)}
-                           underlayColor = 'transparent'
-                           key= {index}
-                       >
-                       <Image  style={styles.image} source={{uri:data.image}}/>
-                       </TouchableHighlight>
-                   )
-                   })
+                   onMomentumScrollEnd={this._onTouchEnd.bind(this)}
+                   bounces={false}
+                >
+                   {  bannar.data.map((data, index) => {
+                         return (
+                             <TouchableHighlight
+                               onPress={this._onPress.bind(this,data)}
+                               underlayColor='transparent'
+                               key={index}
+                             >
+                                 <Image style={styles.image} source={{uri:data.image}}/>
+                             </TouchableHighlight>
+                            )
+                           })
                    }
-               </ScrollView>
-               <Page  page = {{pageCount:bannar.data.length,currentPage:this.state.currentPage}} />
+               </ScrollView>}
+               { bannar &&<Page page = {{pageCount: bannar.data.length, currentPage: this.state.currentPage}} />}
+
            </View>
 
 

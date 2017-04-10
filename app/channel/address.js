@@ -37,5 +37,11 @@ const address = {
     getTimeLineCategories:(page = 1,auth = Common.AUTH_KEY.auth_key) => {
         return `http://www.g-cores.com/api/categories/9/originals?page=${page}&auth_exclusive=${auth}`
     },
+    getRadio:(page = 1,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/categories/9/originals?page=${page}&auth_exclusive=${auth}`
+    },
+    getVideo:(page = 1,auth = Common.AUTH_KEY.auth_key) => {
+        return `http://www.g-cores.com/api/categories/8/originals?page=${page}&auth_exclusive=${auth}`
+    },
 }
 export default address

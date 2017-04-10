@@ -41,13 +41,12 @@ export default class Home extends Component {
     componentDidMount() {
         const  {actions} = this.props
         actions.getHomePage()
-        actions.getBanner()
     }
     _renderRow(row){
         const type = row.type
         if(type === 'original'){
             return(
-                <Original original = {row.data} {...this.props}/>
+                <Original original = {row.data} {...this.props} type = {'default'}/>
             )
         }else if(type === 'news'){
             return(<NewsScrooll homeNews = {row.data} {...this.props}/>)
@@ -55,10 +54,6 @@ export default class Home extends Component {
 
 
     }
-    renderHeaderScrooll(){
-        return(<HomeBannar   {...this.props}/>)
-    }
-
     render(){
          const {homeInfo} = this.props
         return (
@@ -67,8 +62,6 @@ export default class Home extends Component {
                 dataSource={this.state.dataSource.cloneWithRows(homeInfo.data)}
                 enableEmptySections={true}
                 renderRow={this._renderRow.bind(this)}
-                renderHeader={this.renderHeaderScrooll.bind(this)}
-
                 style={styles.listView}
                 />
             </View>

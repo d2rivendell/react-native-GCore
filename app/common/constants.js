@@ -49,6 +49,12 @@ const PLAY = {
     SHOW: 'PLAY.SHOW',
     HIDDEN:'PLAY.HIDDEN'
 }
+const RADIO = {
+    INFO: 'RADIO.INFO'
+}
+const VIDEO = {
+    INFO: 'VIDEO.INFO'
+}
 export default {
     APP,
     AUTH_KEY,
@@ -59,5 +65,7 @@ export default {
     COMMENT,
     PAGEINFO,
     TIMELINE,
-    PLAY
+    PLAY,
+    RADIO,
+    VIDEO
 }

@@ -12,6 +12,8 @@ import comment from '../reducers/comment'
 import pageInfo from '../reducers/pageInfo'
 import timeLine from '../reducers/timeLine'
 import play from '../reducers/play'
+import radio from '../reducers/radio'
+import video from '../reducers/video'
 const  reducers = combineReducers({
     application,
     homeInfo,
@@ -21,7 +23,9 @@ const  reducers = combineReducers({
     comment,
     pageInfo,
     timeLine,
-    play
+    play,
+    radio,
+    video
 });
 
 export  default  reducers
