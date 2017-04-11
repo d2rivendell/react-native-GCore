@@ -88,13 +88,13 @@ export default  class TabBarView extends  Component {
             <HomeBannar  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
 
             <ScrollableTabView
-                renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
+            renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
             tabBarPosition= 'top'
             locked
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
-                style={{height:Common.WINDOW.height}}
-
+            style={{height:Common.WINDOW.height}}
+            scrollEnabled={false}
             >
                  <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
                  <News {...news} {...pageInfo} {...comment} {...timeLine} actions = {newsAction}  navigator = {navigator}/>

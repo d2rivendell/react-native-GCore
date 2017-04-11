@@ -11,6 +11,7 @@
     "react-native": "0.42.3",
     "react-native-audio-streaming": "^2.3.2",
     "react-native-icons": "^0.7.1",
+    "react-native-looped-carousel": "^0.1.5",
     "react-native-scrollable-tab-view": "^0.7.3",
     "react-redux": "^5.0.3",
     "react-timer-mixin": "^0.13.3",

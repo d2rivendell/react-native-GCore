@@ -10,8 +10,7 @@ import {
     TouchableOpacity,
     Image,
     LayoutAnimation,
-    Platform,
-    UIManager
+    ScrollView
 } from 'react-native';
 import Constants from '../common/constants';
 
@@ -37,72 +36,90 @@ export default class ControllerTabBar extends Component {
 
     constructor(props) {
         super(props);
-        this.setAnimationValue = this.setAnimationValue.bind(this);
+
         this.state = {
             indicatorPosition: 0
         }
     }
+    _onscroll(event){
+        const offset = { ...event.nativeEvent.contentOffset };
+        const page = Math.floor(offset.x/(Constants.WINDOW.width/3))
 
-    componentDidMount() {
-        this.props.scrollValue.addListener(this.setAnimationValue);
     }
+_goToPage(index){
+        // 0 1 2 3 4
+    var seq = 0
+    const  len = this.props.tabNames.length
+     if(index - 1 > 0 && index < len-1){
+         seq = index - 1
+         const  offset = (Constants.WINDOW.width/3) * seq
+         this.scrollView.scrollTo({ y: 0, x: offset, true })
+     }else {
+         return
+     }
 
-    setAnimationValue({value}) {
-        LayoutAnimation.linear();
-
-        this.setState({indicatorPosition: value * Constants.WINDOW.width / 5})
-    }
-
+}
     render() {
+
         return (
-            <View style={styles.tabs}>
+            <View style={styles.container}>
+            <ScrollView
+                ref = {(c) => {this.scrollView = c;}}
+                style={styles.scroll}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={true}
+                onScroll={this._onscroll.bind(this)}
+                scrollEventThrottle={200}
+                bounces={false}
+
+            >
                 {this.props.tabs.map((tab, i) => {
                     let color = this.props.activeTab === i ? 'red' : 'black';
                     return (
                         <TouchableOpacity
                             key={i}
                             activeOpacity={0.8}
-                            style={styles.tab}
-                            onPress={() => this.props.goToPage(i)}
+                            style={styles.title}
+                            onPress={ () => {this.props.goToPage(i); this._goToPage(i) }}
                         >
-                            <Text style={{color: color, fontSize: 14}}>
+                            <Text style={{color: color, fontSize: 13}}>
                                 {this.props.tabNames[i]}
                             </Text>
                         </TouchableOpacity>
                     )
                 })}
-                <View style={[styles.indicatorContainer, {left: this.state.indicatorPosition}]}>
-                    <View style={styles.indicator}/>
-                </View>
+
+            </ScrollView>
+            <View style={styles.indicator}/>
             </View>
         )
     }
 }
 
+
 const styles = StyleSheet.create({
-    tabs: {
-        flexDirection: 'row',
-        height: 44,
-        borderBottomColor: 'rgb(242, 242, 242)',
-        borderBottomWidth: 1
+    container: {
+        height:36,
+        width:Constants.WINDOW.width
     },
-    tab: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    scroll: {
+        flex:1
     },
-    indicatorContainer: {
-        position: 'absolute',
-        bottom: 0,
-        height: 3,
-        width: Constants.WINDOW.width / 5,
-        alignItems: 'center',
-        backgroundColor: 'red',
+    title: {
+        flex:1,
+        width: Constants.WINDOW.width/3,
+        justifyContent:'center',
+        alignItems:'center'
     },
+
     indicator: {
         backgroundColor: 'red',
         height: 3,
-        width: 3,
+        width: 50,
         borderRadius: 1.5,
+        position:'absolute',
+        bottom:0,
+        left: ( Constants.WINDOW.width - 50)/2
     }
 });

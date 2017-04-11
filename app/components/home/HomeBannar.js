@@ -13,6 +13,7 @@ import {
 import  Commom from '../../common/constants'
 import  ArticleDetail from '../airticle/ArticleDetail'
 
+import Carousel from '../../Lib/Carousel'
 export class Page extends Component{
     renderPageCircle(){
         const  {page} = this.props
@@ -71,14 +72,16 @@ export default class  HomeBannar extends Component{
 
         return(
            <View  style={styles.container}>
-               {   bannar && <ScrollView
-                   horizontal={true}
-                   showsHorizontalScrollIndicator={false}
-                   style={styles.scrollview}
-                   pagingEnabled={true}
-                   onMomentumScrollEnd={this._onTouchEnd.bind(this)}
-                   bounces={false}
-                >
+               {   bannar && <Carousel
+                   delay={4000}
+                   style={styles.scroolView}
+                   pageInfo = {false}
+                   currentPage={0}
+                   onAnimateNextPage={(p) => console.log(p)}
+                   autoplay = {true}
+                   bullets = {true}
+                   bulletStyle = {{backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor:'rgba(255, 255, 255, 0.4)'}}
+                  >
                    {  bannar.data.map((data, index) => {
                          return (
                              <TouchableHighlight
@@ -91,8 +94,8 @@ export default class  HomeBannar extends Component{
                             )
                            })
                    }
-               </ScrollView>}
-               { bannar &&<Page page = {{pageCount: bannar.data.length, currentPage: this.state.currentPage}} />}
+
+               </Carousel>}
 
            </View>
 
