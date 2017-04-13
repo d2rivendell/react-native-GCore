@@ -26,16 +26,18 @@ export default class Home extends Component {
        this.state = {
            dataSource:new ListView.DataSource({
                rowHasChanged:(row1,row2) => row1 !== row2
-           })
+           }),
+           canScroll:true
 
        };
      }
 
     componentWillReceiveProps(props) {
-        const {application,bannar} = props
+        const {application,bannar,canScroll} = props
         if (application.tab === 'home') {
             // console.log('切换到了home')
         }
+
     }
 
     componentDidMount() {
@@ -54,6 +56,11 @@ export default class Home extends Component {
 
 
     }
+
+    _onScroll(event){
+        var offset = event.nativeEvent.contentOffset.y
+        // console.log(offset)
+    }
     render(){
          const {homeInfo} = this.props
         return (
@@ -63,6 +70,8 @@ export default class Home extends Component {
                 enableEmptySections={true}
                 renderRow={this._renderRow.bind(this)}
                 style={styles.listView}
+                scrollEnabled={this.state.canScroll}
+                onScroll={this._onScroll.bind(this)}
                 />
             </View>
         );

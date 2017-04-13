@@ -10,7 +10,9 @@ import {
     StyleSheet,
     DeviceEventEmitter,
     Navigator,
-    ScrollView
+    ScrollView,
+    Image,
+    TouchableHighlight
 } from 'react-native'
 
 import  ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
@@ -25,7 +27,7 @@ import TimeLine from '../components/other/timeLine/TimeLine'
 import ControllerTabBar from '../containers/ControllerTabBar'
 
 import HomeBannar from '../components/home/HomeBannar'
-
+import Constants from '../common/constants';
 const tabTitles = ['首页', '新闻', '文章','电台','视频']
 const tabIcons = [
     require('../resource/ic_tab_search.png'),
@@ -39,7 +41,14 @@ const tabSelectedIcon = [
 ];
 export default  class TabBarView extends  Component {
 
-
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            alpha:1
+        }
+      }
      _onChangeTab = ({i}) => {
         console.log(i) ;
         const {ApplicationActions} = this.props
@@ -78,13 +87,38 @@ export default  class TabBarView extends  Component {
     componentWillUnmount() {
         this.subscription.remove();
     }
+    _onScroll(event){
+        var offset = event.nativeEvent.contentOffset.y
+        if(offset < 220-60){
+            const alpha = offset/(220-60)
+            this.setState({
+                alpha:alpha
+            })
+            console.log(alpha)
+        }else{
+            this.setState({
+                alpha:1
+            })
+        }
+
+    }
+    _category(){
+
+    }
     render(){
         const {home,news,article,radio,video,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
+        const  color = 'rgba(255,255,255,' + this.state.alpha + ')'
+
         return(
             <ScrollView
+                ref = {(c)=>{this.scrollView = c;}}
             bounces={false}
             showsVerticalScrollIndicator={false}
+            onScroll={this._onScroll.bind(this)}
+            scrollEventThrottle={16}
+            stickyHeaderIndices={[2]}
             >
+
             <HomeBannar  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
 
             <ScrollableTabView
@@ -93,20 +127,51 @@ export default  class TabBarView extends  Component {
             locked
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
-            style={{height:Common.WINDOW.height}}
+            style={{height:Common.WINDOW.height-60}}
             scrollEnabled={false}
             >
-                 <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
+                 <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator} />
                  <News {...news} {...pageInfo} {...comment} {...timeLine} actions = {newsAction}  navigator = {navigator}/>
                  <Article  {...article} {...pageInfo}  {...comment} {...timeLine} actions = {articleAction} navigator = {navigator}/>
                  <Radio    radio={radio} {...pageInfo}  {...comment} {...timeLine} actions = {radioAction} navigator = {navigator}/>
                 <Video    video={video} {...pageInfo}  {...comment} {...timeLine} actions = {videoAction} navigator = {navigator}/>
-            </ScrollableTabView>
+            </ScrollableTabView >
+             <MainNavigator color={color} onCategory = {this._category.bind(this)}/>
             </ScrollView>
         )
 
     }
 
+}
+
+class MainNavigator extends Component{
+
+    _onCategory(){
+        const  {onCategory} = this.props
+        if(onCategory){
+            onCategory()
+        }
+    }
+
+    render(){
+
+        return(
+            <View style={[styles.mainNavigator,{backgroundColor:this.props.color}]}>
+              <Image resizeMode='contain' style={styles.icon}
+                     source={require('../resource/icon-menu~iphone.png')}/>
+                <Image  resizeMode='contain' style={styles.logo}
+                        source={require('../resource/logo-big.png')}/>
+                <TouchableHighlight
+                    onPress={this._onCategory.bind(this)}
+                    underlayColor='transparent'
+                >
+                    <Image  resizeMode='contain' style={styles.icon}
+                            source={require('../resource/icon-category~iphone.png')}/>
+                </TouchableHighlight>
+
+            </View>
+        )
+    }
 }
 TabBarView.propTypes = {
     home:React.PropTypes.object,
@@ -115,4 +180,21 @@ TabBarView.propTypes = {
     ApplicationActions:React.PropTypes.object
 }
 
+const styles = StyleSheet.create({
+    mainNavigator:{
+        width:Constants.WINDOW.width,
+        height:60,
+        position:'absolute',
+        paddingTop:20,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between'
+    },
+    icon:{
+        width:60
+    },
+    logo:{
+        height:15
+    }
+})
 

@@ -77,7 +77,7 @@ export default class  HomeBannar extends Component{
                    style={styles.scroolView}
                    pageInfo = {false}
                    currentPage={0}
-                   onAnimateNextPage={(p) => console.log(p)}
+                   onAnimateNextPage={(p) => {}}
                    autoplay = {true}
                    bullets = {true}
                    bulletStyle = {{backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor:'rgba(255, 255, 255, 0.4)'}}
