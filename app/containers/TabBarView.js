@@ -46,7 +46,7 @@ export default  class TabBarView extends  Component {
         super(props);
         // 初始状态
         this.state = {
-            alpha:1
+            alpha:0
         }
       }
      _onChangeTab = ({i}) => {
