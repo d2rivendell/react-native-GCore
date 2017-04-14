@@ -9,7 +9,8 @@ import {
     Image,
     TouchableHighlight,
     TextInput,
-    ScrollView
+    ScrollView,
+    Alert
 }from 'react-native'
 import  Constants from '../../common/constants'
 import NetTool from '../../channel/NetTool'
@@ -18,7 +19,21 @@ const  registerUrl = 'http://www.g-cores.com/auth/identity/register'
 const  siginUrl = 'http://www.g-cores.com/auth/identity/callback'
 export  default  class Signin extends  Component {
 
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            signinEmail:'',
+            signinPwd:'',
+
+            registerEmail:'',
+            registerPwd:'',
+            registerConfirmPwd:'',
+        };
+      }
     _cancel(){
+
 
     }
     _pop(){
@@ -28,19 +43,46 @@ export  default  class Signin extends  Component {
         this.scrollView.scrollTo({ y: 0, x: (Constants.WINDOW.width - 100)* i, true })
     }
     _register(){
+        if(this.state.registerEmail.length === 0 || this.state.registerPwd.length === 0 || this.state.registerConfirmPwd.length === 0){
+            Alert.alert('提示','账号密码不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            return;
+        }
+        if(this.state.registerPwd !== this.state.registerConfirmPwd){
+            Alert.alert('提示','两次输入的密码不一致',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            return;
+        }
+        let fromData =   new FormData
+        fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu');
+        fromData.append('bypass_humanizer',true);
+        fromData.append('email',this.state.registerEmail);
+        fromData.append('password',this.state.registerPwd);
+        fromData.append('password_confirmation',this.state.registerConfirmPwd);
+        fromData.append('sourceType','app');
+        NetTool.POST(registerUrl,fromData,(response,error)=>{
+            if(response){
+                this.props.navigator.pop()
+            }else{
+                console.log(error)
+            }
 
+        })
     }
     _sigin(){
-        NetTool.POST(siginUrl,{
-            auth_exclusive:'dpkynzs2q0wm9o5gi1r83fcabthl4eu',
-            auth_key:'2451713064@qq.com',
-            password:'fander911',
-            sourceType:'app'
-        },(response,error)=>{
-            if(error){
-                console.log(error)
+        if(this.state.signinEmail.length === 0 || this.state.signinPwd.length===0){
+            Alert.alert('提示','账号密码不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            return;
+        }
+       let fromData =   new FormData
+        fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu');
+        fromData.append('auth_key',this.state.signinEmail);
+        fromData.append('password',this.state.signinPwd);
+        fromData.append('sourceType','app');
+        NetTool.POST(siginUrl,fromData,(response,error)=>{
+            if(response){
+                this.props.navigator.pop()
             }else{
-                console.log(response)
+                console.log(error)
+                Alert.alert('提示',error,[{text:'确定',onPress:()=>{console.log('sure')} }])
             }
 
         })
@@ -66,13 +108,16 @@ export  default  class Signin extends  Component {
                      maxLength = {20}
                      placeholder = 'ID/Email'
                      multiline={true}
+                     onChangeText={(text) => this.setState({signinEmail:text})}
                  />
                  <TextInput
                      style={styles.text}
                      editable = {true}
                      maxLength = {20}
                      placeholder = 'Password'
+                     secureTextEntry={true}
                      multiline={true}
+                     onChangeText={(text) => this.setState({signinPwd:text})}
                  />
 
                  <TouchableHighlight style={styles.singinBtn} underlayColor = 'transparent'
@@ -101,20 +146,27 @@ export  default  class Signin extends  Component {
                          maxLength = {20}
                          placeholder = 'Email'
                          multiline={true}
+                         onChangeText={(text) => this.setState({registerEmail:text})}
                      />
                      <TextInput
                          style={styles.text}
                          editable = {true}
                          maxLength = {20}
                          placeholder = 'Password'
+                         secureTextEntry={true}
                          multiline={true}
+                         onChangeText={(text) => this.setState({registerPwd:text})}
+
                      />
                      <TextInput
                          style={styles.text}
                          editable = {true}
                          maxLength = {20}
                          placeholder = 'Password Confirm'
+                         secureTextEntry={true}
                          multiline={true}
+                         onChangeText={(text) => this.setState({registerConfirmPwd:text})}
+
                      />
                      <TouchableHighlight style={styles.singinBtn} underlayColor = 'transparent'
                                          onPress={this._register.bind(this)}

@@ -12,7 +12,7 @@ import {
 import {bindActionCreators} from 'redux'
 import TabBarView from '../containers/TabBarView'
 import {connect} from 'react-redux'
-import Constants from '../common/constants';
+
 
 
 
@@ -26,7 +26,7 @@ import pageInfoAction from '../actions/pageInfo'
 import playAction from '../actions/play'
 import radioAction from '../actions/radio'
 import videoAction from '../actions/video'
-    global.Common = Constants;
+
 
 import MusicTool from '../components/other/MusicTool'
 export  class App extends Component{
@@ -47,6 +47,7 @@ export  class App extends Component{
            // gestures: {}    // 禁用左滑返回手势
         }
     }
+
 
     _renderScene = (route, navigator) => {
 

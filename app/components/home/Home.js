@@ -8,7 +8,8 @@ import {
     TouchableHighlight,
     ListView,
     ScrollView,
-    Image
+    Image,
+
 } from 'react-native';
 
 import HomeBannar from './HomeBannar'
@@ -27,7 +28,8 @@ export default class Home extends Component {
            dataSource:new ListView.DataSource({
                rowHasChanged:(row1,row2) => row1 !== row2
            }),
-           canScroll:true
+           canScroll:true,
+
 
        };
      }

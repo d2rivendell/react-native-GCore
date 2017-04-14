@@ -69,6 +69,7 @@ export default  class TabBarView extends  Component {
         DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
         const {homeAction} = this.props
         homeAction.getBanner()
+
     }
     _gotoTimeLine(play){
         const {homeAction} =  this.props
@@ -94,7 +95,6 @@ export default  class TabBarView extends  Component {
             this.setState({
                 alpha:alpha
             })
-            console.log(alpha)
         }else{
             this.setState({
                 alpha:1
