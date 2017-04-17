@@ -55,6 +55,13 @@ const RADIO = {
 const VIDEO = {
     INFO: 'VIDEO.INFO'
 }
+
+const CATEGORIES = {
+    INFO: 'CATEGORIES.INFO',
+    DETAIL: 'CATEGORIES.DETAIL',
+    SUB:'CATEGORIES.SUB',
+    CLEAR:'CATEGORIES.CLEAR'
+}
 export default {
     APP,
     AUTH_KEY,
@@ -67,5 +74,6 @@ export default {
     TIMELINE,
     PLAY,
     RADIO,
-    VIDEO
+    VIDEO,
+    CATEGORIES
 }

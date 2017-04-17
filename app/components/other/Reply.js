@@ -11,6 +11,18 @@ import {
     TextInput,
     Navigator
 }from 'react-native'
+
+//http://www.g-cores.com/api/subscriptions/subscript
+//http://www.g-cores.com/api/subscriptions/unsubscript
+
+
+// auth_exclusive	dpkynzs2q0wm9o5gi1r83fcabthl4eu
+// auth_token	0VzyZguVbX5nhpeQe6XC8g
+// subscriptable_id	2
+// subscriptable_type	category
+
+//check   http://www.g-cores.com/api/categories/2?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=0VzyZguVbX5nhpeQe6XC8g
+//detail http://www.g-cores.com/api/categories/2/originals?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=0VzyZguVbX5nhpeQe6XC8g
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
 import Signin from '../../components/other/Signin'
 export  default  class Reply extends  Component {
@@ -33,13 +45,13 @@ export  default  class Reply extends  Component {
     render(){
         return(
             <View style={styles.container}>
-
-                <TextInput multiline={true} style={styles.text}/>
                 <CommonNavigationBar
                     title= {'回复'}
                     rightTitle = {'评论'}
                     onBack = {this._onBack.bind(this)}
                     rightClick= {this._gotoComment.bind(this)}/>
+                <TextInput multiline={true} style={styles.text}/>
+
             </View>
         )
     }

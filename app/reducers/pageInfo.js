@@ -7,7 +7,8 @@ const initialState = {
 const actionHandler = {
     [Commom.PAGEINFO.INFO]: (state, action) => {
         return Object.assign({}, state, {
-            data: action.data
+            data: action.data,
+            type:action.type
         })
     }
 }

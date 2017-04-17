@@ -54,6 +54,7 @@ export default class AirticleDetail extends Component {
 
     gotoTimeLine(id){
         const {pageInfo} = this.props
+        console.log(pageInfo)
         this.props.navigator.push({
             name:'TimeLine',
             component:TimeLine,
@@ -68,9 +69,14 @@ export default class AirticleDetail extends Component {
          actions.getPageInfo(id)
     }
 
+    componentWillReceiveProps(props) {
+        const {pageInfo} = props
+        console.log(pageInfo)
+    }
     render() {
         const {likes_num,navigator,id,pageInfo} = this.props
         const uri = address.articleDetail(id)
+        console.log(pageInfo)
         return (
             <View style={styles.container}>
 

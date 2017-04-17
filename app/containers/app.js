@@ -26,7 +26,7 @@ import pageInfoAction from '../actions/pageInfo'
 import playAction from '../actions/play'
 import radioAction from '../actions/radio'
 import videoAction from '../actions/video'
-
+import categoriesAction from '../actions/categories'
 
 import MusicTool from '../components/other/MusicTool'
 
@@ -114,7 +114,7 @@ App.propTypes = {
     homeAction:React.PropTypes.object,
     article:React.PropTypes.object,
     news:React.PropTypes.object,
-
+    commonData:React.PropTypes.object,
     articleAction:React.PropTypes.object,
     application:React.PropTypes.object,
     ApplicationActions:React.PropTypes.object,
@@ -126,26 +126,23 @@ export default connect (
     state => {
         return {
             application: state.application,
+
+            pageInfo: state.pageInfo,
+            comment:state.comment,
+            play:state.play,
+            timeLine:state.timeLine,
+
             home: {
                 application: state.application,
                 bannar: state.bannar,
                 homeInfo: state.homeInfo,
-                pageInfo: state.pageInfo,
-                comment:state.comment,
-                play:state.play
             },
-            article: {
-                article: state.article,
-            },
-            pageInfo: state.pageInfo,
-            play:state.play,
-            news:{
-                news:state.news
-            },
-            comment:state.comment,
-            timeLine:state.timeLine,
+
+            article: state.article,
+            news:state.news,
             radio:state.radio,
-            video:state.video
+            video:state.video,
+            categories:state.categories
         }
     },
     dispatch => {
@@ -155,7 +152,8 @@ export default connect (
             articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             radioAction:bindActionCreators(Object.assign({},applicationActions,radioAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
+            videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            categoriesAction:bindActionCreators(Object.assign({},applicationActions,categoriesAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
        }
     }
 )(App)

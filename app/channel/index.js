@@ -78,8 +78,8 @@ export default class Channel {
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-                // console.log('~~~~~~~ getPageInfo ')
-                // console.log(data)
+                console.log('~~~~~~~ getPageInfo ')
+                console.log(data)
                 return data['results']
             })
             .catch((error) => {
@@ -142,5 +142,47 @@ export default class Channel {
 
     }
 
+    getCategories(){
+        const gen_url = address.getCategories()
+        console.log('getCategories is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                // console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 
+    }
+    getCategorieDetail(id,page){
+        const gen_url = address.getCategorieDetail(id,page)
+        // console.log('getCategorieDetail is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                // console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+
+    getCategorieSubscriptInfo(id){
+        const gen_url = address.getCategorieSubscriptInfo(id)
+        console.log('getCategorieSubscriptInfo is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
 }

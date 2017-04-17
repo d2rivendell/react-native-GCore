@@ -21,7 +21,7 @@ import  Home from '../components/home/Home'
 import  News from '../components/news/News'
 import  Radio from '../components/radio/Radio'
 import  Video from '../components/video/Video'
-
+import  Category from '../components/category/Category'
 import TimeLine from '../components/other/timeLine/TimeLine'
 // import TabBar from '../containers/TabBar'
 import ControllerTabBar from '../containers/ControllerTabBar'
@@ -103,7 +103,16 @@ export default  class TabBarView extends  Component {
 
     }
     _category(){
-
+        const {pageInfo,comment,play,timeLine,categories,categoriesAction} = this.props
+        const commonData = {pageInfo,comment,play,timeLine}
+      this.props.navigator.push({
+         component:Category,
+         params:{
+        ...commonData,
+             categories:categories,
+             actions:categoriesAction
+         }
+     })
     }
     _menuShow(){
         const {menuShow} = this.props
@@ -112,9 +121,9 @@ export default  class TabBarView extends  Component {
         }
     }
     render(){
-        const {home,news,article,radio,video,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
+        const {pageInfo,comment,play,timeLine,home,news,article,radio,video,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
+        const commonData = {pageInfo,comment,play,timeLine}
         const  color = 'rgba(255,255,255,' + this.state.alpha + ')'
-
         return(
             <ScrollView
                 ref = {(c)=>{this.scrollView = c;}}
@@ -125,7 +134,7 @@ export default  class TabBarView extends  Component {
             stickyHeaderIndices={[2]}
             >
 
-            <HomeBannar  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator}/>
+            <HomeBannar  {...home} {...commonData} actions={homeAction} navigator = {navigator}/>
 
             <ScrollableTabView
             renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
@@ -136,11 +145,11 @@ export default  class TabBarView extends  Component {
             style={{height:Common.WINDOW.height-60}}
             scrollEnabled={false}
             >
-                 <Home  {...home} {...pageInfo} {...timeLine} actions={homeAction} navigator = {navigator} />
-                 <News {...news} {...pageInfo} {...comment} {...timeLine} actions = {newsAction}  navigator = {navigator}/>
-                 <Article  {...article} {...pageInfo}  {...comment} {...timeLine} actions = {articleAction} navigator = {navigator}/>
-                 <Radio    radio={radio} {...pageInfo}  {...comment} {...timeLine} actions = {radioAction} navigator = {navigator}/>
-                <Video    video={video} {...pageInfo}  {...comment} {...timeLine} actions = {videoAction} navigator = {navigator}/>
+                 <Home  {...home} {...commonData} actions={homeAction}  navigator = {navigator} />
+                 <News news ={news} {...commonData}   actions = {newsAction}  navigator = {navigator}/>
+                 <Article  article ={article} {...commonData}  actions = {articleAction} navigator = {navigator}/>
+                 <Radio    radio={radio} {...commonData}   actions = {radioAction} navigator = {navigator}/>
+                <Video    video={video} {...commonData}   actions = {videoAction} navigator = {navigator}/>
             </ScrollableTabView >
              <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
             </ScrollView>

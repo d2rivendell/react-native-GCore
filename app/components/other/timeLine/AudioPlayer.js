@@ -46,6 +46,7 @@ export  default  class AudioPlayer extends  Component {
                 return
             }
             this.over = true
+            console.log(timeLineInfo)
             if(play.id !== timeLineInfo.id){
                 ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
             }
