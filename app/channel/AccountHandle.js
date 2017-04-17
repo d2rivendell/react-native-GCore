@@ -2,7 +2,8 @@
  * Created by Leon.Hwa on 17/4/14.
  */
 const  AccountHandle = {
-    loadAccount:(callback)=>{
+
+    loadAccount(callback){
         storage.load({
             key: 'account',
 
@@ -14,12 +15,22 @@ const  AccountHandle = {
             // 设置为false的话，则始终强制返回sync方法提供的最新数据(当然会需要更多等待时间)。
             syncInBackground: true,
         }).then(result=>{
-            callback(result,null)
+            if(result){
+                this.user = result
+            }
+            if(callback){
+                callback(result,null)
+            }
         }).catch(err => {
-            callback(null,err)
+            if(callback){
+                callback(null,err)
+            }
         })
     },
-    saveAccount:(account)=>{
+    saveAccount(account){
+       if(account){
+           this.user = account
+       }
         storage.save({
             key:'account',
             rawData:account,

@@ -60,6 +60,7 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(registerUrl,fromData,(response,error)=>{
             if(response){
+                console.log(response)
                 this.props.navigator.pop()
             }else{
                 console.log(error)
@@ -79,6 +80,7 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(siginUrl,fromData,(response,error)=>{
             if(response){
+                account.saveAccount(response);
                 this.props.navigator.pop()
             }else{
                 console.log(error)

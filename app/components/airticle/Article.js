@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
@@ -25,7 +25,7 @@ export default class Airticle extends Component {
     }
 
     renderRow(data,index){
-        return(<Original original = {data} {...this.props}/>)
+        return(<Original original = {data} {...this.props} type = {'default'}/>)
     }
     render() {
         const {article} = this.props

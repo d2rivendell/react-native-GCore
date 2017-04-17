@@ -152,15 +152,16 @@ export  default  class TimeLine extends  Component {
         })
     }
     render() {
-        const {timeLine,navigator,likes_num} = this.props
-        console.log('render')
+        const {timeLine,navigator,likes_num,id} = this.props
         return (
             <View style={styles.container}>
                 <ToolNavigationBar
+                    id={id}
                     alpha = {0.8}
                     navigator = {navigator}
                     likes_num = {likes_num}
                     gotoComment = {this.gotoComment.bind(this)}
+                    pageInfo = {this.state.pageInfo}
                 />
 
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&

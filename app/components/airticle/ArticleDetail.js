@@ -75,7 +75,7 @@ export default class AirticleDetail extends Component {
             <View style={styles.container}>
 
                 <StatusBar
-                    animated={true}
+                    animated={false}
                     hidden={true}
                     translucent={true}
                     barStyle={'default'}
@@ -85,6 +85,8 @@ export default class AirticleDetail extends Component {
                     navigator = {navigator}
                     likes_num = {likes_num}
                     gotoComment = {this.gotoComment.bind(this,id)}
+                    id = {id}
+                    pageInfo = {pageInfo.data}
                 />
                 }
 

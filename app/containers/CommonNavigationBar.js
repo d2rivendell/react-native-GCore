@@ -8,13 +8,11 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    Animated,
-    Button,
     StatusBar
 }from 'react-native'
 import Common from '../common/constants'
-import SegmentedControl from '../components/custom/SegmentedControl'
-export  default  class CommentNavigationBar extends  Component{
+
+export  default  class CommonNavigationBar extends  Component{
 
     _back(){
         const  {onBack} = this.props
@@ -22,14 +20,14 @@ export  default  class CommentNavigationBar extends  Component{
             onBack()
         }
     }
-    _gotoComment(){
-        const  {gotoComment} = this.props
-        if(gotoComment){
-            gotoComment()
+    _rightClick(){
+        const  {rightClick} = this.props
+        if(rightClick){
+            rightClick()
         }
     }
     render(){
-        const  {segmentDidSelectIndex,object} = this.props
+        const  {title,rightTitle} = this.props
         return(
             <View style={styles.container}>
                 <StatusBar
@@ -48,18 +46,14 @@ export  default  class CommentNavigationBar extends  Component{
                     </View>
                 </TouchableHighlight>
 
-                <SegmentedControl
-                    values = { ['按热门','按时间'] }
-                    height = {26}
-                    itemWidth = {60}
-                    segmentDidSelectIndex = {segmentDidSelectIndex}
-                />
-                <Button
-                    onPress={this._gotoComment.bind(this)}
-                    title ='评论'
-                    color = '#c8c8c8'
-                    style={{fontSize:14}}
-                />
+                {title&&<Text style={styles.text}>{title}</Text>}
+                {rightTitle &&<TouchableHighlight
+                    onPress={this._rightClick.bind(this)}
+                    underlayColor={'transparent'}
+                >
+                    <Text style={styles.text}>{rightTitle}</Text>
+                </TouchableHighlight>
+                }
             </View>
         )
     }
@@ -67,7 +61,7 @@ export  default  class CommentNavigationBar extends  Component{
 
 const  styles = StyleSheet.create({
     container:{
-        // position:'absolute',
+        position:'absolute',
         top: 0,
         left: 0,
         right: 0,
@@ -83,7 +77,7 @@ const  styles = StyleSheet.create({
         paddingRight:10
     },
     backIcon:{
-        height:30,
+      height:30,
 
     },
     backContainer:{
@@ -94,4 +88,5 @@ const  styles = StyleSheet.create({
         fontSize:17,
         color:'#666666'
     }
+
 })

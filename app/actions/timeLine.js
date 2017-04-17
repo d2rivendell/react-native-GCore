@@ -6,7 +6,7 @@ const  getTimeLine = (id) => {
         const  channel = new Channel()
         return channel.getTimeLine(id)
             .then(data =>{
-                console.log('bingo timeline')
+                console.log(data)
                 return dispatch({
                     type:Commom.TIMELINE.INFO,
                     data:data

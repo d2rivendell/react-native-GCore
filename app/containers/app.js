@@ -29,6 +29,9 @@ import videoAction from '../actions/video'
 
 
 import MusicTool from '../components/other/MusicTool'
+
+import Drawer from '../Lib/drawer/Drawer'
+import  MenuContainer from '../containers/MenuContainer'
 export  class App extends Component{
 
     // 构造
@@ -48,24 +51,59 @@ export  class App extends Component{
         }
     }
 
-
+    _menuShow(){
+          console.log('open')
+        this.drawer.open()
+    }
     _renderScene = (route, navigator) => {
 
         let Component = route.component
-        return <Component navigator={navigator} {...route.params} {...this.props}/>
+        return <Component navigator={navigator} {...route.params} {...this.props} menuShow = {this._menuShow.bind(this)}/>
     }
 
+    tweenHandler(ratio){
+        return tweens.parallax(ratio)
+    }
 
+    componentDidMount() {
+        account.loadAccount()
+    }
     render(){
+
       const component = TabBarView
+        var controlPanel = <MenuContainer closeDrawer={() => {
+      this.drawer.close();
+    }} />
       return(
          <View style={{flex:1}}>
-             <Navigator
-              initialRoute={{name:'TabBarView',component:component}}
-              configureScene={this._configureScene}
-              renderScene={this._renderScene}
-             />
-         <MusicTool pageInfo = {this.props.pageInfo} play = {this.props.play} />
+           <Drawer
+               ref={c => this.drawer = c}
+               content={controlPanel}
+               type={'displace'}
+
+               openDrawerOffset={100}
+               closedDrawerOffset={0}
+               panOpenMask={1}
+               panCloseMask={.4}//右边 点击收回的 点击范围 40%
+               relativeDrag={false}
+               panThreshold={.25}
+
+               tweenDuration={250}
+               tweenEasing={'linear'}
+               acceptDoubleTap={false}
+               acceptTap={true}
+               acceptPan={false}
+               tapToClose={true}
+               negotiatePan={false}
+               side={'left'}
+           >
+               <Navigator
+                initialRoute={{name:'TabBarView',component:component}}
+                configureScene={this._configureScene}
+                renderScene={this._renderScene}
+              />
+              <MusicTool pageInfo = {this.props.pageInfo} play = {this.props.play} />
+           </Drawer>
          </View>
       )
     }

@@ -7,7 +7,7 @@ const NetTool = {
 
     POST(url, params, callback){
         console.log(url)
-     fetch("http://www.g-cores.com/auth/identity/callback",{
+     fetch(url,{
          method:'POST',
          headers: {
              'Content-Type': 'application/json;charset=UTF-8',
@@ -15,10 +15,10 @@ const NetTool = {
          body:params
      })
          .then((response) => (response.json()))
-         .then((response) => {
-            const result =  response['results']
-            account.saveAccount(result);
-           callback(response,null)
+         .then((jsonResponse) => {
+            console.log(jsonResponse)
+            const res =  jsonResponse.results
+           callback(res,null)
          })
          .catch((error)=>{
            callback(null,error)

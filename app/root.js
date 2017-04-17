@@ -18,6 +18,9 @@ import Constants from './common/constants';
 
 import MyStorage from './channel/MyStorage'
 import AccountHandle from './channel/AccountHandle'
+global.Common = Constants;
+global.storage = MyStorage;
+global.account = AccountHandle;
 const  createStoreWithWM = applyMiddleware(thunk)(createStore)
 const  store = createStoreWithWM(reducers)
 
@@ -25,10 +28,6 @@ const  store = createStoreWithWM(reducers)
 export default class  Root extends Component {
 
    render() {
-       global.Common = Constants;
-       global.storage = MyStorage;
-       global.account = AccountHandle;
-       console.log(AccountHandle)
        return (
            <Provider store={store}>
               <App />

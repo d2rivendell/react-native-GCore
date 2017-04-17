@@ -67,7 +67,7 @@ export default class Home extends Component {
          const {homeInfo} = this.props
         return (
             <View style={styles.container}>
-                <ListView
+                {homeInfo&& <ListView
                 dataSource={this.state.dataSource.cloneWithRows(homeInfo.data)}
                 enableEmptySections={true}
                 renderRow={this._renderRow.bind(this)}
@@ -75,6 +75,7 @@ export default class Home extends Component {
                 scrollEnabled={this.state.canScroll}
                 onScroll={this._onScroll.bind(this)}
                 />
+                }
             </View>
         );
     }

@@ -105,6 +105,12 @@ export default  class TabBarView extends  Component {
     _category(){
 
     }
+    _menuShow(){
+        const {menuShow} = this.props
+        if(menuShow){
+            menuShow()
+        }
+    }
     render(){
         const {home,news,article,radio,video,comment,pageInfo,timeLine,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
         const  color = 'rgba(255,255,255,' + this.state.alpha + ')'
@@ -136,7 +142,7 @@ export default  class TabBarView extends  Component {
                  <Radio    radio={radio} {...pageInfo}  {...comment} {...timeLine} actions = {radioAction} navigator = {navigator}/>
                 <Video    video={video} {...pageInfo}  {...comment} {...timeLine} actions = {videoAction} navigator = {navigator}/>
             </ScrollableTabView >
-             <MainNavigator color={color} onCategory = {this._category.bind(this)}/>
+             <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
             </ScrollView>
         )
 
@@ -152,13 +158,25 @@ class MainNavigator extends Component{
             onCategory()
         }
     }
-
+    _menuShow(){
+        const {menuShow} = this.props
+        if(menuShow){
+            menuShow()
+        }
+    }
     render(){
 
         return(
             <View style={[styles.mainNavigator,{backgroundColor:this.props.color}]}>
+                <TouchableHighlight
+                    onPress={this._menuShow.bind(this)}
+                    underlayColor='transparent'
+                >
               <Image resizeMode='contain' style={styles.icon}
                      source={require('../resource/icon-menu~iphone.png')}/>
+
+                </TouchableHighlight>
+
                 <Image  resizeMode='contain' style={styles.logo}
                         source={require('../resource/logo-big.png')}/>
                 <TouchableHighlight

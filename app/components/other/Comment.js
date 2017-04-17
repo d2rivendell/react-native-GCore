@@ -14,7 +14,8 @@ import {
 }from 'react-native'
 import  CommentNavigationBar from '../../containers/CommentNavigationBar'
 import CommentCell from './CommentCell'
-import Signin from '../../components/other/Signin'
+
+import Reply from '../../components/other/Reply'
 export  default  class Comment extends  Component{
    // 构造
      constructor(props) {
@@ -48,8 +49,8 @@ export  default  class Comment extends  Component{
         const {navigator} = this.props
         if(navigator){
             navigator.push({
-                component:Signin,
-                sceneConfig: Navigator.SceneConfigs.FloatFromBottom
+                component:Reply,
+                sceneConfig: Navigator.SceneConfigs.PushFromRight
             })
         }
     }
@@ -60,7 +61,7 @@ export  default  class Comment extends  Component{
     }
     render(){
         const  {comment} =  this.props
-        console.log(comment)
+        // console.log(comment)
         return(
             <View style={styles.container}>
                <CommentNavigationBar
