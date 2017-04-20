@@ -17,4 +17,22 @@ const toNavigation = (targetComponent) => {
         }))
     }
 }
-export  default {changeTab,toNavigation}
+
+const signin = (account) => {
+    return dispatch => {
+        return Promise.resolve(dispatch({
+            type: Constant.APP.SIGNIN,
+            user: account,
+        }))
+    }
+}
+
+const signout = (targetComponent) => {
+    return dispatch => {
+        return Promise.resolve(dispatch({
+            type: Constant.APP.SIGNOUT,
+            user: null,
+        }))
+    }
+}
+export  default {changeTab,toNavigation,signin,signout}

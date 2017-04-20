@@ -18,21 +18,44 @@ const getBanner = ()=>{
 
 }
 /**获取首页信息*/
-const getHomePage = ()=>{
+const getHomePage = (page=1)=>{
     return(dispatch,store) => {
+        dispatch(fetchingHomePage(page))
         const  channel = new Channel()
-        return channel.getHomePage()
+        return channel.getHomePage(page)
             .then(data =>{
                 return dispatch({
                     type:Common.HOME.INFO,
-                    data:data
+                    data:data,
+                    page:page,
+                    isLoading:false,
+                    isLoadMore:false
                 })
             })
     }
-
 }
+
+const fetchingHomePage = (page)=>{
+        var  isLoading = false
+        var isLoadMore = false
+          if(page === 1){
+              isLoading = true,
+              isLoadMore = false
+          }else{
+              isLoading = false,
+              isLoadMore =true
+          }
+          console.log('状态')
+          return {
+                    type:Common.HOME.INFO,
+                    isLoading:isLoading,
+                    isLoadMore:isLoadMore
+          }
+}
+
 export  default {
     getBanner,
-    getHomePage
+    getHomePage,
+    fetchingHomePage
 }
 

@@ -15,8 +15,8 @@ export default class Channel {
             })
 
     }
-    getHomePage(){
-        const gen_url = address.homePage()
+    getHomePage(page){
+        const gen_url = address.homePage(page)
         console.log('home url is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
@@ -74,12 +74,12 @@ export default class Channel {
     }
     getPageInfo(id){
         const gen_url = address.getPageInfo(id)
-        console.log('getPageInfo is ' + gen_url)
+        // console.log('getPageInfo is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
-                console.log('~~~~~~~ getPageInfo ')
-                console.log(data)
+                // console.log('~~~~~~~ getPageInfo ')
+                // console.log(data)
                 return data['results']
             })
             .catch((error) => {
@@ -117,7 +117,7 @@ export default class Channel {
     }
     getRadio(page){
         const gen_url = address.getRadio(page)
-        // console.log('getRadio is ' + gen_url)
+        console.log('getRadio is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -130,7 +130,7 @@ export default class Channel {
     }
     getVideo(page){
         const gen_url = address.getVideo(page)
-        // console.log('getVideo is ' + gen_url)
+        console.log('getVideo is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -178,6 +178,34 @@ export default class Channel {
             .then((res) => res.json())
             .then((data) =>{
                 console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getSubscript(page){
+        const gen_url = address.getSubscript(page)
+        // console.log('getCategorieSubscriptInfo is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                // console.log(data)
+                return data['results']
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+    getMyMark(page){
+        const gen_url = address.getMyMark(page)
+        // console.log('getMyMark is ' + gen_url)
+        return window.fetch(gen_url)
+            .then((res) => res.json())
+            .then((data) =>{
+                // console.log(data)
                 return data['results']
             })
             .catch((error) => {

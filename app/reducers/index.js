@@ -15,6 +15,8 @@ import play from '../reducers/play'
 import radio from '../reducers/radio'
 import video from '../reducers/video'
 import  categories from  '../reducers/categories'
+import  subscript from  '../reducers/subscript'
+import  myMark from  '../reducers/myMark'
 const  reducers = combineReducers({
     application,
     homeInfo,
@@ -27,7 +29,9 @@ const  reducers = combineReducers({
     play,
     radio,
     video,
-    categories
+    categories,
+    subscript,
+    myMark
 });
 
 export  default  reducers

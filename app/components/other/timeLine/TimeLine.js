@@ -36,11 +36,8 @@ export  default  class TimeLine extends  Component {
         };
       }
     componentDidMount() {
-        const {id,actions,timeLine} = this.props
+        const {id,actions} = this.props
         actions.getTimeLine(id)
-            .then(()=>{
-            console.log('then finish')
-            })
         actions.hidden(id)
     }
     componentWillUnmount(){
@@ -152,7 +149,7 @@ export  default  class TimeLine extends  Component {
         })
     }
     render() {
-        const {timeLine,navigator,likes_num,id} = this.props
+        const {timeLine,navigator,likes_num,id,application} = this.props
         return (
             <View style={styles.container}>
                 <ToolNavigationBar
@@ -162,6 +159,7 @@ export  default  class TimeLine extends  Component {
                     likes_num = {likes_num}
                     gotoComment = {this.gotoComment.bind(this)}
                     pageInfo = {this.state.pageInfo}
+                    application = {application}
                 />
 
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&

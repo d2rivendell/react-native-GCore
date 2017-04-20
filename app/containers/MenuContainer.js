@@ -15,38 +15,32 @@ import {
 const items = ['订阅', '消息', '收藏','下载','投稿']
 
 export default class ControlPanel extends Component {
-    // 构造
-      constructor(props) {
-        super(props);
-        // 初始状态
-        this.state = {
-            account:null
-        };
+
+     _onSelectItem(title){
+      const {selectRow} = this.props
+      if(selectRow){
+          selectRow(title)
       }
-    _onSelectItem(){
-console.log('_onSelectItem')
     }
 
-    componentDidMount() {
-        account.loadAccount((account,err)=>{
-            if(account){
-                this.setState({
-                    account:account
-                })
-            }
-        })
-    }
     render() {
+         const {actions,application} = this.props
+         const avatar = application.user ? {uri:application.user.thumb_url}:require('../resource/default-avatar~iphone.png')
         return (
             <View style={styles.container}>
              <View  style={styles.avatarContainer}>
-                 {this.state.account && <Image style={styles.avatar}
-                         resizeMode='contain'
-                         source={{uri:this.state.account.user.thumb_url}}/>
+                <TouchableHighlight
+                     onPress={this._onSelectItem.bind(this,'我')}
+                     underlayColor = 'transparent'
+                 >
+                     <Image style={styles.avatar}
+                            resizeMode='contain'
+                            source={avatar}/>
+                 </TouchableHighlight>
 
-                 }
                  {
-                     this.state.account &&<Text style={styles.nickname}>{this.state.account.user.nickname}</Text>
+                     application.user ?<Text style={styles.nickname}>{application.user.nickname}</Text>:
+                         <Text style={styles.nickname}>未登录</Text>
                  }
              </View>
             <ScrollView

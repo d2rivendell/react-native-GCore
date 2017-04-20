@@ -46,11 +46,15 @@ export  default  class Comment extends  Component{
         }
     }
     _gotoComment(){
-        const {navigator} = this.props
+        const {navigator,application,actions} = this.props
         if(navigator){
             navigator.push({
                 component:Reply,
-                sceneConfig: Navigator.SceneConfigs.PushFromRight
+                sceneConfig: Navigator.SceneConfigs.PushFromRight,
+                params:{
+                    application:application,
+                    actions:actions
+                }
             })
         }
     }

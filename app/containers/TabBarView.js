@@ -23,11 +23,18 @@ import  Radio from '../components/radio/Radio'
 import  Video from '../components/video/Video'
 import  Category from '../components/category/Category'
 import TimeLine from '../components/other/timeLine/TimeLine'
+
+import Subscript from '../components/other/me/Subscript'
+import MyMark from '../components/other/me/MyMark'
+import Me from '../components/other/me/Me'
+import Signin from '../components/other/Signin'
 // import TabBar from '../containers/TabBar'
 import ControllerTabBar from '../containers/ControllerTabBar'
 
 import HomeBannar from '../components/home/HomeBannar'
 import Constants from '../common/constants';
+
+import ArticleDetail from '../components/airticle/ArticleDetail'
 const tabTitles = ['首页', '新闻', '文章','电台','视频']
 const tabIcons = [
     require('../resource/ic_tab_search.png'),
@@ -120,9 +127,67 @@ export default  class TabBarView extends  Component {
             menuShow()
         }
     }
+    push(title){
+        if(account.user === null){
+            this.props.navigator.push({
+                component:Signin
+            })
+            return;
+        }
+        const {pageInfo,comment,play,timeLine,application,subscript,myMark,subscriptAction,myMarkAction,ApplicationActions,homeAction} = this.props
+        const commonData = {pageInfo,comment,play,timeLine,application}
+        switch (title){
+            case '订阅':
+                this.props.navigator.push({
+                    component:Subscript,
+                    params:{
+                        ...commonData,
+                        subscript:subscript,
+                        actions:subscriptAction
+                    }
+                })
+                break;
+            case '消息':
+                break;
+            case '收藏':
+                this.props.navigator.push({
+                    component:MyMark,
+                    params:{
+                        ...commonData,
+                        myMark:myMark,
+                        actions:myMarkAction
+                    }
+                })
+                break;
+            case '下载':
+                break;
+            case '投稿':
+                this.props.navigator.push({
+                    name:'BannarDetail',
+                    component:ArticleDetail,
+                    params : {
+                        ...this.props,
+                        id:18293,
+                        ...commonData,
+                        actions:homeAction
+                    }
+                })
+                break;
+            case '我':
+                this.props.navigator.push({
+                    component:Me,
+                    params:{
+                        ...commonData,
+                        actions:ApplicationActions
+                    }
+                })
+                break;
+
+        }
+    }
     render(){
-        const {pageInfo,comment,play,timeLine,home,news,article,radio,video,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
-        const commonData = {pageInfo,comment,play,timeLine}
+        const {pageInfo,comment,play,timeLine,application,home,news,article,radio,video,homeAction,newsAction,articleAction,radioAction,videoAction,navigator} = this.props
+        const commonData = {pageInfo,comment,play,timeLine,application}
         const  color = 'rgba(255,255,255,' + this.state.alpha + ')'
         return(
             <ScrollView
@@ -151,8 +216,9 @@ export default  class TabBarView extends  Component {
                  <Radio    radio={radio} {...commonData}   actions = {radioAction} navigator = {navigator}/>
                 <Video    video={video} {...commonData}   actions = {videoAction} navigator = {navigator}/>
             </ScrollableTabView >
-             <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
+                <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
             </ScrollView>
+
         )
 
     }

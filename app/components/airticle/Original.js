@@ -38,7 +38,7 @@ export default  class  Original extends Component{
     }
     render() {
         const {original,actions,type} = this.props
-        let icon = type === 'radio' ? require('../../resource/player-audio~iphone.png'):require('../../resource/player-video~iphone.png')
+        let icon = type === 'Volume' ? require('../../resource/player-audio~iphone.png'):require('../../resource/player-video~iphone.png')
         return(
             <TouchableHighlight
                 onPress={this._onPress.bind(this,original)}

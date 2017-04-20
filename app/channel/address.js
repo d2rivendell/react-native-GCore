@@ -8,7 +8,7 @@ const address = {
         const auth_token = account.user ? `&auth_token=` + account.user.auth_token:``
         return `http://www.g-cores.com/api/originals/home_slideshow?auth_exclusive=${auth}`+ auth_token
     },
-    homePage:(page = 1,auth = Common.AUTH_KEY.auth_key) => {
+    homePage:(page,auth = Common.AUTH_KEY.auth_key) => {
         // console.log(account.user)
         const auth_token = account.user ? `&auth_token=` + account.user.auth_token:``
         return `http://www.g-cores.com/api/originals/home?page=${page}&auth_exclusive=${auth}`+ auth_token
@@ -80,6 +80,14 @@ const address = {
     getCategorieSubscriptInfo:(id,auth = Common.AUTH_KEY.auth_key) => {
         const auth_token = account.user ? `&auth_token=` + account.user.auth_token:``
         return `http://www.g-cores.com/api/categories/${id}?auth_exclusive=${auth}`+ auth_token
+    },
+    getSubscript:(page,auth = Common.AUTH_KEY.auth_key)=>{
+        const auth_token = account.user ? `&auth_token=` + account.user.auth_token:``
+        return `http://www.g-cores.com/api/subscriptions/my_category_originals?page=${page}&auth_exclusive=${auth}`+ auth_token
+    },
+    getMyMark:(page,auth = Common.AUTH_KEY.auth_key)=>{
+        const auth_token = account.user ? `&auth_token=` + account.user.auth_token:``
+        return `http://www.g-cores.com/api/originals/my_marked?page=${page}&auth_exclusive=${auth}`+ auth_token
     },
 }
 export default address

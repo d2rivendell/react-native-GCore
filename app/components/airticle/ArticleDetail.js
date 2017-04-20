@@ -71,12 +71,10 @@ export default class AirticleDetail extends Component {
 
     componentWillReceiveProps(props) {
         const {pageInfo} = props
-        console.log(pageInfo)
     }
     render() {
-        const {likes_num,navigator,id,pageInfo} = this.props
+        const {likes_num,navigator,id,pageInfo,application} = this.props
         const uri = address.articleDetail(id)
-        console.log(pageInfo)
         return (
             <View style={styles.container}>
 
@@ -93,6 +91,7 @@ export default class AirticleDetail extends Component {
                     gotoComment = {this.gotoComment.bind(this,id)}
                     id = {id}
                     pageInfo = {pageInfo.data}
+                    application = {application}
                 />
                 }
 

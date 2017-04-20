@@ -10,6 +10,7 @@ import {
 import Common from '../../common/constants'
 import CategoryDetail from './CategoryDetail'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
+import CategoryCell from './CategoryCell'
 export default class Category extends Component {
     // 构造
     constructor(props) {
@@ -26,33 +27,20 @@ export default class Category extends Component {
         actions.getCategories()
     }
     _selectRow(data){
-   this.props.navigator.push({
-    component:CategoryDetail,
-    params:{
-        ...this.props,
-        id:data.id,
-        specific_type:data.specific_type
-    }
-})
+        this.props.navigator.push({
+                    component:CategoryDetail,
+                    params:{
+                      ...this.props,
+                      id:data.id,
+                      specific_type:data.specific_type
+                   }
+         })
     }
     _renderRow(data,index){
         return(
-            <TouchableHighlight
-                onPress={this._selectRow.bind(this,data)}
-                underlayColor={'transparent'}
-            >
-            <View style={styles.cell}>
-            <Image style={styles.cellBg} source={{uri:data.background_url}}>
-              <View style={styles.nameContainer}>
-                  <Text style={styles.name}>{data.name}</Text>
-              </View>
-                <View style={styles.numbersContainer}>
-                    <Text style={styles.numText}>文章数 {data.originals_num}</Text>
-                    <Text style={styles.numText}>订阅数 {data.subscriptors_num}</Text>
-                </View>
-            </Image>
-           </View>
-            </TouchableHighlight>
+            <CategoryCell
+                categorie = {data}
+                selectRow = {this._selectRow.bind(this)}/>
         )
     }
     _onBack(){

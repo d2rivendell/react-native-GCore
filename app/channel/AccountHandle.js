@@ -36,6 +36,11 @@ const  AccountHandle = {
             rawData:account,
             expires:null
         })
+    },
+    signout(){
+        storage.remove({
+            key: 'account'
+        });
     }
 }
 

@@ -32,7 +32,7 @@ export  default  class CommonNavigationBar extends  Component{
         return(
             <View style={styles.container}>
                 <StatusBar
-                    animated={false}
+                    animated={true}
                     hidden={false}
                     translucent={true}
                     barStyle={'default'}

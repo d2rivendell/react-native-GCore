@@ -27,7 +27,7 @@ export default class Radio extends Component {
     }
 
     renderRow(data,index){
-        return(<Original original = {data} {...this.props} type = {'radio'}/>)
+        return(<Original original = {data} {...this.props} type = {'Volume'}/>)
     }
     render() {
         const {radio} = this.props

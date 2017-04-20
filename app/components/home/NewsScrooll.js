@@ -15,66 +15,72 @@ import Constants from '../../common/constants'
 import Commom from '../../common/constants'
 
 import ArticleDetail  from '../airticle/ArticleDetail'
+import CategoryCell from '../category/CategoryCell'
+
+import CategoryDetail from '../category/CategoryDetail'
 
 export default  class  NewsScrooll extends Component{
-    _onPress(homeNews){
-      const {navigator} = this.props
-        console.log(homeNews)
-      if(navigator){
-       navigator.push({
+    _onPress(data){
+        const {type} = this.props
+         if(type==='news'){
+            this.props.navigator.push({
            name:'NewsDetail',
            component:ArticleDetail,
            params:{
                ...this.props,
-               likes_num:homeNews.likes_num,
-               id:homeNews.id
+               likes_num:data.likes_num,
+               id:data.id
            }
 
-       })
+         })
+        }else if(type==='categories'){
+             this.props.navigator.push({
+                 component:CategoryDetail,
+                 params:{
+                     ...this.props,
+                     id:data.id,
+                     specific_type:data.specific_type
+                 }
+             })
+         }
 
-      }
     }
     render(){
-        const {homeNews} = this.props
-
+        const {homeNews,type} = this.props
+        var title = ''
+        var  Component = null
+        if(type==='news'){
+            title = '新闻联播'
+            Component = HomeNews
+        }else  if(type === 'categories'){
+            title = '精彩栏目推荐'
+            Component = CategoryCell
+        }
         return(
 
           <View style={styles.container}>
-             <Text style={styles.headerTitle} >新闻联播</Text>
+             <Text style={styles.headerTitle} >{title}</Text>
              <ScrollView style={styles.scrollContainer}
-                        showsHorizontalScrollIndicator={false}
                         horizontal={true}
              >
                 {homeNews.map((data,index) => {
-                    return(
-                        <TouchableHighlight
-                            onPress={this._onPress.bind(this,data)}
-                            underlayColor = 'transparent'
-                            key= {index}
-                        >
-                        <View style={styles.bgView}>
-                            <Image  style={styles.bgImage} source={{uri:data.thumb_url}}>
-
-                                <View style={styles.markView}>
-                                    <Text style={styles.markTitle}>{data.category.name}</Text>
-                                </View>
-                                <View style={styles.contentView}>
-                                   <Text style={styles.title}>{data.title}</Text>
-                                   <View style={styles.parameterView}>
-                                        <Text style={styles.createdAt}>{data.created_at}</Text>
-                                       <View style={styles.likeAndComment}>
-                                           <Image style={styles.LCIcon} source={require('../../resource/icon-like-w~iphone.png')}/>
-                                           <Text style={styles.LCNum}>{data.likes_num}</Text>
-                                           <Image style={styles.LCIcon} source={require('../../resource/icon-comment-w~iphone.png')}/>
-                                           <Text style={styles.LCNum}>{data.comments_num}</Text>
-                                       </View>
-                                   </View>
-
-                                </View>
-                            </Image>
-                        </View>
-                        </TouchableHighlight>
-                    )
+                    if(type==='news'){
+                        return(
+                            <Component key ={index} data = {data} onPress={this._onPress.bind(this,data)}/>
+                        )
+                    }else  if(type === 'categories'){
+                        return(
+                            <Component key ={index} categorie = {data}
+                                       selectRow = {this._onPress.bind(this,data)}
+                                       overStyle = {{
+                                           width:Commom.WINDOW.width * 0.7,
+                                           height:130,
+                                           marginLeft:16,
+                                           marginTop:10}}
+                            />
+                        )
+                    }
+                  return (<View/>)
                 })
                 }
             </ScrollView>
@@ -83,6 +89,37 @@ export default  class  NewsScrooll extends Component{
 
         )
     }
+}
+
+const HomeNews = ({data,onPress})=>{
+        return(
+    <TouchableHighlight
+       onPress={onPress}
+       underlayColor = 'transparent'
+    >
+    <View style={styles.bgView}>
+        <Image  style={styles.bgImage} source={{uri:data.thumb_url}}>
+
+            <View style={styles.markView}>
+                <Text style={styles.markTitle}>{data.category.name}</Text>
+            </View>
+            <View style={styles.contentView}>
+                <Text style={styles.title}>{data.title}</Text>
+                <View style={styles.parameterView}>
+                    <Text style={styles.createdAt}>{data.created_at}</Text>
+                    <View style={styles.likeAndComment}>
+                        <Image style={styles.LCIcon} source={require('../../resource/icon-like-w~iphone.png')}/>
+                        <Text style={styles.LCNum}>{data.likes_num}</Text>
+                        <Image style={styles.LCIcon} source={require('../../resource/icon-comment-w~iphone.png')}/>
+                        <Text style={styles.LCNum}>{data.comments_num}</Text>
+                    </View>
+                </View>
+
+            </View>
+        </Image>
+    </View>
+    </TouchableHighlight>
+)
 }
 
 NewsScrooll.propTypes = {

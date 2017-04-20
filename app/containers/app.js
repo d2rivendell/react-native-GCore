@@ -27,6 +27,9 @@ import playAction from '../actions/play'
 import radioAction from '../actions/radio'
 import videoAction from '../actions/video'
 import categoriesAction from '../actions/categories'
+import subscriptAction from '../actions/subscript'
+import myMarkAction from '../actions/myMark'
+
 
 import MusicTool from '../components/other/MusicTool'
 
@@ -52,13 +55,17 @@ export  class App extends Component{
     }
 
     _menuShow(){
-          console.log('open')
         this.drawer.open()
     }
     _renderScene = (route, navigator) => {
 
         let Component = route.component
-        return <Component navigator={navigator} {...route.params} {...this.props} menuShow = {this._menuShow.bind(this)}/>
+        return <Component
+            ref = {c=>this.tabBarView = c}
+            navigator={navigator}
+            {...route.params}
+            {...this.props}
+            menuShow = {this._menuShow.bind(this)}/>
     }
 
     tweenHandler(ratio){
@@ -66,14 +73,27 @@ export  class App extends Component{
     }
 
     componentDidMount() {
-        account.loadAccount()
+        const {ApplicationActions} = this.props
+
+        account.loadAccount((user,err)=>{
+            if(user){
+               ApplicationActions.signin(user)
+            }
+        })
+    }
+    _selectRow(title){
+        this.drawer.close();
+        this.tabBarView.push(title)
     }
     render(){
 
       const component = TabBarView
-        var controlPanel = <MenuContainer closeDrawer={() => {
-      this.drawer.close();
-    }} />
+        var controlPanel = <MenuContainer
+            closeDrawer={() => {this.drawer.close();}}
+            selectRow = {this._selectRow.bind(this)}
+            application = {this.props.application}
+            actions = {this.props.ApplicationActions}
+        />
       return(
          <View style={{flex:1}}>
            <Drawer
@@ -133,7 +153,6 @@ export default connect (
             timeLine:state.timeLine,
 
             home: {
-                application: state.application,
                 bannar: state.bannar,
                 homeInfo: state.homeInfo,
             },
@@ -142,18 +161,22 @@ export default connect (
             news:state.news,
             radio:state.radio,
             video:state.video,
-            categories:state.categories
+            categories:state.categories,
+            subscript:state.subscript,
+            myMark:state.myMark
         }
     },
     dispatch => {
         return {
             ApplicationActions:bindActionCreators(Object.assign({},applicationActions), dispatch),
-            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction,categoriesAction), dispatch),
             articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             radioAction:bindActionCreators(Object.assign({},applicationActions,radioAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
             videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            categoriesAction:bindActionCreators(Object.assign({},applicationActions,categoriesAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
-       }
+            categoriesAction:bindActionCreators(Object.assign({},applicationActions,categoriesAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            subscriptAction:bindActionCreators(Object.assign({},applicationActions,subscriptAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
+            myMarkAction:bindActionCreators(Object.assign({},applicationActions,myMarkAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
+        }
     }
 )(App)

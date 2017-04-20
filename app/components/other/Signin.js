@@ -60,7 +60,6 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(registerUrl,fromData,(response,error)=>{
             if(response){
-                console.log(response)
                 this.props.navigator.pop()
             }else{
                 console.log(error)
@@ -69,10 +68,12 @@ export  default  class Signin extends  Component {
         })
     }
     _sigin(){
+        const {actions} = this.props
         if(this.state.signinEmail.length === 0 || this.state.signinPwd.length===0){
             Alert.alert('提示','账号密码不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
             return;
         }
+
        let fromData =   new FormData
         fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu');
         fromData.append('auth_key',this.state.signinEmail);
@@ -80,8 +81,13 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(siginUrl,fromData,(response,error)=>{
             if(response){
-                account.saveAccount(response);
-                this.props.navigator.pop()
+                if(response.status === 1){
+                     var user = {...response.results.user,auth_token:response.results.auth_token}
+                    account.saveAccount(user);
+                    actions.signin(user)
+                    this.props.navigator.pop()
+                }
+
             }else{
                 console.log(error)
                 Alert.alert('提示',error,[{text:'确定',onPress:()=>{console.log('sure')} }])

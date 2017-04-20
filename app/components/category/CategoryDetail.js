@@ -14,6 +14,10 @@ import Common from '../../common/constants'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
 import Original from '../airticle/Original'
 import NewsCell from '../news/NewsCell'
+
+import NetTool from '../../channel/NetTool'
+const unsubscriptUrl = 'http://www.g-cores.com/api/subscriptions/unsubscript'
+const subscriptUrl = 'http://www.g-cores.com/api/subscriptions/subscript'
 export default class CategoryDetail extends Component {
     // 构造
     constructor(props) {
@@ -22,6 +26,16 @@ export default class CategoryDetail extends Component {
         this.state = {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2
+            }),
+            subscript:false
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        const {categories} = props
+        if(categories.sub){
+            this.setState({
+                subscript:categories.sub.is_subscript
             })
         }
     }
@@ -58,17 +72,13 @@ export default class CategoryDetail extends Component {
     }
     _renderHeader(){
         const {categories} = this.props
-        var  subIcon = null
-        if(categories.sub){
-            if(categories.sub.is_subscript){
-                subIcon = require('../../resource/unsubscript.png')
-            }else{
-                subIcon = require('../../resource/subscript.png')
-            }
-        }
+        var  subIcon = this.state.subscript ? require('../../resource/unsubscript.png'):subIcon = require('../../resource/subscript.png')
         return(
             <View style={styles.Header}>
-                { categories.sub && <Image style={styles.HeaderBg} source={{uri:categories.sub.background_url}}>
+                { categories.sub && <Image
+                    style={styles.HeaderBg}
+                    source={{uri:categories.sub.background_url}}
+                >
                     <View style={styles.nameContainer}>
                         <Text style={styles.name}>{categories.sub.name}</Text>
                     </View>
@@ -92,6 +102,36 @@ export default class CategoryDetail extends Component {
         )
     }
     _subscript(){
+
+        // auth_token	0VzyZguVbX5nhpeQe6XC8g
+        // subscriptable_id	2
+        // subscriptable_type	category
+        if(account.user){
+            var url = this.state.subscript?unsubscriptUrl:subscriptUrl
+
+            const  {id} = this.props
+            var formData = new FormData()
+            formData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu')
+            formData.append('auth_token',account.user.auth_token)
+            formData.append('subscriptable_id',id)
+            formData.append('subscriptable_type','category')
+            NetTool.POST(url,formData,(res,err)=>{
+                if(!err){
+                    if(this.state.subscript){
+                        this.setState({
+                            subscript:false
+                        })
+                    }else {
+                        this.setState({
+                            subscript:true
+                        })
+                    }
+
+                }else {
+                    console.log(err)
+                }
+            })
+        }
 
     }
     _onBack(){
@@ -125,6 +165,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
+
     Header: {
         flex:1
     },
@@ -160,7 +201,7 @@ const styles = StyleSheet.create({
     },
     subContainer:{
         position:'absolute',
-        alignSelf:'flex-end'
+        bottom:30
     },
     subIcon:{
         height:32,

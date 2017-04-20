@@ -16,9 +16,7 @@ const NetTool = {
      })
          .then((response) => (response.json()))
          .then((jsonResponse) => {
-            console.log(jsonResponse)
-            const res =  jsonResponse.results
-           callback(res,null)
+           callback(jsonResponse,null)
          })
          .catch((error)=>{
            callback(null,error)

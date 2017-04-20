@@ -6,7 +6,9 @@ import  {Dimensions, PixelRatio} from  'react-native'
 
 const  APP = {
     TAB: 'APP.TAB',
-    NAVIGATION:'APP.NAVIGATION'
+    NAVIGATION:'APP.NAVIGATION',
+    SIGNIN:'APP.SIGNIN',
+    SIGNOUT:'APP.SIGNOUT',
 }
 
 const WINDOW = {
@@ -62,6 +64,12 @@ const CATEGORIES = {
     SUB:'CATEGORIES.SUB',
     CLEAR:'CATEGORIES.CLEAR'
 }
+const SUBSCRIPT = {
+    INFO: 'SUBSCRIPT.INFO',
+}
+const MYMARK = {
+    INFO: 'MYMARK.INFO',
+}
 export default {
     APP,
     AUTH_KEY,
@@ -75,5 +83,7 @@ export default {
     PLAY,
     RADIO,
     VIDEO,
-    CATEGORIES
+    CATEGORIES,
+    SUBSCRIPT,
+    MYMARK
 }

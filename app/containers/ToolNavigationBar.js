@@ -12,6 +12,8 @@ import {
 }from 'react-native'
 import Common from '../common/constants'
 import NetTool from '../channel/NetTool'
+
+import  Signin  from '../components/other/Signin'
 const likeUrl = 'http://www.g-cores.com/api/like'
 const  markUrl = 'http://www.g-cores.com/api/mark'
 
@@ -25,15 +27,18 @@ export  default  class ToolNavigationBar extends  Component{
           like:false,
           mark:false
       };
+      this.firstRefresh = false
     }
 
     componentWillReceiveProps(props) {
-        const {alpha,pageInfo} = props
+        const {alpha,pageInfo,application} = props
         this.state.alpha.setValue(alpha)
-
-        if(pageInfo){
+        console.log(pageInfo)
+        if(pageInfo &&application.user && !this.firstRefresh){
+         this.firstRefresh = true
          this.setState({
-             like:pageInfo.is_like
+             like:pageInfo.is_like,
+             mark:pageInfo.is_mark
          })
         }
     }
@@ -51,10 +56,17 @@ export  default  class ToolNavigationBar extends  Component{
     }
 
     _doSomething(op){
-        if(!account.user){
-
+        const  {application,navigator} = this.props
+        if(!application.user){
+            navigator.push({
+                component:Signin,
+                params:{
+                    ...this.props
+                }
+            })
             return;
         }
+
         var method = null
         var url = null
         if (op === 'like'){
@@ -64,26 +76,23 @@ export  default  class ToolNavigationBar extends  Component{
             method = this.state.mark ? 'cancel_mark':'mark'
             url = markUrl
         }
-        console.log(account.user)
-        const {id,pageInfo} = this.props
-
+        const {id} = this.props
         let fromData =   new FormData
         fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu');
-        fromData.append('auth_token',account.user.auth_token);
+        fromData.append('auth_token',application.user.auth_token);
         fromData.append('id',id);
         fromData.append('method',method);
         fromData.append('resource','original');
         NetTool.POST(url,fromData,(res,err)=>{
             if(res){
                 console.log(res)
-
-                if (op === 'like'){
+                if (op === 'like' && res.status){
                     this.setState({
-                        like:res.is_like
+                        like:res.results.is_like
                     })
-                }else if (op === 'mark'){
+                }else if (op === 'mark'&& res.status){
                     this.setState({
-                        mark:res.is_mark
+                        mark:res.results.is_mark
                     })
                 }
             }else{
@@ -93,9 +102,9 @@ export  default  class ToolNavigationBar extends  Component{
    }
 
     render(){
-        const {likes_num,pageInfo} = this.props
+        const {likes_num} = this.props
        const likeStyle = this.state.like ? {tintColor:'#dd0000'}:{tintColor:'#777777'}
-        const markStyle = this.state.mark ? {tintColor:'#dd0000'}:{}
+        const markStyle = this.state.mark ? {tintColor:'#dd0000'}:{tintColor:'#777777'}
         return(
                  <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
                      <TouchableHighlight

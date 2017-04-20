@@ -69,7 +69,6 @@ export default class  HomeBannar extends Component{
     }
     render(){
         const  {bannar} = this.props
-
         return(
            <View  style={styles.container}>
                {   bannar && <Carousel

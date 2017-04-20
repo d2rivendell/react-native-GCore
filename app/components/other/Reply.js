@@ -30,16 +30,18 @@ export  default  class Reply extends  Component {
         this.props.navigator.pop()
     }
     _gotoComment(){
-        account.loadAccount((result,err)=>{
-            if(result){
-            console.log(result)
-            }else{
-                this.props.navigator.push({
-                    component:Signin,
-                    sceneConfig: Navigator.SceneConfigs.FloatFromBottom
-                })
-            }
-        })
+       const {actions,application} =  this.props
+        console.log(actions)
+        if(application.user === null){
+            this.props.navigator.push({
+                component:Signin,
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+                params:{
+                    ...this.props
+                }
+            })
+        }
+
 
     }
     render(){
