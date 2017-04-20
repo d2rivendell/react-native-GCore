@@ -20,6 +20,7 @@ import NewsScrooll  from './NewsScrooll'
 
 import  Common from '../../common/constants'
 
+import Loading from '../other/Loading'
 import ArticleDetail from '../airticle/ArticleDetail'
 
 export default class Home extends Component {
@@ -77,14 +78,17 @@ export default class Home extends Component {
 
         console.log(viewBottomY - contentSizeH)
         if((viewBottomY - contentSizeH)>=40){
+            const  {actions,homeInfo} = this.props
+            if(homeInfo.isLoadMore){
+                return
+             }
                  this.page++;
-                 const  {actions} = this.props
+
                  actions.getHomePage(this.page )
         }
     }
     render(){
          const {homeInfo} = this.props
-        console.log(homeInfo)
         const refreshWord = homeInfo.isLoading ? '正在刷新':'下拉刷新'
         return (
             <View style={styles.container}>
@@ -108,10 +112,10 @@ export default class Home extends Component {
                 {homeInfo.isLoadMore &&
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator />
-                    <Text style={{fontSize: 14, marginLeft: 5}}>正在加载更多的数据...</Text>
+                    <Text style={{fontSize: 14, marginLeft: 5}}>加载中...</Text>
                 </View>
                 }
-
+                <Loading isShow={homeInfo.isLoading}/>
             </View>
         );
     }

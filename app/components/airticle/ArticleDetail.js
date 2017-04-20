@@ -9,7 +9,8 @@ import {
     View,
     Text,
     StatusBar,
-    Navigator
+    Navigator,
+    InteractionManager
 } from  'react-native'
 
 import address from '../../channel/address'
@@ -66,7 +67,10 @@ export default class AirticleDetail extends Component {
 
     componentDidMount() {
         const {id,actions} = this.props
-         actions.getPageInfo(id)
+        // InteractionManager.runAfterInteractions(() => {
+            actions.getPageInfo(id)
+        // })
+
     }
 
     componentWillReceiveProps(props) {
@@ -84,7 +88,7 @@ export default class AirticleDetail extends Component {
                     translucent={true}
                     barStyle={'default'}
                 />
-                { likes_num && <ToolNavigationBar
+                { (likes_num || likes_num === 0) && <ToolNavigationBar
                     alpha = {0.8}
                     navigator = {navigator}
                     likes_num = {likes_num}
@@ -105,7 +109,7 @@ export default class AirticleDetail extends Component {
                >
                </WebView>
                 {
-                    !likes_num &&  <BanarNavigationBar
+                    (!likes_num && likes_num != 0)&&  <BanarNavigationBar
                         alpha = {0.8}
                         navigator = {navigator}
                         likes_num = {pageInfo.data.likes_num}

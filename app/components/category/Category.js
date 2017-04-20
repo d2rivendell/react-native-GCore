@@ -5,7 +5,8 @@ import {
     View,
     Image,
     ListView,
-    TouchableHighlight
+    TouchableHighlight,
+    InteractionManager
 } from 'react-native';
 import Common from '../../common/constants'
 import CategoryDetail from './CategoryDetail'
@@ -24,7 +25,10 @@ export default class Category extends Component {
     }
     componentDidMount() {
         const  {actions} = this.props
-        actions.getCategories()
+         InteractionManager.runAfterInteractions(() => {
+            actions.getCategories()
+         })
+
     }
     _selectRow(data){
         this.props.navigator.push({

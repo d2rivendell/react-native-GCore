@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     avatar:{
         width:80,
         height:80,
-        backgroundColor:'red',
         borderRadius:40
     },
     nickname:{
