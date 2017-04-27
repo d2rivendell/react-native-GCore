@@ -38,11 +38,17 @@ export default class Home extends Component {
      }
 
     componentWillReceiveProps(props) {
-        const {application,bannar,canScroll} = props
+        const {application,actions} = props
         if (application.tab === 'home') {
             // console.log('切换到了home')
         }
+        actions.getBanner()
 
+    }
+    fatherScrollToTop(ret){
+             this.setState({
+                 canScroll:true
+             })
     }
 
     componentDidMount() {
@@ -68,7 +74,7 @@ export default class Home extends Component {
     _onRefresh(){
         const  {actions} = this.props
         this.page = 1
-        console.log('正在刷新')
+        // console.log('正在刷新')
         actions.getHomePage(this.page)
     }
     _onScrollEndDrag(event){
@@ -77,7 +83,7 @@ export default class Home extends Component {
         //layoutMeasurement.height 是listView的高度(小于 window.height)
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
-        console.log(viewBottomY - contentSizeH)
+        // console.log(viewBottomY - contentSizeH)
         if((viewBottomY - contentSizeH)>=40){
             const  {actions,homeInfo} = this.props
             if(homeInfo.isLoadMore){
@@ -88,18 +94,25 @@ export default class Home extends Component {
                  actions.getHomePage(this.page )
         }
     }
+    _renderHeader(ret){
+       return(
+            <HomeBannar  {...this.props}/>
+          )
+    }
     render(){
          const {homeInfo} = this.props
         const refreshWord = homeInfo.isLoading ? '正在刷新':'下拉刷新'
         return (
             <View style={styles.container}>
                 {homeInfo&& <ListView
+                    ref={(c)=>this.listView = c}
                 dataSource={this.state.dataSource.cloneWithRows(homeInfo.data)}
                 enableEmptySections={true}
                 renderRow={this._renderRow.bind(this)}
                 style={styles.listView}
-                scrollEventThrottle={200}
                 onScrollEndDrag = {this._onScrollEndDrag.bind(this)}
+                scrollEnabled={this.state.canScroll}
+                    renderHeader={this._renderHeader.bind(this)}
                 refreshControl={
                         <RefreshControl
                             refreshing={homeInfo.isLoading}

@@ -27,7 +27,6 @@ export  default  class MusicTool extends  Component {
     }
 
     startAnimation(){
-            console.log('rotate')
             this.state.rotateValue.setValue(0);
             Animated.timing(this.state.rotateValue,
                 {toValue:1,

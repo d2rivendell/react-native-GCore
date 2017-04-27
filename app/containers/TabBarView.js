@@ -54,8 +54,10 @@ export default  class TabBarView extends  Component {
         super(props);
         // 初始状态
         this.state = {
-            alpha:0
+            alpha:0,
+            canScroll:true
         }
+        this.scrolling = false
       }
      _onChangeTab = ({i}) => {
         console.log(i) ;
@@ -76,8 +78,8 @@ export default  class TabBarView extends  Component {
     componentDidMount() {
 
         DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
-        const {homeAction} = this.props
-        homeAction.getBanner()
+        // const {homeAction} = this.props
+        // homeAction.getBanner()
 
     }
     _gotoTimeLine(play){
@@ -98,20 +100,7 @@ export default  class TabBarView extends  Component {
     componentWillUnmount() {
         this.subscription.remove();
     }
-    _onScroll(event){
-        var offset = event.nativeEvent.contentOffset.y
-        if(offset < 220-60){
-            const alpha = offset/(220-60)
-            this.setState({
-                alpha:alpha
-            })
-        }else{
-            this.setState({
-                alpha:1
-            })
-        }
 
-    }
     _category(){
         const {pageInfo,comment,play,timeLine,categories,categoriesAction} = this.props
         const commonData = {pageInfo,comment,play,timeLine}
@@ -193,34 +182,25 @@ export default  class TabBarView extends  Component {
         const commonData = {pageInfo,comment,play,timeLine,application}
         const  color = 'rgba(255,255,255,' + this.state.alpha + ')'
         return(
-            <ScrollView
-                ref = {(c)=>{this.scrollView = c;}}
-            bounces={false}
-            showsVerticalScrollIndicator={false}
-            onScroll={this._onScroll.bind(this)}
-            scrollEventThrottle={16}
-            stickyHeaderIndices={[2]}
-            >
-
-            <HomeBannar  {...home} {...commonData} actions={homeAction} navigator = {navigator}/>
-
+            <View style={{flex:1}}>
+                <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
             <ScrollableTabView
             renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
             tabBarPosition= 'top'
             locked
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
-            style={{height:Common.WINDOW.height-60}}
+            style={{height:Common.WINDOW.height-64}}
             scrollEnabled={false}
             >
-                 <Home  {...home} {...commonData} actions={homeAction}  navigator = {navigator} />
+                 <Home  ref={(c)=>this.Home = c} {...home} {...commonData} actions={homeAction}  navigator = {navigator} />
                  <News news ={news} {...commonData}   actions = {newsAction}  navigator = {navigator}/>
                  <Article  article ={article} {...commonData}  actions = {articleAction} navigator = {navigator}/>
                  <Radio    radio={radio} {...commonData}   actions = {radioAction} navigator = {navigator}/>
                 <Video    video={video} {...commonData}   actions = {videoAction} navigator = {navigator}/>
             </ScrollableTabView >
-                <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
-            </ScrollView>
+
+            </View>
 
         )
 
@@ -280,14 +260,16 @@ const styles = StyleSheet.create({
     mainNavigator:{
         width:Constants.WINDOW.width,
         height:60,
-        position:'absolute',
         paddingTop:20,
         flexDirection:'row',
         alignItems:'center',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        paddingLeft:20,
+        paddingRight:20,
     },
     icon:{
-        width:60
+        width:18,
+        height:18
     },
     logo:{
         height:15

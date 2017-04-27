@@ -184,6 +184,7 @@ export  default  class TimeLine extends  Component {
                     renderRow={this._renderRow.bind(this)}
                     enableEmptySections={true}
                     renderSectionHeader={this._renderSectionHeader.bind(this)}
+                    stickySectionHeadersEnabled={true}
                 />
                 }
                 {
