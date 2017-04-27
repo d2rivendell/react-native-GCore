@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   text:{
       fontSize:16,
       flex:1,
+      padding:6
   },
     container:{
         flex:1,

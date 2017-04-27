@@ -8,7 +8,8 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    Animated
+    Animated,
+    StatusBar
 }from 'react-native'
 import Common from '../common/constants'
 import NetTool from '../channel/NetTool'
@@ -33,7 +34,7 @@ export  default  class ToolNavigationBar extends  Component{
     componentWillReceiveProps(props) {
         const {alpha,pageInfo,application} = props
         this.state.alpha.setValue(alpha)
-        console.log(pageInfo)
+        // console.log(pageInfo)
         if(pageInfo &&application.user && !this.firstRefresh){
          this.firstRefresh = true
          this.setState({
@@ -107,6 +108,12 @@ export  default  class ToolNavigationBar extends  Component{
         const markStyle = this.state.mark ? {tintColor:'#dd0000'}:{tintColor:'#777777'}
         return(
                  <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
+                     <StatusBar
+                         animated={true}
+                         hidden={true}
+                         translucent={true}
+                         barStyle={'default'}
+                     />
                      <TouchableHighlight
                          onPress={this._back.bind(this)}
                          underlayColor={'transparent'}

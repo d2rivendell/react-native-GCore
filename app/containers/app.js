@@ -73,8 +73,8 @@ export  class App extends Component{
     }
 
     componentDidMount() {
-        const {ApplicationActions} = this.props
 
+        const {ApplicationActions} = this.props
         account.loadAccount((user,err)=>{
             if(user){
                ApplicationActions.signin(user)

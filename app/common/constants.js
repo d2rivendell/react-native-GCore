@@ -49,7 +49,8 @@ const TIMELINE = {
 }
 const PLAY = {
     SHOW: 'PLAY.SHOW',
-    HIDDEN:'PLAY.HIDDEN'
+    HIDDEN:'PLAY.HIDDEN',
+    PLAY:'PLAY.PLAY'
 }
 const RADIO = {
     INFO: 'RADIO.INFO'

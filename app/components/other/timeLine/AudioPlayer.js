@@ -14,13 +14,7 @@ import {
 import Common from '../../../common/constants'
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 export  default  class AudioPlayer extends  Component {
-  // 构造
-    constructor(props) {
-      super(props);
-      // 初始状态
-      this.play = true
-      this.over = false
-    }
+
 
     mixins: [TimerMixin]
     componentDidMount() {
@@ -39,39 +33,31 @@ export  default  class AudioPlayer extends  Component {
 
     }
 
-    componentWillReceiveProps(props) {
-        const {timeLineInfo,play} = props
-        if(timeLineInfo){
-            if(this.over){
-                return
-            }
-            this.over = true
-            console.log(timeLineInfo)
-            if(play.id !== timeLineInfo.id){
-                ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
-            }
-
-        }
-
-    }
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
 
-    _play(){
-        const {timeLineInfo} = this.props
-        console.log(timeLineInfo)
-     if(timeLineInfo){
-         console.log('will play')
-         this.play = !this.play
-         if(this.play){
-             console.log('play')
-             ReactNativeAudioStreaming.play(timeLineInfo.media.mp3[0], {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+
+    playAudio(){
+        const {pageInfo,play} = this.props
+     if(pageInfo){
+         if(!play.isPlay && pageInfo.media.mp3[0]){
+             this.play(pageInfo.media.mp3[0])
          }else{
-             console.log('stop')
-             ReactNativeAudioStreaming.pause();
+            this.pause()
          }
      }
+    }
+    play(url){
+        const {actions} = this.props
+        ReactNativeAudioStreaming.play(url, {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+        actions.play(true)
+    }
+
+    pause(){
+        const {actions} = this.props
+        ReactNativeAudioStreaming.pause()
+        actions.play(false)
     }
 
     _list(){
@@ -81,26 +67,25 @@ export  default  class AudioPlayer extends  Component {
         }
     }
     _onValueChange(v){
-        const {timeLineInfo} = this.props
-        let value = timeLineInfo.duration * (v/100)
+        const {pageInfo} = this.props
+        let value = pageInfo.duration * (v/100)
         ReactNativeAudioStreaming.seekToTime(value)
     }
   render(){
-      const {timeLineInfo} = this.props
-      // console.log(timeLineInfo)
-      var icon = this.play ? require('../../../resource/icon-pause~iphone.png'):require('../../../resource/icon-play~iphone.png')
+      const {pageInfo,play} = this.props
+      var icon = play.isPlay ? require('../../../resource/icon-pause~iphone.png'):require('../../../resource/icon-play~iphone.png')
       return(
           <View style={styles.container}>
-              { timeLineInfo && <View style={styles.contentView}>
-                  <Image style={styles.cover} source={{uri:timeLineInfo.thumb_url}}/>
+              { pageInfo && <View style={styles.contentView}>
+                  <Image style={styles.cover} source={{uri:pageInfo.thumb_url}}/>
                   <View style={styles.textView}>
-                      <Text numberOfLines={1} style={styles.title}>{timeLineInfo.title}</Text>
-                      <Text numberOfLines={1} style={styles.desc}>{timeLineInfo.desc}</Text>
+                      <Text numberOfLines={1} style={styles.title}>{pageInfo.title}</Text>
+                      <Text numberOfLines={1} style={styles.desc}>{pageInfo.desc}</Text>
                   </View>
                   <View style={styles.toolView}>
                       <TouchableHighlight
                           underlayColor='transparent'
-                          onPress={this._play.bind(this)}
+                          onPress={this.playAudio.bind(this)}
                       >
                           <Image resizeMode='contain' style={styles.icon}
                                  source={icon}/>

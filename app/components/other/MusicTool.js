@@ -25,14 +25,17 @@ export  default  class MusicTool extends  Component {
         //在初始化渲染执行之后立刻调用动画执行函数
         this.startAnimation();
     }
+
     startAnimation(){
-        this.state.rotateValue.setValue(0);
-          Animated.timing(this.state.rotateValue,
-              {toValue:1,
-               duration:10000,
-               easing: Easing.out(Easing.linear),//线性变化，匀速旋转
-              }
-              ).start(()=>this.startAnimation() )
+            console.log('rotate')
+            this.state.rotateValue.setValue(0);
+            Animated.timing(this.state.rotateValue,
+                {toValue:1,
+                    duration:10000,
+                    easing: Easing.out(Easing.linear),//线性变化，匀速旋转
+                    isInteraction: false,//加入此参数可解决阻塞InteractionManager.runAfterInteractions，官方文档上无此参数说明
+                }
+            ).start(()=>this.startAnimation() )
       }
 
     _onPress(){

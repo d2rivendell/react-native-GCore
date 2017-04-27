@@ -7,37 +7,147 @@ import {
     Text,
     Image,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    ListView
 }from 'react-native'
 
-import Commom from '../../common/constants'
-
+import Common from '../../common/constants'
+import DateHandel from './DateHandel'
 export  default  class CommentCell extends  Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource:new ListView.DataSource({
+                rowHasChanged:(row1,row2) => row1 !== row2}),
+        canFold:false
+        }
+    }
+    _renderChilden(data,index){
+        return(
+            <CommentChild child = {data} onPress={this._childPress.bind(this)}/>
+        )
+    }
+    _childPress(child){
+ console.log('_childPress')
+    }
 
+    componentDidMount() {
+        const {comment}  = this.props
+        const {dataSource} = this.state
 
+        if(comment.children){
+            if(comment.children.length >= 3){
+                rows =  comment.children.slice(0,3)
+                this.setState({
+                    dataSource:dataSource.cloneWithRows(rows),
+                    canFold:true
+                })
+            }else{
+                var rows = comment.children
+                this.setState({
+                    dataSource:dataSource.cloneWithRows(rows),
+                    canFold:false
+                })
+            }
+            console.log(rows.length)
+
+        }
+    }
+
+      componentWillReceiveProps (props) {
+
+    }
+    _fold(){
+        const {dataSource} = this.state
+        this.setState({
+            canFold:false,
+            dataSource:dataSource.cloneWithRows(this.props.comment.children),
+        })
+    }
+    _renderFooter(){
+        if(this.state.canFold){
+            return (
+                <TouchableHighlight
+                    onPress={this._fold.bind(this)}
+                    underlayColor={'transparent'}
+                >
+                    <View style={styles.foldContainer}>
+                        <Text style={{fontSize:14}}>展开全部</Text>
+                    </View>
+                </TouchableHighlight>
+            )
+
+        }else {
+            return (
+                <View>
+
+               </View>)
+        }
+    }
     render(){
         const {comment}  = this.props
         return(
-            <View style={styles.container}>
-             <Image style={styles.icon} source={{uri:comment.user.thumb_url}}/>
-             <View  style={styles.content}>
-                 <Text  style={styles.nickname}>{comment.user.nickname}</Text>
-                 <Text   style={styles.contentText}>{comment.body}</Text>
-                 <View   style={styles.desc}>
-                   <Text style={styles.time}>{comment.created_at}</Text>
-                 </View>
-             </View>
+            <View style={{flex:1}}>
+                <View style={styles.container}>
+                    <Image style={styles.icon} source={{uri:comment.user.thumb_url}}/>
+                    <View  style={styles.content}>
+                        <Text  style={styles.nickname}>{comment.user.nickname}</Text>
+                        <Text   style={styles.contentText}>{comment.body}</Text>
+                        <View   style={styles.desc}>
+                            <Text style={styles.time}>{DateHandel.parse(comment.created_at)}</Text>
+                        </View>
+                    </View>
+                </View>
+                {comment.children &&
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this._renderChilden.bind(this)}
+                    enableEmptySections={true}
+                    renderFooter={this._renderFooter.bind(this)}
+                />
+                }
             </View>
+
         )
     }
 }
+
+const CommentChild = ({onPress,child})=>{
+    _onPress=()=>{
+        onPress(child)
+    }
+    return(
+        <TouchableHighlight
+            onPress={this._onPress}
+            underlayColor={'transparent'}
+
+        >
+            <View style={styles.childrenContainer}>
+                <Image style={styles.childrenIcon} source={{uri:child.user.thumb_url}}/>
+                <View  style={styles.content}>
+                    <Text  style={styles.childrenNickname}>{child.user.nickname}</Text>
+                    <View style={{flexDirection:'row',marginTop:10,alignItems:'center'}}>
+                        <Image style={{width:10,tintColor:'#999999'}} resizeMode='contain' source={require('../../resource/icon-comment-wo~iphone.png')}/>
+                        <Text style={{color:'#cc0000',fontSize:10,marginLeft:8}}>{child.to_user.nickname}</Text>
+                    </View>
+                    <Text   style={styles.contentText}>{child.body}</Text>
+                    <View   style={styles.desc}>
+                        <Text style={styles.time}>{DateHandel.parse(child.created_at)}</Text>
+                    </View>
+                </View>
+            </View>
+        </TouchableHighlight>
+       )
+}
+
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:'white',
+        backgroundColor:'rgba(240,240,240,1)',
         padding:16,
         paddingBottom:10,
         flexDirection:'row',
-        width:375
+        width:Common.WINDOW.width
     },
     icon:{
       width:50,
@@ -50,7 +160,7 @@ const styles = StyleSheet.create({
     },
     nickname:{
         fontSize:14,
-        color:'red'
+        color:'#cc0000'
     },
     contentText:{
         marginTop:10,
@@ -65,5 +175,33 @@ const styles = StyleSheet.create({
         marginTop:16,
         fontSize:12,
         color:'#999999'
+    },
+
+    //children
+    childrenContainer: {
+        padding:16,
+        paddingBottom:10,
+        flexDirection:'row',
+        width:Common.WINDOW.width,
+        paddingLeft:66
+    },
+    childrenIcon:{
+        width:36,
+        height:36,
+        borderRadius:18
+    },
+    childrenNickname:{
+        fontSize:13,
+        color:'#cc0000'
+    },
+    foldContainer:{
+        flex:1,
+        marginLeft:66+56,
+        height:30,
+        marginRight:20,
+        justifyContent:'center',
+        alignItems:'center',
+        borderColor:'#c8c8c8',
+        borderWidth:Common.WINDOW.onePR
     }
 })

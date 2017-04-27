@@ -25,7 +25,7 @@ export default class AirticleDetail extends Component {
       var msg = e.url.split('://')
       var scheme = msg[0]
       var response = msg[1]
-      console.log(scheme + ' ' + response)
+      // console.log(scheme + ' ' + response)
 
       if(scheme === 'http' || scheme === 'https'){
        return true
@@ -67,10 +67,9 @@ export default class AirticleDetail extends Component {
 
     componentDidMount() {
         const {id,actions} = this.props
-        // InteractionManager.runAfterInteractions(() => {
+        InteractionManager.runAfterInteractions(()=>{
             actions.getPageInfo(id)
-        // })
-
+        })
     }
 
     componentWillReceiveProps(props) {

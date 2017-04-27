@@ -54,12 +54,12 @@ export  default  class CommentNavigationBar extends  Component{
                     itemWidth = {60}
                     segmentDidSelectIndex = {segmentDidSelectIndex}
                 />
-                <Button
+                <TouchableHighlight
                     onPress={this._gotoComment.bind(this)}
-                    title ='评论'
-                    color = '#c8c8c8'
-                    style={{fontSize:14}}
-                />
+                    underlayColor={'transparent'}
+                >
+                    <Text style={styles.text}>评论</Text>
+                </TouchableHighlight>
             </View>
         )
     }
@@ -91,7 +91,8 @@ const  styles = StyleSheet.create({
         alignItems:'center'
     },
     text:{
-        fontSize:17,
-        color:'#666666'
+        fontSize:15,
+        color:'#666666',
+        marginLeft:4
     }
 })

@@ -5,7 +5,8 @@ import  createReducer from '../utils/create-reducer'
 import  Commom from  '../common/constants'
 const  initialState = {
     show:false,
-    pageInfo:null
+    pageInfo:null,
+    isPlay:false
 }
 
 const  actionHandle = {
@@ -20,6 +21,11 @@ const  actionHandle = {
         return Object.assign({}, state, {
             id:action.id,
             show:false
+        })
+    },
+    [Commom.PLAY.PLAY]: (state, action) => {
+        return Object.assign({}, state, {
+            isPlay:action.isPlay
         })
     }
 }

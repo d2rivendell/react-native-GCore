@@ -8,7 +8,8 @@ import {
     View,
     Image,
     ListView,
-    TouchableHighlight
+    TouchableHighlight,
+    InteractionManager
 } from 'react-native';
 import Common from '../../common/constants'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
@@ -41,8 +42,17 @@ export default class CategoryDetail extends Component {
     }
     componentDidMount() {
         const  {actions,id} = this.props
-        actions.getCategorieDetail(id)
-        actions.getCategorieSubscriptInfo(id)
+        InteractionManager.runAfterInteractions(()=>{
+            actions.getCategorieDetail(id)
+            actions.getCategorieSubscriptInfo(id)
+            console.log('get~~~~~~~~~~')
+        })
+
+    }
+
+    componentDidUnMount() {
+        const  {actions} = this.props
+        actions.clearSubscriptInfo()
     }
     _selectRow(){
 

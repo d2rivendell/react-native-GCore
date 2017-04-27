@@ -45,12 +45,15 @@ export  default  class BanarNavigationBar extends  Component{
 
         return(
             <Animated.View style={[styles.container,{opacity:this.state.alpha}]}>
-                <Button
+                <TouchableHighlight
                     onPress={this._back.bind(this)}
-                    title ='返回'
-                    color = '#ffffff'
-
-                />
+                    underlayColor={'transparent'}
+                >
+                    <View style={styles.backContainer}>
+                        <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/navigationbar_back@2x.png')}/>
+                        <Text style={styles.text}>返回</Text>
+                    </View>
+                </TouchableHighlight>
                 <View style={styles.ToolView}>
                     <Image style={styles.icon} source={require('../resource/icon-share~iphone.png')}/>
                     <TouchableHighlight onPress={this._gotoComment.bind(this)}  underlayColor = 'transparent'>
@@ -76,10 +79,8 @@ const  styles = StyleSheet.create({
         backgroundColor:'transparent',
         borderBottomColor: '#d9d9d9',
         alignItems:'center',
-        position:'absolute'
-    },
-    back:{
-        paddingLeft:40
+        position:'absolute',
+        padding:10
     },
     ToolView:{
         flexDirection:'row',
@@ -87,11 +88,24 @@ const  styles = StyleSheet.create({
         paddingRight:26
     },
     icon:{
-        marginLeft:20
+        marginLeft:20,
+        tintColor:'white'
     },
     likeText:{
         color:'#c8c8c8',
         fontSize:10,
         marginLeft:4
+    },
+    backIcon:{
+        height:30,
+        tintColor:'white'
+    },
+    backContainer:{
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    text:{
+        fontSize:17,
+        color:'#666666'
     }
 })

@@ -10,7 +10,7 @@ import {
     ScrollView,
     Image,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 
 import HomeBannar from './HomeBannar'
@@ -48,6 +48,7 @@ export default class Home extends Component {
     componentDidMount() {
         const  {actions} = this.props
         actions.getHomePage(this.page)
+
     }
     _renderRow(row){
         const type = row.type

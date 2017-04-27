@@ -12,7 +12,8 @@ import {
     Navigator,
     ScrollView,
     Image,
-    TouchableHighlight
+    TouchableHighlight,
+
 } from 'react-native'
 
 import  ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
@@ -73,6 +74,7 @@ export default  class TabBarView extends  Component {
      };
 
     componentDidMount() {
+
         DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
         const {homeAction} = this.props
         homeAction.getBanner()
@@ -88,7 +90,8 @@ export default  class TabBarView extends  Component {
                 actions:homeAction,
                 id:play.pageInfo.id,
                 likes_num:play.pageInfo.likes_num},
-                play:play
+                play: play,
+                shortcut:true
             })
         }
 

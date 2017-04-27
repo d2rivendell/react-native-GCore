@@ -34,10 +34,9 @@ export  default  class Comment extends  Component{
    }
     componentDidMount() {
         const {id,actions} = this.props
-        InteractionManager.runAfterInteractions(() => {
-            actions.getComment(this.state.commentType,1,id)
+        InteractionManager.runAfterInteractions(()=> {
+            actions.getComment(this.state.commentType, 1, id)
         })
-
     }
     onBack(){
         const  {navigator} =  this.props
@@ -144,7 +143,7 @@ export  default  class Comment extends  Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'white'
+        backgroundColor:'rgba(240,240,240,1)'
     },
     loadingContainer: {
         height:30,

@@ -10,7 +10,8 @@ import {
     TouchableHighlight,
     Button,
     ListView,
-    Navigator
+    Navigator,
+    InteractionManager
 }from 'react-native'
 import {Player}  from  'react-native-audio-streaming'
 import TimeLinePanel from './TimeLinePanel'
@@ -36,9 +37,21 @@ export  default  class TimeLine extends  Component {
         };
       }
     componentDidMount() {
-        const {id,actions} = this.props
-        actions.getTimeLine(id)
-        actions.hidden(id)
+        const {id,actions,play} = this.props
+        InteractionManager.runAfterInteractions(() => {
+
+            actions.getTimeLine(id)
+            actions.hidden(id)
+        }).done(()=>{
+            console.log('this.props.shortcut~~~')
+            console.log(this.props.shortcut)
+            if(play.isPlay === true){
+
+            }else {
+                this.audioPlayer.playAudio()
+            }
+        })
+
     }
     componentWillUnmount(){
           const {actions,id} = this.props
@@ -121,6 +134,7 @@ export  default  class TimeLine extends  Component {
         this.setState({
             mode:mode
         })
+
         console.log(this.state.mode)
     }
     _reLoad(pageInfo){
@@ -132,7 +146,9 @@ export  default  class TimeLine extends  Component {
             mode:'timeLine',
             value:0
         })
-       console.log(this.state.pageInfo)
+        actions.hidden(pageInfo.id)
+        console.log(pageInfo.media.mp3[0])
+        this.audioPlayer.play(pageInfo.media.mp3[0])
     }
     _onback(){
         const {navigator} = this.props
@@ -175,13 +191,15 @@ export  default  class TimeLine extends  Component {
                 }
 
                 <AudioPlayer
-                    timeLineInfo ={this.state.pageInfo}
+                    ref = {(c)=>this.audioPlayer = c}
+                    pageInfo ={this.state.pageInfo}
                     getProgress = {this._getProgress.bind(this)}
                     value={this.state.value}
                     disabled = {false}
                     maxVallue = {100}
                     onList = {this._onList.bind(this)}
-                    {...this.props}
+                    actions = {this.props.actions}
+                    play = {this.props.play}
                 />
             </View>
         );

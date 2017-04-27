@@ -22,4 +22,13 @@ const hidden = (id) => {
         }))
     }
 }
-export  default {show,hidden}
+const play = (isPlay) => {
+
+    return dispatch => {
+        return Promise.resolve(dispatch({
+            type:Common.PLAY.PLAY,
+            isPlay:isPlay
+        }))
+    }
+}
+export  default {show,hidden,play}
