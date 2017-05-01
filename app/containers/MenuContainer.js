@@ -25,6 +25,7 @@ export default class ControlPanel extends Component {
 
     render() {
          const {actions,application} = this.props
+        // console.log(application.user)
          const avatar = application.user ? {uri:application.user.thumb_url}:require('../resource/default-avatar~iphone.png')
         return (
             <View style={styles.container}>

@@ -78,6 +78,7 @@ export  class App extends Component{
         account.loadAccount((user,err)=>{
             if(user){
                ApplicationActions.signin(user)
+                // console.log(user)
             }
         })
     }

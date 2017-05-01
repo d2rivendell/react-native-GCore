@@ -28,7 +28,10 @@ export  default  class CommentCell extends  Component{
         )
     }
     _childPress(child){
- console.log('_childPress')
+        const {onPress} = this.props
+        if(onPress){
+            onPress(null,child)
+        }
     }
 
     componentDidMount() {
@@ -84,10 +87,20 @@ export  default  class CommentCell extends  Component{
                </View>)
         }
     }
+    _response(){
+      const {onPress,comment} = this.props
+      if(onPress){
+          onPress(comment,null)
+      }
+    }
     render(){
         const {comment}  = this.props
         return(
             <View style={{flex:1}}>
+                <TouchableHighlight
+                    underlayColor={'transparent'}
+                    onPress={this._response.bind(this)}
+                >
                 <View style={styles.container}>
                     <Image style={styles.icon} source={{uri:comment.user.thumb_url}}/>
                     <View  style={styles.content}>
@@ -98,6 +111,7 @@ export  default  class CommentCell extends  Component{
                         </View>
                     </View>
                 </View>
+                </TouchableHighlight>
                 {comment.children &&
                 <ListView
                     dataSource={this.state.dataSource}

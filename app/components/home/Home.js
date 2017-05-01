@@ -11,6 +11,7 @@ import {
     Image,
     RefreshControl,
     ActivityIndicator,
+    InteractionManager
 } from 'react-native';
 
 import HomeBannar from './HomeBannar'
@@ -42,7 +43,7 @@ export default class Home extends Component {
         if (application.tab === 'home') {
             // console.log('切换到了home')
         }
-        actions.getBanner()
+
 
     }
     fatherScrollToTop(ret){
@@ -53,7 +54,10 @@ export default class Home extends Component {
 
     componentDidMount() {
         const  {actions} = this.props
-        actions.getHomePage(this.page)
+        InteractionManager.runAfterInteractions(()=>{
+            actions.getHomePage(this.page)
+            actions.getBanner()
+        })
 
     }
     _renderRow(row){

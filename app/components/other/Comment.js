@@ -65,14 +65,15 @@ export  default  class Comment extends  Component{
         }
     }
     _gotoComment(){
-        const {navigator,application,actions} = this.props
+        const {navigator,application,actions,id} = this.props
         if(navigator){
             navigator.push({
                 component:Reply,
                 sceneConfig: Navigator.SceneConfigs.PushFromRight,
                 params:{
                     application:application,
-                    actions:actions
+                    actions:actions,
+                    id:id
                 }
             })
         }
@@ -101,8 +102,24 @@ export  default  class Comment extends  Component{
     }
     _renderRow(data){
         return (
-        <CommentCell comment = {data}/>
+        <CommentCell comment = {data} onPress={this._toReplay.bind(this)}/>
         )
+    }
+    _toReplay(father,child){
+        const {navigator,application,actions,id} = this.props
+        console.log(father)
+        console.log(child)
+        if(navigator){
+            navigator.push({
+                component:Reply,
+                sceneConfig: Navigator.SceneConfigs.PushFromRight,
+                params:{
+                    application:application,
+                    actions:actions,
+                    replay:{father:father,child:child}
+                }
+            })
+        }
     }
     render(){
         const  {comment} =  this.props
@@ -116,7 +133,7 @@ export  default  class Comment extends  Component{
                />
                <ListView
                dataSource={this.state.dataSource.cloneWithRows(comment.data)}
-               renderRow={this._renderRow}
+               renderRow={this._renderRow.bind(this)}
                enableEmptySections={true}
                scrollEventThrottle={200}
                onScrollEndDrag = {this._onScrollEndDrag.bind(this)}

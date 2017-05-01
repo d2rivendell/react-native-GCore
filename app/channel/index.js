@@ -17,7 +17,7 @@ export default class Channel {
     }
     getHomePage(page){
         const gen_url = address.homePage(page)
-        console.log('home url is ' + gen_url)
+        // console.log('home url is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -74,7 +74,7 @@ export default class Channel {
     }
     getPageInfo(id){
         const gen_url = address.getPageInfo(id)
-        // console.log('getPageInfo is ' + gen_url)
+        console.log('getPageInfo is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{

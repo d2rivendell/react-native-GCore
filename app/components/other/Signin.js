@@ -110,21 +110,14 @@ export  default  class Signin extends  Component {
                           horizontal={true}
              >
                  <View style={styles.twoContainView}>
-                 <TextInput
-                     style={styles.text}
-                     editable = {true}
-                     maxLength = {20}
+                 <MyTextField
                      placeholder = 'ID/Email'
-                     multiline={true}
                      onChangeText={(text) => this.setState({signinEmail:text})}
+                     secureTextEntry = {false}
                  />
-                 <TextInput
-                     style={styles.text}
-                     editable = {true}
-                     maxLength = {20}
+                 <MyTextField
                      placeholder = 'Password'
                      secureTextEntry={true}
-                     multiline={true}
                      onChangeText={(text) => this.setState({signinPwd:text})}
                  />
 
@@ -148,31 +141,20 @@ export  default  class Signin extends  Component {
 
                  {/* register */}
                  <View style={styles.twoContainView}>
-                     <TextInput
-                         style={styles.text}
-                         editable = {true}
-                         maxLength = {20}
+                     <MyTextField
                          placeholder = 'Email'
-                         multiline={true}
+                         secureTextEntry={false}
                          onChangeText={(text) => this.setState({registerEmail:text})}
                      />
-                     <TextInput
-                         style={styles.text}
-                         editable = {true}
-                         maxLength = {20}
+                     <MyTextField
                          placeholder = 'Password'
                          secureTextEntry={true}
-                         multiline={true}
                          onChangeText={(text) => this.setState({registerPwd:text})}
 
                      />
-                     <TextInput
-                         style={styles.text}
-                         editable = {true}
-                         maxLength = {20}
+                     <MyTextField
                          placeholder = 'Password Confirm'
                          secureTextEntry={true}
-                         multiline={true}
                          onChangeText={(text) => this.setState({registerConfirmPwd:text})}
 
                      />
@@ -193,6 +175,22 @@ export  default  class Signin extends  Component {
          </View>
      )
  }
+}
+
+class MyTextField extends Component{
+    render(){
+        return (
+            <View style={{borderBottomColor:"#e8e8e8",borderBottomWidth: 1}}>
+                <TextInput  style={styles.text}
+                            placeholder = {this.props.placeholder}
+                            onChangeText = {this.props.onChangeText}
+                            secureTextEntry = {this.props.secureTextEntry}
+                            maxLength = {20}
+                />
+            </View>
+        )
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -244,10 +242,8 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         marginTop:20,
          height: 30,
-        borderBottomWidth: 1,
         width:220,
-        borderBottomColor:"#e8e8e8"
-
+        padding:0
     },
     logo:{
         width:140,

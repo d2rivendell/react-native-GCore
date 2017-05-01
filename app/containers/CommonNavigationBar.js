@@ -92,11 +92,11 @@ const  styles = StyleSheet.create({
         color:'#666666',
         alignSelf:'center',
         position:'absolute',
-        left:(Common.WINDOW.width-100)/2,
-        right:(Common.WINDOW.width-100)/2,
+        left:(Common.WINDOW.width-200)/2,
+        right:(Common.WINDOW.width-200)/2,
         paddingTop:20,
         textAlign:'center',
-        width:100
+        width:200
     }
 
 })

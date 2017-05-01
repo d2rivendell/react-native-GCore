@@ -116,13 +116,14 @@ export default class CategoryDetail extends Component {
         // auth_token	0VzyZguVbX5nhpeQe6XC8g
         // subscriptable_id	2
         // subscriptable_type	category
-        if(account.user){
+        const {application} = this.props
+        if(application.user){
             var url = this.state.subscript?unsubscriptUrl:subscriptUrl
 
             const  {id} = this.props
             var formData = new FormData()
             formData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu')
-            formData.append('auth_token',account.user.auth_token)
+            formData.append('auth_token',application.user.auth_token)
             formData.append('subscriptable_id',id)
             formData.append('subscriptable_type','category')
             NetTool.POST(url,formData,(res,err)=>{

@@ -102,8 +102,8 @@ export default  class TabBarView extends  Component {
     }
 
     _category(){
-        const {pageInfo,comment,play,timeLine,categories,categoriesAction} = this.props
-        const commonData = {pageInfo,comment,play,timeLine}
+        const {pageInfo,comment,play,timeLine,categories,categoriesAction,application} = this.props
+        const commonData = {pageInfo,comment,play,timeLine,application}
       this.props.navigator.push({
          component:Category,
          params:{

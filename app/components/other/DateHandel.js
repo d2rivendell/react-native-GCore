@@ -41,8 +41,8 @@ const parse = (date) =>{
                 return `${hour_del}小时前`
             }else if(hour_del === 1){
                let min_del = (60 - min) + now.getMinutes()
-                console.log('min_del')
-                console.log(min_del)
+                // console.log('min_del')
+                // console.log(min_del)
                 if(min_del === 60){
                     return '1小时前'
                 }else {
