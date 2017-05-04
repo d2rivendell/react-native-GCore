@@ -13,6 +13,7 @@ import {
     Button
 }from 'react-native'
 import Common from '../common/constants'
+import * as WeChat from 'react-native-wechat'
 export  default  class BanarNavigationBar extends  Component{
     // 构造
     constructor(props) {
@@ -40,6 +41,16 @@ export  default  class BanarNavigationBar extends  Component{
             gotoComment()
         }
     }
+    _share(){
+        try {
+            let result =  WeChat.shareToTimeline({
+                type: 'text',
+                description: '为了打动你来机核。我们把她请来了 '+ this.props.url
+            });
+        } catch (e) {
+            console.error('share text message to time line failed with:', e);
+        }
+    }
     render(){
         const {likes_num} = this.props
 
@@ -55,12 +66,22 @@ export  default  class BanarNavigationBar extends  Component{
                     </View>
                 </TouchableHighlight>
                 <View style={styles.ToolView}>
+                    <TouchableHighlight
+                        onPress={this._share.bind(this)}
+                        underlayColor = 'transparent'
+                       style={{width:50,height:40,justifyContent:'center',padding:10}}
+                    >
                     <Image style={styles.icon} source={require('../resource/icon-share~iphone.png')}/>
-                    <TouchableHighlight onPress={this._gotoComment.bind(this)}  underlayColor = 'transparent'>
-                        <Image style={styles.icon} source={require('../resource/icon-comment.png')}/>
                     </TouchableHighlight>
 
-                    <Text style={styles.likeText}>{likes_num}</Text>
+                    <TouchableHighlight onPress={this._gotoComment.bind(this)}  underlayColor = 'transparent'>
+                        <View style={{ flexDirection:'row'}}>
+                            <Image style={styles.icon} source={require('../resource/icon-comment.png')}/>
+                            <Text style={styles.likeText}>{likes_num}</Text>
+                        </View>
+
+                    </TouchableHighlight>
+
                 </View>
             </Animated.View>
         )
@@ -85,6 +106,7 @@ const  styles = StyleSheet.create({
     ToolView:{
         flexDirection:'row',
         justifyContent:'space-around',
+        alignItems:'center',
         paddingRight:26
     },
     icon:{

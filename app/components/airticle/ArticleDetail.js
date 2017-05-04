@@ -18,6 +18,7 @@ import ToolNavigationBar from '../../containers/ToolNavigationBar'
 import BanarNavigationBar from '../../containers/BanarNavigationBar'
 import  Comment from '../../components/other/Comment'
 import  TimeLine from '../other/timeLine/TimeLine'
+
 export default class AirticleDetail extends Component {
 
 
@@ -70,6 +71,7 @@ export default class AirticleDetail extends Component {
         InteractionManager.runAfterInteractions(()=>{
             actions.getPageInfo(id)
         })
+
     }
 
     componentWillReceiveProps(props) {
@@ -91,10 +93,11 @@ export default class AirticleDetail extends Component {
                     alpha = {0.8}
                     navigator = {navigator}
                     likes_num = {likes_num}
-                    gotoComment = {this.gotoComment.bind(this,id)}
+                    gotoComment = {this.gotoTimeLine.bind(this,id)}
                     id = {id}
                     pageInfo = {pageInfo.data}
                     application = {application}
+                    url = {uri}
                 />
                 }
 
@@ -112,7 +115,8 @@ export default class AirticleDetail extends Component {
                         alpha = {0.8}
                         navigator = {navigator}
                         likes_num = {pageInfo.data.likes_num}
-                        gotoComment = {this.gotoComment.bind(this,id)}
+                        gotoComment = {this.gotoTimeLine.bind(this,id)}
+                        url = {uri}
                     />
                 }
             </View>

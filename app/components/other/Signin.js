@@ -186,6 +186,8 @@ class MyTextField extends Component{
                             onChangeText = {this.props.onChangeText}
                             secureTextEntry = {this.props.secureTextEntry}
                             maxLength = {20}
+                            multiline={false}
+                            underlineColorAndroid="transparent"
                 />
             </View>
         )

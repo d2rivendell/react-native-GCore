@@ -34,10 +34,19 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* GCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GCoreTests.m */; };
+		33EEE9139EE04AB69106A826 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF5E5414970442CBA2B8103 /* libSQLite.a */; };
+		4F60AE091EB8516E003D66AE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE081EB8516E003D66AE /* SystemConfiguration.framework */; };
+		4F60AE281EB85176003D66AE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE271EB85176003D66AE /* CoreTelephony.framework */; };
+		4F60AE2A1EB85181003D66AE /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE291EB85181003D66AE /* libsqlite3.0.tbd */; };
+		4F60AE2C1EB8518C003D66AE /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE2B1EB8518C003D66AE /* libc++.tbd */; };
+		4F60AE2E1EB85196003D66AE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE2D1EB85196003D66AE /* libz.tbd */; };
 		4FC374771E8E3B1D00C80077 /* libStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC374761E8E3B0E00C80077 /* libStreamingKit.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		86B1CFF07170490DBDF8F1F8 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 750BDDCAD98B4D37801FA7DE /* libReactNativeIcons.a */; };
+		CB4BB693F5FC4645AFEA6474 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FA13A4072B44FB8FB278BF /* libRCTWeChat.a */; };
 		CFE4BDDC360C43908780162B /* libReactNativeAudioStreaming.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 714B131AFB114C12A6CFE5D2 /* libReactNativeAudioStreaming.a */; };
+		FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FBE42CFA1540A1BAB59AFC /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +211,20 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		4F60ADEF1EB850F8003D66AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86D238421BD0BB9E00C75D01;
+			remoteInfo = RCTWeChat;
+		};
+		4F7EAD801EB87A7800067774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
 		4FC3746C1E8E3AD600C80077 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */;
@@ -222,6 +245,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8354B6B10F10687EE626DF43663B075A;
 			remoteInfo = StreamingKit;
+		};
+		4FEBF1521EBAF48A00ACCA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
+			remoteInfo = ReactNativeIcons;
+		};
+		4FEBF1581EBAF48B00ACCA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E23D7B471ACEFE2A00C59171;
+			remoteInfo = SQLite;
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -273,14 +310,27 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GCore/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GCore/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* GCore-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GCore-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* GCore-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GCore-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
+		4F60AE081EB8516E003D66AE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4F60AE271EB85176003D66AE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4F60AE291EB85181003D66AE /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		4F60AE2B1EB8518C003D66AE /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		4F60AE2D1EB85196003D66AE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4FC3746E1E8E3B0E00C80077 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
+		52FA13A4072B44FB8FB278BF /* libRCTWeChat.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWeChat.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		714B131AFB114C12A6CFE5D2 /* libReactNativeAudioStreaming.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeAudioStreaming.a; sourceTree = "<group>"; };
+		750BDDCAD98B4D37801FA7DE /* libReactNativeIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeIcons.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		85FBE42CFA1540A1BAB59AFC /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
+		8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
+		9AF5E5414970442CBA2B8103 /* libSQLite.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSQLite.a; sourceTree = "<group>"; };
+		F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +346,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F60AE2A1EB85181003D66AE /* libsqlite3.0.tbd in Frameworks */,
+				4F60AE2E1EB85196003D66AE /* libz.tbd in Frameworks */,
+				4F60AE2C1EB8518C003D66AE /* libc++.tbd in Frameworks */,
+				4F60AE281EB85176003D66AE /* CoreTelephony.framework in Frameworks */,
+				4F60AE091EB8516E003D66AE /* SystemConfiguration.framework in Frameworks */,
 				4FC374771E8E3B1D00C80077 /* libStreamingKit.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -309,6 +364,10 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				CFE4BDDC360C43908780162B /* libReactNativeAudioStreaming.a in Frameworks */,
+				CB4BB693F5FC4645AFEA6474 /* libRCTWeChat.a in Frameworks */,
+				FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */,
+				86B1CFF07170490DBDF8F1F8 /* libReactNativeIcons.a in Frameworks */,
+				33EEE9139EE04AB69106A826 /* libSQLite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +502,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4F60ADD91EB850F7003D66AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F60ADF01EB850F8003D66AE /* libRCTWeChat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4F7EAD601EB87A7700067774 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F7EAD811EB87A7800067774 /* libRNFS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4FC374501E8E3AD600C80077 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +531,22 @@
 			children = (
 				4FC374741E8E3B0E00C80077 /* libPods-ReactNativeAudioStreaming.a */,
 				4FC374761E8E3B0E00C80077 /* libStreamingKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FEBF1321EBAF48A00ACCA6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FEBF1531EBAF48A00ACCA6D /* libReactNativeIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FEBF1551EBAF48B00ACCA6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FEBF1591EBAF48B00ACCA6D /* libSQLite.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -494,6 +585,10 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */,
+				7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */,
+				F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */,
+				2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */,
+				8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -534,6 +629,11 @@
 		972C6827E36A8520A4A51D07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F60AE2D1EB85196003D66AE /* libz.tbd */,
+				4F60AE2B1EB8518C003D66AE /* libc++.tbd */,
+				4F60AE291EB85181003D66AE /* libsqlite3.0.tbd */,
+				4F60AE271EB85176003D66AE /* CoreTelephony.framework */,
+				4F60AE081EB8516E003D66AE /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -699,12 +799,28 @@
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
 				},
 				{
+					ProductGroup = 4F60ADD91EB850F7003D66AE /* Products */;
+					ProjectRef = 7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */;
+				},
+				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
 					ProductGroup = 4FC374501E8E3AD600C80077 /* Products */;
 					ProjectRef = 38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */;
+				},
+				{
+					ProductGroup = 4FEBF1321EBAF48A00ACCA6D /* Products */;
+					ProjectRef = 2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */;
+				},
+				{
+					ProductGroup = 4F7EAD601EB87A7700067774 /* Products */;
+					ProjectRef = F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */;
+				},
+				{
+					ProductGroup = 4FEBF1551EBAF48B00ACCA6D /* Products */;
+					ProjectRef = 8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -865,6 +981,20 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4F60ADF01EB850F8003D66AE /* libRCTWeChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWeChat.a;
+			remoteRef = 4F60ADEF1EB850F8003D66AE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4F7EAD811EB87A7800067774 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 4F7EAD801EB87A7800067774 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4FC3746D1E8E3AD600C80077 /* libReactNativeAudioStreaming.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -884,6 +1014,20 @@
 			fileType = archive.ar;
 			path = libStreamingKit.a;
 			remoteRef = 4FC374751E8E3B0E00C80077 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FEBF1531EBAF48A00ACCA6D /* libReactNativeIcons.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeIcons.a;
+			remoteRef = 4FEBF1521EBAF48A00ACCA6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FEBF1591EBAF48B00ACCA6D /* libSQLite.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSQLite.a;
+			remoteRef = 4FEBF1581EBAF48B00ACCA6D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
@@ -1058,12 +1202,20 @@
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = GCoreTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1088,12 +1240,20 @@
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = GCoreTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1118,6 +1278,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = GCore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1126,6 +1290,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yybbox.YiYouBao;
 				PRODUCT_NAME = GCore;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1141,6 +1306,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = GCore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1149,6 +1318,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yybbox.YiYouBao;
 				PRODUCT_NAME = GCore;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1171,11 +1341,19 @@
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = "GCore-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1209,11 +1387,19 @@
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-streaming/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 				INFOPLIST_FILE = "GCore-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1249,6 +1435,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.GCore-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1274,6 +1464,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

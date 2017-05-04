@@ -58,7 +58,7 @@ export  default  class CommentNavigationBar extends  Component{
                     onPress={this._gotoComment.bind(this)}
                     underlayColor={'transparent'}
                 >
-                    <Text style={styles.text}>评论</Text>
+                    <Text style={styles.text}>发评论</Text>
                 </TouchableHighlight>
             </View>
         )

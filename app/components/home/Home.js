@@ -11,7 +11,8 @@ import {
     Image,
     RefreshControl,
     ActivityIndicator,
-    InteractionManager
+    InteractionManager,
+    Platform
 } from 'react-native';
 
 import HomeBannar from './HomeBannar'
@@ -20,7 +21,7 @@ import NewsScrooll  from './NewsScrooll'
 
 
 import  Common from '../../common/constants'
-
+import  DataManager from '../../channel/DataManager'
 import Loading from '../other/Loading'
 import ArticleDetail from '../airticle/ArticleDetail'
 
@@ -58,8 +59,10 @@ export default class Home extends Component {
             actions.getHomePage(this.page)
             actions.getBanner()
         })
-
+       var manager = new DataManager()
+   manager.getAudioInfo()
     }
+
     _renderRow(row){
         const type = row.type
         if(type === 'original'){
@@ -87,16 +90,16 @@ export default class Home extends Component {
         //layoutMeasurement.height 是listView的高度(小于 window.height)
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
-        // console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40){
+        console.log(viewBottomY - contentSizeH)
+        if((viewBottomY - contentSizeH)>=40 || (Platform.OS === 'android' && (viewBottomY - contentSizeH) === 0)){
             const  {actions,homeInfo} = this.props
             if(homeInfo.isLoadMore){
                 return
              }
                  this.page++;
-
-                 actions.getHomePage(this.page )
+            actions.getHomePage(this.page )
         }
+
     }
     _renderHeader(ret){
        return(

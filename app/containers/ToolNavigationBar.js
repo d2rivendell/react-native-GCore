@@ -15,6 +15,7 @@ import Common from '../common/constants'
 import NetTool from '../channel/NetTool'
 
 import  Signin  from '../components/other/Signin'
+import * as WeChat from 'react-native-wechat'
 const likeUrl = 'http://www.g-cores.com/api/like'
 const  markUrl = 'http://www.g-cores.com/api/mark'
 
@@ -76,7 +77,18 @@ export  default  class ToolNavigationBar extends  Component{
         }else if (op === 'mark'){
             method = this.state.mark ? 'cancel_mark':'mark'
             url = markUrl
+        }else if (op === 'share'){
+            try {
+                let result =  WeChat.shareToTimeline({
+                    type: 'text',
+                    description: '为了打动你来机核。我们把她请来了 '+ this.props.url
+                });
+            } catch (e) {
+                console.error('share text message to time line failed with:', e);
+            }
+            return;
         }
+
         const {id} = this.props
         let fromData =   new FormData
         fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu');
@@ -137,7 +149,7 @@ export  default  class ToolNavigationBar extends  Component{
                        </TouchableHighlight>
                        <TouchableHighlight
                            underlayColor={'transparent'}
-                           onPress={this._doSomething.bind(this)}
+                           onPress={this._doSomething.bind(this,'share')}
                        >
                            <Image style={styles.icon} source={require('../resource/icon-share~iphone.png')}/>
                        </TouchableHighlight>

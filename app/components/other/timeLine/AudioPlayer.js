@@ -12,6 +12,7 @@ import {
     Platform
 }from 'react-native'
 import Common from '../../../common/constants'
+
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 export  default  class AudioPlayer extends  Component {
 
@@ -71,7 +72,13 @@ export  default  class AudioPlayer extends  Component {
         let value = pageInfo.duration * (v/100)
         ReactNativeAudioStreaming.seekToTime(value)
     }
-  render(){
+    _download(){
+        const {download} = this.props
+        if(download){
+            download()
+        }
+    }
+    render(){
       const {pageInfo,play} = this.props
       var icon = play.isPlay ? require('../../../resource/icon-pause~iphone.png'):require('../../../resource/icon-play~iphone.png')
       return(
@@ -90,15 +97,22 @@ export  default  class AudioPlayer extends  Component {
                           <Image resizeMode='contain' style={styles.icon}
                                  source={icon}/>
                       </TouchableHighlight>
+
                       <TouchableHighlight
                           underlayColor='transparent'
                           onPress={this._list.bind(this)}
                       >
+
                           <Image resizeMode='contain' style={styles.icon}
                                  source={require('../../../resource/icon-list~iphone.png')}/>
                       </TouchableHighlight>
+                      <TouchableHighlight
+                          underlayColor='transparent'
+                          onPress={this._download.bind(this)}
+                      >
                       <Image resizeMode='contain' style={styles.icon}
-                             source={require('../../../resource/icon-share~iphone.png')}/>
+                             source={require('../../../resource/icon-download~iphone.png')}/>
+                      </TouchableHighlight>
                   </View>
               </View>
               }

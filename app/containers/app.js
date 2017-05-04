@@ -35,6 +35,7 @@ import MusicTool from '../components/other/MusicTool'
 
 import Drawer from '../Lib/drawer/Drawer'
 import  MenuContainer from '../containers/MenuContainer'
+import * as WeChat from 'react-native-wechat'
 export  class App extends Component{
 
     // 构造
@@ -81,6 +82,9 @@ export  class App extends Component{
                 // console.log(user)
             }
         })
+        //org.reactjs.native.example.GCore
+        WeChat.registerApp('wx374bb4d5b3dfadcd')
+
     }
     _selectRow(title){
         this.drawer.close();

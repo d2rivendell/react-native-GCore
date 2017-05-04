@@ -19,6 +19,10 @@ import AudioPlayer from './AudioPlayer'
 import TimeLineList from './TimeLineList'
 import ToolNavigationBar from '../../../containers/ToolNavigationBar'
 import  Comment from '../../../components/other/Comment'
+import address from '../../../channel/address'
+
+import  RNFS from 'react-native-fs'
+import  DataManager from '../../../channel/DataManager'
 export  default  class TimeLine extends  Component {
 
     // 构造
@@ -39,19 +43,16 @@ export  default  class TimeLine extends  Component {
     componentDidMount() {
         const {id,actions,play} = this.props
         InteractionManager.runAfterInteractions(() => {
-
             actions.getTimeLine(id)
             actions.hidden(id)
         }).done(()=>{
-            console.log('this.props.shortcut~~~')
-            console.log(this.props.shortcut)
             if(play.isPlay === true){
 
             }else {
                 this.audioPlayer.playAudio()
             }
         })
-
+console.log(RNFS.DocumentDirectoryPath)
     }
     componentWillUnmount(){
           const {actions,id} = this.props
@@ -164,8 +165,25 @@ export  default  class TimeLine extends  Component {
                 ...this.props},
         })
     }
+
+    _download(){
+       const {id,timeLine} = this.props
+       // var localPath = RNFS.DocumentDirectoryPath + '/' + id + '.mp3'
+       //  console.log(localPath)
+       //  RNFS.downloadFile({ fromUrl: this.state.pageInfo.media.mp3[0], toFile: localPath ,background:true,
+       //      progress:(res)=>{
+       //          var progress = (res.bytesWritten/res.contentLength)
+       //          console.log(progress)
+       //      }
+       //  })
+        let manager = new DataManager()
+        manager.saveAudioInfo(timeLine,this.state.pageInfo)
+    }
     render() {
         const {timeLine,navigator,likes_num,id,application} = this.props
+        const uri = address.articleDetail(id)
+        console.log(timeLine)
+        console.log(this.state.pageInfo)
         return (
             <View style={styles.container}>
                 <ToolNavigationBar
@@ -176,6 +194,7 @@ export  default  class TimeLine extends  Component {
                     gotoComment = {this.gotoComment.bind(this)}
                     pageInfo = {this.state.pageInfo}
                     application = {application}
+                    url = {uri}
                 />
 
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&
@@ -201,6 +220,7 @@ export  default  class TimeLine extends  Component {
                     onList = {this._onList.bind(this)}
                     actions = {this.props.actions}
                     play = {this.props.play}
+                    download = {this._download.bind(this)}
                 />
             </View>
         );

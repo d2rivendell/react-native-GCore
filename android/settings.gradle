@@ -1,4 +1,13 @@
 rootProject.name = 'GCore'
+include ':react-native-fs'
+project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+include ':react-native-wechat'
+project(':react-native-wechat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wechat/android')
 include ':react-native-audio-streaming'
 project(':react-native-audio-streaming').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-audio-streaming/android')
+include ':react-native-sqlite-storage'
+project(':react-native-sqlite-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlite-storage/src/android')
+
 include ':app'
+include ':react-native-icons'
+project(':react-native-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-icons/android')

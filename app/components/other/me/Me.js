@@ -12,10 +12,11 @@ import {
     ScrollView,
     Image,
     Alert,
-    TouchableHighlight
+    TouchableHighlight,
+    Linking
 } from 'react-native';
 
-
+const  APPURL = 'itms-apps://itunes.apple.com/cn/app/%E6%9C%BA%E6%A0%B8-gamecores-%E4%B8%8D%E6%AD%A2%E6%98%AF%E6%B8%B8%E6%88%8F/id1095283476?mt=8'
 import CommonNavigationBar from '../../../containers/CommonNavigationBar'
 import  Constants from '../../../common/constants'
 import AccountHandle from '../../../channel/AccountHandle'
@@ -65,6 +66,11 @@ export default class Me extends Component {
              })
          }
     }
+    _rating(){
+        if(Linking.canOpenURL(APPURL)){
+            Linking.openURL(APPURL)
+        }
+    }
     render() {
         const {application,actions} = this.props
         const avatar = application.user ?{uri:application.user.thumb_url}:require('../../../resource/default-avatar~iphone.png')
@@ -103,10 +109,15 @@ export default class Me extends Component {
                 <View style={styles.cell}>
                     <Text>反馈</Text>
                 </View>
+
+                <TouchableHighlight
+                    underlayColor={'transparent'}
+                    onPress={this._rating.bind(this)}
+                >
                 <View style={styles.cell}>
                     <Text>给予评分</Text>
                 </View>
-
+                </TouchableHighlight>
 
                 {application.user&&<View style={[styles.cell,{marginTop:30,borderTopWidth:1,borderTopColor:'#c8c8c8'}]}>
                     <Text>账号绑定</Text>

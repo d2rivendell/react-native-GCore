@@ -47,6 +47,7 @@ const  replyUrl = 'http://www.g-cores.com/api/comments'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
 import Signin from '../../components/other/Signin'
 import NetTool from '../../channel/NetTool'
+
 export  default  class Reply extends  Component {
     // 构造
       // 构造
@@ -122,7 +123,7 @@ export  default  class Reply extends  Component {
             <View style={styles.container}>
                 <CommonNavigationBar
                     title= {title}
-                    rightTitle = {'评论'}
+                    rightTitle = {'发布'}
                     onBack = {this._onBack.bind(this)}
                     rightClick= {this._publish.bind(this)}/>
                 <TextInput multiline={true}
@@ -138,7 +139,8 @@ const styles = StyleSheet.create({
   text:{
       fontSize:16,
       flex:1,
-      padding:6
+      padding:6,
+      textAlignVertical:'top'
   },
     container:{
         flex:1,

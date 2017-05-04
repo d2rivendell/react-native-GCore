@@ -3,6 +3,9 @@ package com.gcore;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.pgsqlite.SQLitePluginPackage;
+import com.rnfs.RNFSPackage;
+import com.theweflex.react.WeChatPackage;
 import com.audioStreaming.ReactNativeAudioStreamingPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -11,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -24,6 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SQLitePluginPackage(),
+            new RNFSPackage(),
+            new WeChatPackage(),
             new ReactNativeAudioStreamingPackage()
 
       );

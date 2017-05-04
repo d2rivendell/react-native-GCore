@@ -9,9 +9,6 @@ const NetTool = {
         console.log(url)
      fetch(url,{
          method:'POST',
-         headers: {
-             'Content-Type': 'application/json;charset=UTF-8',
-         },
          body:params
      })
          .then((response) => (response.json()))
