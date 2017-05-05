@@ -18,32 +18,44 @@ import ToolNavigationBar from '../../containers/ToolNavigationBar'
 import BanarNavigationBar from '../../containers/BanarNavigationBar'
 import  Comment from '../../components/other/Comment'
 import  TimeLine from '../other/timeLine/TimeLine'
+import WebViewBridge from 'react-native-webview-bridge'
+
+const injectScript = `
+  $(function () {
+  
+         $("a").click(function(){
+           WebViewBridge.send(this.href.toString());
+        });
+                  });
+`;
 
 export default class AirticleDetail extends Component {
 
 
     onShouldStartLoadWithRequest= (e) => {
-      var msg = e.url.split('://')
-      var scheme = msg[0]
-      var response = msg[1]
-      // console.log(scheme + ' ' + response)
+    this._responseCunstomUrl(e.url)
+   }
+   _responseCunstomUrl(url){
+       var msg = url.split('://')
+       var scheme = msg[0]
+       var response = msg[1]
+       console.log(scheme + '+ ' + response)
 
-      if(scheme === 'http' || scheme === 'https'){
-       return true
-      }else{
-          const {id} = this.props
-          switch (response){
-              case 'showComments':
-                  this.gotoComment(id)
-                  break;
-              case 'playAudio':
-                  this.gotoTimeLine(id)
+       if(scheme === 'http' || scheme === 'https'){
+           return true
+       }else{
+           const {id} = this.props
+           switch (response){
+               case 'showComments':
+                   this.gotoComment(id)
                    break;
-              default:
-          }
-          return false
-      }
-
+               case 'playAudio':
+                   this.gotoTimeLine(id)
+                   break;
+               default:
+           }
+           return false
+       }
    }
     gotoComment(id){
         const {actions} = this.props
@@ -74,12 +86,19 @@ export default class AirticleDetail extends Component {
 
     }
 
-    componentWillReceiveProps(props) {
-        const {pageInfo} = props
+    _onBridgeMessage(msg){
+        // console.log(msg)
+        var type =  typeof  msg
+        if(type === 'string' && ( msg.search('://') >= 0)){
+            this._responseCunstomUrl(msg)
+        }
     }
+
+
     render() {
         const {likes_num,navigator,id,pageInfo,application} = this.props
         const uri = address.articleDetail(id)
+        console.log(uri)
         return (
             <View style={styles.container}>
 
@@ -101,21 +120,25 @@ export default class AirticleDetail extends Component {
                 />
                 }
 
-               <WebView
+               <WebViewBridge
+                   ref="webviewbridge"
                    style={styles.webView}
                    source={{uri: uri}}
                    automaticallyAdjustContentInsets={false}
+                   allowFileAccessFromFileURLs = {true}
+                   allowUniversalAccessFromFileURLs = {true}
+                   onBridgeMessage={this._onBridgeMessage.bind(this)}
+                   domStorageEnabled={true}
                    javaScriptEnabled={true}
-                   scrollEventThrottle={16}
-                   onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                   injectedJavaScript={injectScript}
                >
-               </WebView>
+               </WebViewBridge>
                 {
                     (!likes_num && likes_num != 0)&&  <BanarNavigationBar
                         alpha = {0.8}
                         navigator = {navigator}
                         likes_num = {pageInfo.data.likes_num}
-                        gotoComment = {this.gotoTimeLine.bind(this,id)}
+                        gotoComment = {this.gotoComment.bind(this,id)}
                         url = {uri}
                     />
                 }

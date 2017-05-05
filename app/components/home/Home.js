@@ -21,9 +21,9 @@ import NewsScrooll  from './NewsScrooll'
 
 
 import  Common from '../../common/constants'
-import  DataManager from '../../channel/DataManager'
+
 import Loading from '../other/Loading'
-import ArticleDetail from '../airticle/ArticleDetail'
+
 
 export default class Home extends Component {
    // 构造
@@ -39,14 +39,6 @@ export default class Home extends Component {
        this.page = 1
      }
 
-    componentWillReceiveProps(props) {
-        const {application,actions} = props
-        if (application.tab === 'home') {
-            // console.log('切换到了home')
-        }
-
-
-    }
     fatherScrollToTop(ret){
              this.setState({
                  canScroll:true
@@ -59,8 +51,6 @@ export default class Home extends Component {
             actions.getHomePage(this.page)
             actions.getBanner()
         })
-       var manager = new DataManager()
-   manager.getAudioInfo()
     }
 
     _renderRow(row){

@@ -3,7 +3,7 @@ export default class Channel {
 
     getBanner(){
         const gen_url = address.banner()
-        // console.log('bannar url is ' + gen_url)
+        console.log('bannar url is ' + gen_url)
         return window.fetch(gen_url)
                 .then((res) => res.json())
                 .then((data) =>{
@@ -17,7 +17,7 @@ export default class Channel {
     }
     getHomePage(page){
         const gen_url = address.homePage(page)
-        // console.log('home url is ' + gen_url)
+        console.log('home url is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -59,7 +59,7 @@ export default class Channel {
     }
     getComment(type,page,id){
         const gen_url = address.getComment(type,page,id)
-        // console.log('comment is ' + gen_url)
+        console.log('comment is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -104,7 +104,7 @@ export default class Channel {
     }
     getTimeLineCategories(page){
         const gen_url = address.getTimeLineCategories(page)
-        // console.log('getTimeLineCategories is ' + gen_url)
+        console.log('getTimeLineCategories is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -158,7 +158,7 @@ export default class Channel {
     }
     getCategorieDetail(id,page){
         const gen_url = address.getCategorieDetail(id,page)
-        // console.log('getCategorieDetail is ' + gen_url)
+        console.log('getCategorieDetail is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -187,7 +187,7 @@ export default class Channel {
     }
     getSubscript(page){
         const gen_url = address.getSubscript(page)
-        // console.log('getCategorieSubscriptInfo is ' + gen_url)
+        console.log('getCategorieSubscriptInfo is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{
@@ -201,7 +201,7 @@ export default class Channel {
     }
     getMyMark(page){
         const gen_url = address.getMyMark(page)
-        // console.log('getMyMark is ' + gen_url)
+        console.log('getMyMark is ' + gen_url)
         return window.fetch(gen_url)
             .then((res) => res.json())
             .then((data) =>{

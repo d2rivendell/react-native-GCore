@@ -41,9 +41,9 @@
 		4F60AE2C1EB8518C003D66AE /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE2B1EB8518C003D66AE /* libc++.tbd */; };
 		4F60AE2E1EB85196003D66AE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F60AE2D1EB85196003D66AE /* libz.tbd */; };
 		4FC374771E8E3B1D00C80077 /* libStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC374761E8E3B0E00C80077 /* libStreamingKit.a */; };
+		4FCB325C1EBC1D5500264FEE /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCB321D1EBC1B5000264FEE /* libReact-Native-Webview-Bridge.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		86B1CFF07170490DBDF8F1F8 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 750BDDCAD98B4D37801FA7DE /* libReactNativeIcons.a */; };
 		CB4BB693F5FC4645AFEA6474 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FA13A4072B44FB8FB278BF /* libRCTWeChat.a */; };
 		CFE4BDDC360C43908780162B /* libReactNativeAudioStreaming.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 714B131AFB114C12A6CFE5D2 /* libReactNativeAudioStreaming.a */; };
 		FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FBE42CFA1540A1BAB59AFC /* libRNFS.a */; };
@@ -246,12 +246,12 @@
 			remoteGlobalIDString = 8354B6B10F10687EE626DF43663B075A;
 			remoteInfo = StreamingKit;
 		};
-		4FEBF1521EBAF48A00ACCA6D /* PBXContainerItemProxy */ = {
+		4FCB321C1EBC1B5000264FEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */;
+			containerPortal = 4FCB32041EBC1B4F00264FEE /* React-Native-Webview-Bridge.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
-			remoteInfo = ReactNativeIcons;
+			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
+			remoteInfo = "React-Native-Webview-Bridge";
 		};
 		4FEBF1581EBAF48B00ACCA6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -310,7 +310,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GCore/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GCore/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* GCore-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GCore-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* GCore-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GCore-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
@@ -320,10 +319,10 @@
 		4F60AE2B1EB8518C003D66AE /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		4F60AE2D1EB85196003D66AE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4FC3746E1E8E3B0E00C80077 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
+		4FCB32041EBC1B4F00264FEE /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		52FA13A4072B44FB8FB278BF /* libRCTWeChat.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWeChat.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		714B131AFB114C12A6CFE5D2 /* libReactNativeAudioStreaming.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeAudioStreaming.a; sourceTree = "<group>"; };
-		750BDDCAD98B4D37801FA7DE /* libReactNativeIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeIcons.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -346,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FCB325C1EBC1D5500264FEE /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				4F60AE2A1EB85181003D66AE /* libsqlite3.0.tbd in Frameworks */,
 				4F60AE2E1EB85196003D66AE /* libz.tbd in Frameworks */,
 				4F60AE2C1EB8518C003D66AE /* libc++.tbd in Frameworks */,
@@ -366,7 +366,6 @@
 				CFE4BDDC360C43908780162B /* libReactNativeAudioStreaming.a in Frameworks */,
 				CB4BB693F5FC4645AFEA6474 /* libRCTWeChat.a in Frameworks */,
 				FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */,
-				86B1CFF07170490DBDF8F1F8 /* libReactNativeIcons.a in Frameworks */,
 				33EEE9139EE04AB69106A826 /* libSQLite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,10 +534,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4FEBF1321EBAF48A00ACCA6D /* Products */ = {
+		4FCB32051EBC1B4F00264FEE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4FEBF1531EBAF48A00ACCA6D /* libReactNativeIcons.a */,
+				4FCB321D1EBC1B5000264FEE /* libReact-Native-Webview-Bridge.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -572,6 +571,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4FCB32041EBC1B4F00264FEE /* React-Native-Webview-Bridge.xcodeproj */,
 				4FC3746E1E8E3B0E00C80077 /* Pods.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -587,7 +587,6 @@
 				38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */,
 				7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */,
 				F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */,
-				2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */,
 				8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */,
 			);
 			name = Libraries;
@@ -803,16 +802,16 @@
 					ProjectRef = 7E3D31F11E0241DAB786B4F2 /* RCTWeChat.xcodeproj */;
 				},
 				{
+					ProductGroup = 4FCB32051EBC1B4F00264FEE /* Products */;
+					ProjectRef = 4FCB32041EBC1B4F00264FEE /* React-Native-Webview-Bridge.xcodeproj */;
+				},
+				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
 					ProductGroup = 4FC374501E8E3AD600C80077 /* Products */;
 					ProjectRef = 38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */;
-				},
-				{
-					ProductGroup = 4FEBF1321EBAF48A00ACCA6D /* Products */;
-					ProjectRef = 2057C55422984A46B584C916 /* ReactNativeIcons.xcodeproj */;
 				},
 				{
 					ProductGroup = 4F7EAD601EB87A7700067774 /* Products */;
@@ -1016,11 +1015,11 @@
 			remoteRef = 4FC374751E8E3B0E00C80077 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4FEBF1531EBAF48A00ACCA6D /* libReactNativeIcons.a */ = {
+		4FCB321D1EBC1B5000264FEE /* libReact-Native-Webview-Bridge.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libReactNativeIcons.a;
-			remoteRef = 4FEBF1521EBAF48A00ACCA6D /* PBXContainerItemProxy */;
+			path = "libReact-Native-Webview-Bridge.a";
+			remoteRef = 4FCB321C1EBC1B5000264FEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4FEBF1591EBAF48B00ACCA6D /* libSQLite.a */ = {

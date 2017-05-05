@@ -19,7 +19,7 @@ import {
 const  APPURL = 'itms-apps://itunes.apple.com/cn/app/%E6%9C%BA%E6%A0%B8-gamecores-%E4%B8%8D%E6%AD%A2%E6%98%AF%E6%B8%B8%E6%88%8F/id1095283476?mt=8'
 import CommonNavigationBar from '../../../containers/CommonNavigationBar'
 import  Constants from '../../../common/constants'
-import AccountHandle from '../../../channel/AccountHandle'
+import MyStorage from '../../../channel/MyStorage'
 import Signin from '../../other/Signin'
 export default class Me extends Component {
 
@@ -48,7 +48,8 @@ export default class Me extends Component {
      _siginout(){
          const {actions} = this.props
          Alert.alert('提示','确定要退出吗',[{text:'取消',onPress:()=>{} },{text:'确定',onPress:()=>{
-             AccountHandle.signout()
+            let storage = new MyStorage()
+             storage.signout()
              actions.signout()
           }
          }])

@@ -33,9 +33,10 @@ import myMarkAction from '../actions/myMark'
 
 import MusicTool from '../components/other/MusicTool'
 
-import Drawer from '../Lib/drawer/Drawer'
+import  Drawer from '../Lib/drawer/Drawer'
 import  MenuContainer from '../containers/MenuContainer'
 import * as WeChat from 'react-native-wechat'
+import MyStorage from '../channel/MyStorage'
 export  class App extends Component{
 
     // 构造
@@ -76,7 +77,8 @@ export  class App extends Component{
     componentDidMount() {
 
         const {ApplicationActions} = this.props
-        account.loadAccount((user,err)=>{
+       let storage = new MyStorage()
+        storage.loadAccount((user,err)=>{
             if(user){
                ApplicationActions.signin(user)
                 // console.log(user)

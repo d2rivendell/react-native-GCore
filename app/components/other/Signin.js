@@ -14,7 +14,7 @@ import {
 }from 'react-native'
 import  Constants from '../../common/constants'
 import NetTool from '../../channel/NetTool'
-
+import MyStorage from '../../channel/MyStorage'
 const  registerUrl = 'http://www.g-cores.com/auth/identity/register'
 const  siginUrl = 'http://www.g-cores.com/auth/identity/callback'
 export  default  class Signin extends  Component {
@@ -83,7 +83,8 @@ export  default  class Signin extends  Component {
             if(response){
                 if(response.status === 1){
                      var user = {...response.results.user,auth_token:response.results.auth_token}
-                    account.saveAccount(user);
+                  let storage = new  MyStorage()
+                    storage.saveAccount(user);
                     actions.signin(user)
                     this.props.navigator.pop()
                 }

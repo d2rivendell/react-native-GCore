@@ -120,14 +120,15 @@ export default  class TabBarView extends  Component {
         }
     }
     push(title){
-        if(account.user === null){
+        const {pageInfo,comment,play,timeLine,application,subscript,myMark,subscriptAction,myMarkAction,ApplicationActions,homeAction} = this.props
+        const commonData = {pageInfo,comment,play,timeLine,application}
+        if(application.user === null){
             this.props.navigator.push({
                 component:Signin
             })
             return;
         }
-        const {pageInfo,comment,play,timeLine,application,subscript,myMark,subscriptAction,myMarkAction,ApplicationActions,homeAction} = this.props
-        const commonData = {pageInfo,comment,play,timeLine,application}
+
         switch (title){
             case '订阅':
                 this.props.navigator.push({

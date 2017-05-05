@@ -22,7 +22,6 @@ import  Comment from '../../../components/other/Comment'
 import address from '../../../channel/address'
 
 import  RNFS from 'react-native-fs'
-import  DataManager from '../../../channel/DataManager'
 export  default  class TimeLine extends  Component {
 
     // 构造
@@ -176,8 +175,6 @@ console.log(RNFS.DocumentDirectoryPath)
        //          console.log(progress)
        //      }
        //  })
-        let manager = new DataManager()
-        manager.saveAudioInfo(timeLine,this.state.pageInfo)
     }
     render() {
         const {timeLine,navigator,likes_num,id,application} = this.props
