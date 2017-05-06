@@ -69,6 +69,7 @@ export  default  class Signin extends  Component {
     }
     _sigin(){
         const {actions} = this.props
+        console.log(actions)
         if(this.state.signinEmail.length === 0 || this.state.signinPwd.length===0){
             Alert.alert('提示','账号密码不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
             return;
@@ -82,7 +83,7 @@ export  default  class Signin extends  Component {
         NetTool.POST(siginUrl,fromData,(response,error)=>{
             if(response){
                 if(response.status === 1){
-                     var user = {...response.results.user,auth_token:response.results.auth_token}
+                  var user = {...response.results.user,auth_token:response.results.auth_token}
                   let storage = new  MyStorage()
                     storage.saveAccount(user);
                     actions.signin(user)

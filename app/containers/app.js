@@ -29,7 +29,7 @@ import videoAction from '../actions/video'
 import categoriesAction from '../actions/categories'
 import subscriptAction from '../actions/subscript'
 import myMarkAction from '../actions/myMark'
-
+import downloadAction from '../actions/download'
 
 import MusicTool from '../components/other/MusicTool'
 
@@ -86,6 +86,13 @@ export  class App extends Component{
         })
         //org.reactjs.native.example.GCore
         WeChat.registerApp('wx374bb4d5b3dfadcd')
+        storage.getAudioInfo(24544,(res,err)=>{
+            if(res){
+                console.log(res)
+            }else {
+                console.log(res)
+            }
+        })
 
     }
     _selectRow(title){
@@ -170,20 +177,21 @@ export default connect (
             video:state.video,
             categories:state.categories,
             subscript:state.subscript,
-            myMark:state.myMark
+            myMark:state.myMark,
+            download:state.download
         }
     },
     dispatch => {
         return {
             ApplicationActions:bindActionCreators(Object.assign({},applicationActions), dispatch),
-            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction,categoriesAction), dispatch),
-            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            radioAction:bindActionCreators(Object.assign({},applicationActions,radioAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            categoriesAction:bindActionCreators(Object.assign({},applicationActions,categoriesAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            subscriptAction:bindActionCreators(Object.assign({},applicationActions,subscriptAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch),
-            myMarkAction:bindActionCreators(Object.assign({},applicationActions,myMarkAction,commentAction,pageInfoAction,timeLineAction,playAction), dispatch)
+            homeAction:bindActionCreators(Object.assign({},applicationActions,homeAction,commentAction,pageInfoAction,timeLineAction,playAction,categoriesAction,downloadAction), dispatch),
+            articleAction:bindActionCreators(Object.assign({},applicationActions,articleAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            newsAction:bindActionCreators(Object.assign({},applicationActions,newsAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            radioAction:bindActionCreators(Object.assign({},applicationActions,radioAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            videoAction:bindActionCreators(Object.assign({},applicationActions,videoAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            categoriesAction:bindActionCreators(Object.assign({},applicationActions,categoriesAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            subscriptAction:bindActionCreators(Object.assign({},applicationActions,subscriptAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch),
+            myMarkAction:bindActionCreators(Object.assign({},applicationActions,myMarkAction,commentAction,pageInfoAction,timeLineAction,playAction,downloadAction), dispatch)
         }
     }
 )(App)

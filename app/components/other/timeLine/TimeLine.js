@@ -11,7 +11,8 @@ import {
     Button,
     ListView,
     Navigator,
-    InteractionManager
+    InteractionManager,
+    Alert
 }from 'react-native'
 import {Player}  from  'react-native-audio-streaming'
 import TimeLinePanel from './TimeLinePanel'
@@ -20,7 +21,8 @@ import TimeLineList from './TimeLineList'
 import ToolNavigationBar from '../../../containers/ToolNavigationBar'
 import  Comment from '../../../components/other/Comment'
 import address from '../../../channel/address'
-
+import MyStorage from '../../../channel/MyStorage'
+import DownloadManager from '../../../channel/DownloadManager'
 import  RNFS from 'react-native-fs'
 export  default  class TimeLine extends  Component {
 
@@ -45,8 +47,12 @@ export  default  class TimeLine extends  Component {
             actions.getTimeLine(id)
             actions.hidden(id)
         }).done(()=>{
-            if(play.isPlay === true){
-
+            if(play.isPlay === true ){
+                if(play.id !== id){
+                    this.audioPlayer.pause()
+                    actions.play(false)
+                    this.audioPlayer.playAudio()
+                }
             }else {
                 this.audioPlayer.playAudio()
             }
@@ -166,21 +172,29 @@ console.log(RNFS.DocumentDirectoryPath)
     }
 
     _download(){
-       const {id,timeLine} = this.props
-       // var localPath = RNFS.DocumentDirectoryPath + '/' + id + '.mp3'
-       //  console.log(localPath)
-       //  RNFS.downloadFile({ fromUrl: this.state.pageInfo.media.mp3[0], toFile: localPath ,background:true,
-       //      progress:(res)=>{
-       //          var progress = (res.bytesWritten/res.contentLength)
-       //          console.log(progress)
-       //      }
-       //  })
+        const {timeLine,} = this.props
+        var localPath = RNFS.DocumentDirectoryPath + '/' + this.state.pageInfo.id + '.mp3'
+        let downloadManager = new DownloadManager()
+
+        if(downloadManager.isDownloading ){
+            Alert.alert('提示','已有任务在队列中',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            return
+        }
+
+        console.log(localPath)
+        let starage = new MyStorage()
+        starage.getAudioInfo(this.state.pageInfo.id,(res)=>{
+            if(res){
+                Alert.alert('提示','资源已经下载',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            }else{
+                downloadManager.downloadFile(this.state.pageInfo.media.mp3[0],localPath,timeLine,this.state.pageInfo)
+            }
+        })
+
     }
     render() {
         const {timeLine,navigator,likes_num,id,application} = this.props
         const uri = address.articleDetail(id)
-        console.log(timeLine)
-        console.log(this.state.pageInfo)
         return (
             <View style={styles.container}>
                 <ToolNavigationBar

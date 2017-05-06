@@ -18,7 +18,7 @@ import Constants from './common/constants';
 
 import MyStorage from './channel/MyStorage'
 
-global.Common = Constants;
+
 const  createStoreWithWM = applyMiddleware(thunk)(createStore)
 const  store = createStoreWithWM(reducers)
 
@@ -26,6 +26,7 @@ const  store = createStoreWithWM(reducers)
 export default class  Root extends Component {
 
    render() {
+       global.Common = Constants;
        let storage =  new MyStorage()
        storage.loadAccount((user,err)=>{
 

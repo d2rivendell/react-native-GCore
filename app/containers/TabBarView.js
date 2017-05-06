@@ -28,8 +28,8 @@ import TimeLine from '../components/other/timeLine/TimeLine'
 import Subscript from '../components/other/me/Subscript'
 import MyMark from '../components/other/me/MyMark'
 import Me from '../components/other/me/Me'
-import Signin from '../components/other/Signin'
-// import TabBar from '../containers/TabBar'
+import DownloadList from '../components/other/DownloadList'
+
 import ControllerTabBar from '../containers/ControllerTabBar'
 
 import HomeBannar from '../components/home/HomeBannar'
@@ -120,15 +120,8 @@ export default  class TabBarView extends  Component {
         }
     }
     push(title){
-        const {pageInfo,comment,play,timeLine,application,subscript,myMark,subscriptAction,myMarkAction,ApplicationActions,homeAction} = this.props
+        const {pageInfo,comment,play,timeLine,application,subscript,myMark,subscriptAction,myMarkAction,ApplicationActions,homeAction,download} = this.props
         const commonData = {pageInfo,comment,play,timeLine,application}
-        if(application.user === null){
-            this.props.navigator.push({
-                component:Signin
-            })
-            return;
-        }
-
         switch (title){
             case '订阅':
                 this.props.navigator.push({
@@ -153,6 +146,12 @@ export default  class TabBarView extends  Component {
                 })
                 break;
             case '下载':
+                this.props.navigator.push({
+                    component:DownloadList,
+                    params:{
+                        download:download,
+                    }
+                })
                 break;
             case '投稿':
                 this.props.navigator.push({
@@ -250,12 +249,7 @@ class MainNavigator extends Component{
         )
     }
 }
-TabBarView.propTypes = {
-    home:React.PropTypes.object,
-    homeAction:React.PropTypes.object,
-    article:React.PropTypes.object,
-    ApplicationActions:React.PropTypes.object
-}
+
 
 const styles = StyleSheet.create({
     mainNavigator:{

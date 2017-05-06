@@ -10,7 +10,8 @@ import {
     Text,
     StatusBar,
     Navigator,
-    InteractionManager
+    InteractionManager,
+    Platform
 } from  'react-native'
 
 import address from '../../channel/address'
@@ -31,9 +32,16 @@ const injectScript = `
 
 export default class AirticleDetail extends Component {
 
-
+// 构造
+  constructor(props) {
+    super(props);
+    // 初始状态
+    this.state = {
+        uri:''
+    };
+  }
     onShouldStartLoadWithRequest= (e) => {
-    this._responseCunstomUrl(e.url)
+    return this._responseCunstomUrl(e.url)
    }
    _responseCunstomUrl(url){
        var msg = url.split('://')
@@ -81,13 +89,19 @@ export default class AirticleDetail extends Component {
     componentDidMount() {
         const {id,actions} = this.props
         InteractionManager.runAfterInteractions(()=>{
+            this.setState({
+                uri : address.articleDetail(id)
+            })
             actions.getPageInfo(id)
         })
 
     }
 
     _onBridgeMessage(msg){
-        // console.log(msg)
+        console.log(msg)
+        if(Platform.OS === 'ios'){
+            return
+        }
         var type =  typeof  msg
         if(type === 'string' && ( msg.search('://') >= 0)){
             this._responseCunstomUrl(msg)
@@ -97,8 +111,6 @@ export default class AirticleDetail extends Component {
 
     render() {
         const {likes_num,navigator,id,pageInfo,application} = this.props
-        const uri = address.articleDetail(id)
-        console.log(uri)
         return (
             <View style={styles.container}>
 
@@ -116,14 +128,14 @@ export default class AirticleDetail extends Component {
                     id = {id}
                     pageInfo = {pageInfo.data}
                     application = {application}
-                    url = {uri}
+                    url = {this.state.uri}
                 />
                 }
 
                <WebViewBridge
                    ref="webviewbridge"
                    style={styles.webView}
-                   source={{uri: uri}}
+                   source={{uri: this.state.uri}}
                    automaticallyAdjustContentInsets={false}
                    allowFileAccessFromFileURLs = {true}
                    allowUniversalAccessFromFileURLs = {true}
@@ -131,6 +143,7 @@ export default class AirticleDetail extends Component {
                    domStorageEnabled={true}
                    javaScriptEnabled={true}
                    injectedJavaScript={injectScript}
+                   onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
                >
                </WebViewBridge>
                 {
@@ -139,7 +152,7 @@ export default class AirticleDetail extends Component {
                         navigator = {navigator}
                         likes_num = {pageInfo.data.likes_num}
                         gotoComment = {this.gotoComment.bind(this,id)}
-                        url = {uri}
+                        url = {this.state.uri}
                     />
                 }
             </View>

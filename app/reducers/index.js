@@ -17,6 +17,7 @@ import video from '../reducers/video'
 import  categories from  '../reducers/categories'
 import  subscript from  '../reducers/subscript'
 import  myMark from  '../reducers/myMark'
+import  download from  '../reducers/download'
 const  reducers = combineReducers({
     application,
     homeInfo,
@@ -31,7 +32,8 @@ const  reducers = combineReducers({
     video,
     categories,
     subscript,
-    myMark
+    myMark,
+    download
 });
 
 export  default  reducers

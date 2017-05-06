@@ -71,6 +71,10 @@ const SUBSCRIPT = {
 const MYMARK = {
     INFO: 'MYMARK.INFO',
 }
+const DOWNLOAD = {
+    BEGIN: 'DOWNLOAD.BEGIN',
+    END: 'DOWNLOAD.END',
+}
 export default {
     APP,
     AUTH_KEY,
@@ -86,5 +90,6 @@ export default {
     VIDEO,
     CATEGORIES,
     SUBSCRIPT,
-    MYMARK
+    MYMARK,
+    DOWNLOAD
 }
