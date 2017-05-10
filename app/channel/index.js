@@ -80,6 +80,7 @@ export default class Channel {
             .then((data) =>{
                 // console.log('~~~~~~~ getPageInfo ')
                 // console.log(data)
+                data['results'].localFile = false
                 return data['results']
             })
             .catch((error) => {

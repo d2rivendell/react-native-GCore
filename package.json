@@ -9,11 +9,13 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-native": "0.42.3",
+    "react-native-audio-streamer": "0.0.9",
     "react-native-audio-streaming": "^2.3.2",
     "react-native-fs": "^2.3.2",
     "react-native-looped-carousel": "^0.1.5",
     "react-native-progress": "^3.2.1",
     "react-native-scrollable-tab-view": "^0.7.3",
+    "react-native-sound": "^0.10.1",
     "react-native-sqlite-storage": "^3.3.1",
     "react-native-storage": "^0.1.5",
     "react-native-swipe-list-view": "^0.4.1",

@@ -128,6 +128,7 @@ const  styles = StyleSheet.create({
     },
     text:{
         fontSize:17,
-        color:'#666666'
+        color:'#fff',
+        marginLeft:5
     }
 })

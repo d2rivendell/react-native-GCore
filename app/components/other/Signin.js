@@ -30,6 +30,7 @@ export  default  class Signin extends  Component {
             registerEmail:'',
             registerPwd:'',
             registerConfirmPwd:'',
+            name:''
         };
       }
     _cancel(){
@@ -60,7 +61,7 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(registerUrl,fromData,(response,error)=>{
             if(response){
-                this.props.navigator.pop()
+                this._goto(2)
             }else{
                 console.log(error)
             }
@@ -97,6 +98,12 @@ export  default  class Signin extends  Component {
 
         })
     }
+    _changeName(){
+        if(this.state.name.length === 0){
+            Alert.alert('提示','昵称不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
+            return;
+        }
+    }
  render(){
      return(
          <View style={styles.container}>
@@ -132,7 +139,7 @@ export  default  class Signin extends  Component {
                      <TouchableHighlight underlayColor = 'transparent'
                                          onPress={this._goto.bind(this,1)}
                      >
-                 <Text style={styles.loginText}>注册机核应用</Text>
+                 <Text style={styles.btnText}>注册机核应用</Text>
                      </TouchableHighlight>
                  <View style={styles.iconContainer}>
                      <Image style={styles.signinLogo} source={require('../../resource/signin-weibo.png')} resizeMode= 'contain'/>
@@ -169,10 +176,28 @@ export  default  class Signin extends  Component {
                      <TouchableHighlight underlayColor = 'transparent'
                                          onPress={this._goto.bind(this,0)}
                      >
-                     <Text style={styles.loginText}>登陆机核应用</Text>
+                     <Text style={styles.btnText}>登陆机核应用</Text>
                      </TouchableHighlight>
 
                  </View>
+
+                 <View style={styles.twoContainView}>
+                     <Text style={{fontSize:16,paddingTop:30}}>最后一步</Text>
+                     <MyTextField
+                         textStyle = {{width:Constants.WINDOW.width - 120,marginTop:30,height:30}}
+                         borderStyle={{borderBottomColor:"#000",borderBottomWidth:Constants.WINDOW.onePR}}
+                         onChangeText={(text) => this.setState({name:text})}
+                     />
+                     <Text style={{paddingTop:16}}>请填写你的昵称，以完成注册</Text>
+                     <TouchableHighlight style={styles.singinBtn} underlayColor = 'transparent'
+                                         onPress={this._changeName.bind(this)}
+                     >
+                         <Text style={styles.singinText}>完成</Text>
+                     </TouchableHighlight>
+
+
+                 </View>
+
              </ScrollView>
          </View>
      )
@@ -182,8 +207,8 @@ export  default  class Signin extends  Component {
 class MyTextField extends Component{
     render(){
         return (
-            <View style={{borderBottomColor:"#e8e8e8",borderBottomWidth: 1}}>
-                <TextInput  style={styles.text}
+            <View style={[{borderBottomColor:"#e8e8e8",borderBottomWidth: 1},this.props.borderStyle]}>
+                <TextInput  style={[styles.text,this.props.textStyle]}
                             placeholder = {this.props.placeholder}
                             onChangeText = {this.props.onChangeText}
                             secureTextEntry = {this.props.secureTextEntry}
@@ -253,7 +278,7 @@ const styles = StyleSheet.create({
         width:140,
         marginTop:20
     },
-    loginText:{
+    btnText:{
         color:'#555555',
         marginTop:26
     },

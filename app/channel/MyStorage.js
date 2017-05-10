@@ -4,7 +4,7 @@ import {
 }from 'react-native'
 import Storage from 'react-native-storage';
 
-let instance = null;
+let storageInstance = null;
 let storage =new Storage({
     size: 1000,
     storageBackend: AsyncStorage,
@@ -14,10 +14,10 @@ let storage =new Storage({
 export default class MyStorage {
 
     constructor() {
-        if(!instance){
-            instance = this
+        if(!storageInstance){
+            storageInstance = this
         }
-        return instance
+        return storageInstance
     }
 
     loadAccount(callback){
@@ -58,7 +58,8 @@ export default class MyStorage {
     }
     signout(){
         storage.remove({
-            key: 'account'
+            key: 'account',
+            id:0
         });
     }
 

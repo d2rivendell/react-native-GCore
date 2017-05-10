@@ -12,7 +12,7 @@ import {
     RefreshControl,
     ActivityIndicator,
     InteractionManager,
-    Platform
+    Platform,
 } from 'react-native';
 
 import HomeBannar from './HomeBannar'
@@ -93,7 +93,10 @@ export default class Home extends Component {
     }
     _renderHeader(ret){
        return(
-            <HomeBannar  {...this.props}/>
+            <HomeBannar
+                ref = {(c)=> this.header = c}
+                {...this.props}
+            />
           )
     }
     render(){

@@ -12,8 +12,9 @@ import {
     Platform
 }from 'react-native'
 import Common from '../../../common/constants'
-
+import  RNFS from 'react-native-fs'
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+import RNAudioStreamer from 'react-native-audio-streamer'
 export  default  class AudioPlayer extends  Component {
 
 
@@ -32,6 +33,7 @@ export  default  class AudioPlayer extends  Component {
              1000)
         }
 
+
     }
 
     componentWillUnmount() {
@@ -41,9 +43,16 @@ export  default  class AudioPlayer extends  Component {
 
     playAudio(){
         const {pageInfo,play} = this.props
+        console.log(pageInfo)
      if(pageInfo){
          if(!play.isPlay && pageInfo.media.mp3[0]){
-             this.play(pageInfo.media.mp3[0])
+             if(pageInfo.localFile){
+                 var localPath = RNFS.DocumentDirectoryPath + '/' + pageInfo.id + '.mp3'
+                 this.play(localPath)
+                 console.log('播放本地音乐')
+             }else{
+                 this.play(pageInfo.media.mp3[0])
+             }
          }else{
             this.pause()
          }
@@ -72,6 +81,9 @@ export  default  class AudioPlayer extends  Component {
         let value = pageInfo.duration * (v/100)
         ReactNativeAudioStreaming.seekToTime(value)
     }
+    seekToTime(progress){
+        ReactNativeAudioStreaming.seekToTime(progress)
+    }
     _download(){
         const {download} = this.props
         if(download){
@@ -81,6 +93,13 @@ export  default  class AudioPlayer extends  Component {
     render(){
       const {pageInfo,play} = this.props
       var icon = play.isPlay ? require('../../../resource/icon-pause~iphone.png'):require('../../../resource/icon-play~iphone.png')
+        var downloadIcon
+       if(pageInfo && pageInfo.localFile){
+           downloadIcon =  require('../../../resource/icon-downloaded~iphone.png')
+       }else {
+           downloadIcon = require('../../../resource/icon-download~iphone.png')
+       }
+
       return(
           <View style={styles.container}>
               { pageInfo && <View style={styles.contentView}>
@@ -93,6 +112,7 @@ export  default  class AudioPlayer extends  Component {
                       <TouchableHighlight
                           underlayColor='transparent'
                           onPress={this.playAudio.bind(this)}
+                          style={styles.toolItem}
                       >
                           <Image resizeMode='contain' style={styles.icon}
                                  source={icon}/>
@@ -101,6 +121,7 @@ export  default  class AudioPlayer extends  Component {
                       <TouchableHighlight
                           underlayColor='transparent'
                           onPress={this._list.bind(this)}
+                          style={styles.toolItem}
                       >
 
                           <Image resizeMode='contain' style={styles.icon}
@@ -109,9 +130,10 @@ export  default  class AudioPlayer extends  Component {
                       <TouchableHighlight
                           underlayColor='transparent'
                           onPress={this._download.bind(this)}
+                          style={styles.toolItem}
                       >
                       <Image resizeMode='contain' style={styles.icon}
-                             source={require('../../../resource/icon-download~iphone.png')}/>
+                             source={downloadIcon}/>
                       </TouchableHighlight>
                   </View>
               </View>
@@ -135,7 +157,7 @@ const  styles = StyleSheet.create({
         height:60,
         backgroundColor:'white',
         width:Common.WINDOW.width,
-        padding:10
+
     },
     slider:{
         height:16,
@@ -156,16 +178,17 @@ const  styles = StyleSheet.create({
         marginLeft:10
     },
     icon:{
-        width:15,
+        width:18,
+        height:18,
     },
     textView:{
         flex:5,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems:'center',
         paddingLeft:10
 },
     title:{
-       color:'#999999',
+        color:'#999999',
         fontSize:13
     },
     desc:{
@@ -178,6 +201,12 @@ const  styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-around',
         alignItems:'center',
-        paddingRight:10
+        paddingRight:10,
+    },
+    toolItem:{
+        height:50,
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center'
     }
 })

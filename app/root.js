@@ -22,7 +22,14 @@ import MyStorage from './channel/MyStorage'
 const  createStoreWithWM = applyMiddleware(thunk)(createStore)
 const  store = createStoreWithWM(reducers)
 
-
+/**
+ *
+ * http://www.g-cores.com/api/set_device_token
+ * auth_exclusive	dpkynzs2q0wm9o5gi1r83fcabthl4eu
+   device_token	08532edf3c771890ad23a62d65cb749f02341c6d72213eb6d72ba97e7547e580
+   user_id	-1
+ *
+ * */
 export default class  Root extends Component {
 
    render() {

@@ -115,7 +115,7 @@ export  default  class ToolNavigationBar extends  Component{
    }
 
     render(){
-        const {likes_num} = this.props
+        const {likes_num,type} = this.props
        const likeStyle = this.state.like ? {tintColor:'#dd0000'}:{tintColor:'#777777'}
         const markStyle = this.state.mark ? {tintColor:'#dd0000'}:{tintColor:'#777777'}
         return(
@@ -130,35 +130,50 @@ export  default  class ToolNavigationBar extends  Component{
                          onPress={this._back.bind(this)}
                          underlayColor={'transparent'}
                      >
+                         {type === 'pop'?  <View style={styles.backContainer}>
+                             <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/navigationbar_back@2x.png')}/>
+                             <Text style={styles.text}>返回</Text>
+                         </View>:
                          <View style={styles.backContainer}>
-                             <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/icon-close-down.png')}/>
-                         </View>
+                                 <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/icon-close-down.png')}/>
+                          </View>
+                         }
+
                      </TouchableHighlight>
                    <View style={styles.ToolView}>
                        <TouchableHighlight
                            underlayColor={'transparent'}
                            onPress={this._doSomething.bind(this,'like')}
+                           style={styles.toolItem}
                        >
                            <Image style={[styles.icon ,likeStyle]} source={require('../resource/icon-like-r.png')}/>
                        </TouchableHighlight>
                        <TouchableHighlight
                            underlayColor={'transparent'}
                            onPress={this._doSomething.bind(this,'mark')}
+                           style={styles.toolItem}
                        >
                            <Image style={[styles.icon ,markStyle]} source={ require('../resource/icon-mark~iphone.png')}/>
                        </TouchableHighlight>
                        <TouchableHighlight
                            underlayColor={'transparent'}
                            onPress={this._doSomething.bind(this,'share')}
+                           style={styles.toolItem}
                        >
                            <Image style={styles.icon} source={require('../resource/icon-share~iphone.png')}/>
                        </TouchableHighlight>
 
-                     <TouchableHighlight onPress={this._gotoComment.bind(this)}  underlayColor = 'transparent'>
-                     <Image style={styles.icon} source={require('../resource/icon-comment.png')}/>
+                     <TouchableHighlight onPress={this._gotoComment.bind(this)}
+                                         underlayColor = 'transparent'
+                                         style={styles.toolItem}
+                     >
+                         <View
+                         style={{flexDirection:'row',justifyContent:'center'}}
+                         >
+                             <Image style={styles.icon} source={require('../resource/icon-comment.png')}/>
+                             <Text style={styles.likeText}>{likes_num}</Text>
+                         </View>
                      </TouchableHighlight>
-
-                      <Text style={styles.likeText}>{likes_num}</Text>
                    </View>
                 </Animated.View>
         )
@@ -183,12 +198,14 @@ const  styles = StyleSheet.create({
     },
     backContainer:{
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        height:44,
+        width:80
     },
     ToolView:{
         flexDirection:'row',
         justifyContent:'space-around',
-        paddingRight:26
+        paddingRight:20
     },
     icon:{
       marginLeft:20,
@@ -197,5 +214,11 @@ const  styles = StyleSheet.create({
         color:'#c8c8c8',
         fontSize:10,
         marginLeft:4
+    },
+    toolItem:{
+        width:44,
+        height:44,
+        alignItems:'center',
+        justifyContent:'center'
     }
 })

@@ -7,10 +7,18 @@ import {
     Text,
     Image,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    UIManager,
+    findNodeHandle,
+    InteractionManager
 }from 'react-native'
-
+import MyIcon from '../../other/custom/MyIcon'
 export  default  class TimeLinePanel extends  Component {
+    // 构造
+      constructor(props) {
+        super(props);
+        this.didUpdate = false
+      }
     getTime(timestamp){
         var hour = Math.floor(timestamp/60)
         var sec = timestamp - (hour * 60)
@@ -25,9 +33,30 @@ export  default  class TimeLinePanel extends  Component {
             return( <Image style={styles.tagImage} source={require('../../../resource/timeline-source~iphone.png')} resizeMode= 'contain'/>)
         }
     }
+    _listen(){
+        const  {changeProgress} = this.props
+        if(changeProgress){
+            changeProgress()
+        }
+    }
+
+    componentDidUpdate() {
+        if(!this.didUpdate){
+            this.didUpdate = true
+            const  {shouldScroll} = this.props
+            var hand = findNodeHandle(this)
+            UIManager.measure(hand,(x,y,w,h,px,py)=>{
+                if(shouldScroll){
+                    shouldScroll(y)
+                }
+            })
+        }
+    }
+
+
     render(){
         const {timeLineInfo} = this.props
-        // console.log(timeLineInfo)
+
         return(
             <View style={styles.container}>
                 <View style={styles.leftLineView}>
@@ -41,12 +70,12 @@ export  default  class TimeLinePanel extends  Component {
                     <Text style={styles.title}>{timeLineInfo.title}</Text>
                     <Image  style={styles.corver} source={{uri:timeLineInfo.asset_url}} resizeMode= 'contain'/>
                     <Text style={styles.content}>{timeLineInfo.content}</Text>
-                    <View style={styles.bottomContainer} >
+                    <View style={styles.bottomContainer}>
                         {timeLineInfo.quote_href.length === 0 ?
-                            (<Text style={{color:'#999999',fontSize:10}}>no link</Text>):
-                            (<Image style={styles.tagImage} source={require('../../../resource/timeline-source~iphone.png')} resizeMode= 'contain'/>)
+                            (<Text style={{color:'#999999',fontSize:10,width:60,textAlign:'center'}}>no link</Text>):
+                            (<MyIcon style={styles.tagImage} source={require('../../../resource/timeline-source~iphone.png')} resizeMode= 'contain'/>)
                         }
-                        <Image style={styles.tagImage} source={require('../../../resource/timeline-listen~iphone.png')} resizeMode= 'contain'/>
+                        <MyIcon onPress={this._listen.bind(this)} style={styles.tagImage} source={require('../../../resource/timeline-listen~iphone.png')} resizeMode= 'contain'/>
                     </View>
                 </View>
 
@@ -105,8 +134,9 @@ const  styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'space-around',
-        padding:30,
-        alignItems:'center'
+        paddingTop:30,
+        alignItems:'center',
+        paddingBottom:30,
     },
     tagImage:{
         width:60

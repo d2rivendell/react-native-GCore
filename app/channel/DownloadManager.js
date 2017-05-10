@@ -1,7 +1,5 @@
 'use strict'
-import {
-    DeviceEventEmitter
-}from 'react-native'
+
 import Storage from 'react-native-storage';
 let instance = null;
 import MyStorage from '../channel/MyStorage'
@@ -23,14 +21,18 @@ export default class DownloadManager {
         RNFS.downloadFile({ fromUrl: fromUrl, toFile: toFile ,background:true,
             progress:(res)=>{
                 var progress = (res.bytesWritten/res.contentLength)
+                this.downloadInfo =  {contentLength:res.contentLength,bytesWritten:res.bytesWritten,progress:progress,...pageInfo}
                 if(progress === 1){
-                    starage.saveAudioInfo(timeLine,{...pageInfo,contentLength:res.contentLength});
+                    starage.saveAudioInfo(timeLine,{...pageInfo,contentLength:res.contentLength,localFile:true});
                     this.isDownloading = false
                 }
-                DeviceEventEmitter.emit('download', {contentLength:res.contentLength,bytesWritten:res.bytesWritten,progress:progress,...pageInfo});
             }
         })
     }
-
+    getDownloadProgress(info,callback){
+        if(callback){
+            callback(info)
+        }
+    }
 }
 

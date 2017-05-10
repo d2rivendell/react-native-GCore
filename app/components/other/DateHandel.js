@@ -11,8 +11,7 @@ const parse = (date) =>{
     let min = d.getMinutes()
 
     let now = new Date()
-    // console.log(date + '===>' + day)
-    // console.log(now + '===>' + now.getDate())
+
     if(now.getYear() > year){
         let yeal_del =  now.getYear() - year
         return `${yeal_del}年前`
@@ -22,7 +21,6 @@ const parse = (date) =>{
             return `${month_del}个月前`
         }
         let day_del =  now.getDate() - day
-        console.log(day_del)
         if(day_del >= 7){
             let we = parseInt(day_del/7)
             return `${day_del}周前`
@@ -53,6 +51,9 @@ const parse = (date) =>{
                 if(min_del >= 1){
                     return `${min_del}分钟前`
                 }else{
+                    console.log('刚刚')
+                    console.log(date + '===>' + day)
+                    console.log(now + '===>' + now.getDate())
                     return '刚刚'
                 }
             }

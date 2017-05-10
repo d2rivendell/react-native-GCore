@@ -40,11 +40,17 @@ export  default  class TimeLine extends  Component {
             mode:'timeLine',
             pageInfo:null
         };
+        this.rowPositionY = new Array()
+        this.rowSeconds = []
+        this.recieveTimeLine = false
       }
     componentDidMount() {
-        const {id,actions,play} = this.props
+        const {id,actions,play,loaclTimeLine} = this.props
         InteractionManager.runAfterInteractions(() => {
-            actions.getTimeLine(id)
+            if(!loaclTimeLine){
+                actions.getTimeLine(id)
+                console.log('请求数据')
+            }
             actions.hidden(id)
         }).done(()=>{
             if(play.isPlay === true ){
@@ -57,7 +63,6 @@ export  default  class TimeLine extends  Component {
                 this.audioPlayer.playAudio()
             }
         })
-console.log(RNFS.DocumentDirectoryPath)
     }
     componentWillUnmount(){
           const {actions,id} = this.props
@@ -79,20 +84,57 @@ console.log(RNFS.DocumentDirectoryPath)
           }
 
     }
+
     componentWillReceiveProps(prop) {
-        const {pageInfo} = prop
+        const {pageInfo,timeLine,localPageInfo} = prop
         //初始化时需要 重新在列表选择后不再需要
-        if (pageInfo && this.state.pageInfo === null) {
+      if(localPageInfo && this.state.pageInfo === null){
+          this.setState({
+              pageInfo:localPageInfo
+          })
+      }else if (pageInfo && this.state.pageInfo === null) {
             let truePageInfo = (pageInfo.data ? pageInfo.data:pageInfo)
-        this.setState({
+          this.setState({
             pageInfo:truePageInfo
-        })
+         })
+      }
+    //请求到数据后 把秒数 保存起来
+      if(timeLine.data.length){
+            if(!this.recieveTimeLine){
+                this.recieveTimeLine = true
+                for(var i = 0; i < timeLine.data.length;i++){
+                    this.rowSeconds[i] = timeLine.data.at
+                }
+            }
       }
     }
-    _renderRow(data){
-          // console.log(data)
-          return (<TimeLinePanel timeLineInfo = {data}/>)
+    /**返回cell 的y坐标 保存起来
+     * */
+    _shouldScroll(rowID,y){
+        // console.log('y:  '+y+ 'rowID: ' + rowID)
+        let whatSeconds = this.rowSeconds[rowID]
+        this.rowPositionY[whatSeconds] = y
     }
+    /**
+     * 调整播放进度
+     * */
+    _changeProgress(data){
+        this.audioPlayer.seekToTime(data.at)
+        if(this.rowPositionY[data.at]){
+            this.listView.scrollTo({x: 0, y: this.rowPositionY[data.at]-32, animated: true})
+        }
+    }
+
+    _renderRow(data, sectionID, rowID, highlightRow){
+        this.rowSeconds[rowID] = data.at
+          return (<TimeLinePanel
+               shouldScroll = {this._shouldScroll.bind(this,rowID)}
+               changeProgress = {this._changeProgress.bind(this,data)}
+               timeLineInfo = {data}
+          />)
+    }
+
+
     _getTime(timestamp){
         var hour = Math.floor(timestamp/60)
         var sec = timestamp - (hour * 60)
@@ -127,7 +169,14 @@ console.log(RNFS.DocumentDirectoryPath)
                 ss = '加载中'
                 break;
         }
-     var value = (progress/this.state.pageInfo.duration) * 100
+        for(var key in this.rowPositionY){
+            if(parseInt(progress) === parseInt(key)){
+                console.log('key = ' + key)
+                this.listView.scrollTo({x: 0, y: this.rowPositionY[key]-32, animated: true})
+                break
+            }
+        }
+        var value = (progress/this.state.pageInfo.duration) * 100
     this.setState({
         progress:progress,
         playerState:ss,
@@ -187,13 +236,15 @@ console.log(RNFS.DocumentDirectoryPath)
             if(res){
                 Alert.alert('提示','资源已经下载',[{text:'确定',onPress:()=>{console.log('sure')} }])
             }else{
+                Alert.alert('提示','开始下载',[{text:'确定',onPress:()=>{console.log('sure')} }])
                 downloadManager.downloadFile(this.state.pageInfo.media.mp3[0],localPath,timeLine,this.state.pageInfo)
             }
         })
 
     }
     render() {
-        const {timeLine,navigator,likes_num,id,application} = this.props
+        const {timeLine,navigator,likes_num,id,application,loaclTimeLine} = this.props
+        let rTimeLine = loaclTimeLine ? loaclTimeLine:timeLine
         const uri = address.articleDetail(id)
         return (
             <View style={styles.container}>
@@ -206,11 +257,13 @@ console.log(RNFS.DocumentDirectoryPath)
                     pageInfo = {this.state.pageInfo}
                     application = {application}
                     url = {uri}
+                    type = {'dismiss'}
                 />
 
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&
                 <ListView
-                    dataSource={this.state.dataSource.cloneWithRows(timeLine.data)}
+                    ref = {(c)=>this.listView = c}
+                    dataSource={this.state.dataSource.cloneWithRows(rTimeLine.data)}
                     renderRow={this._renderRow.bind(this)}
                     enableEmptySections={true}
                     renderSectionHeader={this._renderSectionHeader.bind(this)}

@@ -60,7 +60,8 @@ export default  class TabBarView extends  Component {
         this.scrolling = false
       }
      _onChangeTab = ({i}) => {
-        console.log(i) ;
+
+        this.tabBar.setupPageUI(i)
         const {ApplicationActions} = this.props
         switch (i){
             case 0:
@@ -78,9 +79,6 @@ export default  class TabBarView extends  Component {
     componentDidMount() {
 
         DeviceEventEmitter.addListener('timeLine',this._gotoTimeLine.bind(this))
-        // const {homeAction} = this.props
-        // homeAction.getBanner()
-
     }
     _gotoTimeLine(play){
         const {homeAction} =  this.props
@@ -145,14 +143,15 @@ export default  class TabBarView extends  Component {
                     }
                 })
                 break;
-            case '下载':
+            case '下载':{
                 this.props.navigator.push({
                     component:DownloadList,
                     params:{
-                        download:download,
+                        actions:homeAction
                     }
                 })
                 break;
+            }
             case '投稿':
                 this.props.navigator.push({
                     name:'BannarDetail',
@@ -185,13 +184,14 @@ export default  class TabBarView extends  Component {
             <View style={{flex:1}}>
                 <MainNavigator color={color} onCategory = {this._category.bind(this)} menuShow={this._menuShow.bind(this)}/>
             <ScrollableTabView
-            renderTabBar={() => <ControllerTabBar tabNames={tabTitles}/>}
+            renderTabBar={() => <ControllerTabBar
+                                    ref = {(c)=>this.tabBar = c}
+                                   tabNames={tabTitles}/>
+            }
             tabBarPosition= 'top'
-            locked
             scrollWithoutAnimation
             onChangeTab={this._onChangeTab}
             style={{height:Common.WINDOW.height-64}}
-            scrollEnabled={false}
             >
                  <Home  ref={(c)=>this.Home = c} {...home} {...commonData} actions={homeAction}  navigator = {navigator} />
                  <News news ={news} {...commonData}   actions = {newsAction}  navigator = {navigator}/>
@@ -226,22 +226,26 @@ class MainNavigator extends Component{
 
         return(
             <View style={[styles.mainNavigator,{backgroundColor:this.props.color}]}>
+
                 <TouchableHighlight
                     onPress={this._menuShow.bind(this)}
                     underlayColor='transparent'
+                    style={styles.menu}
                 >
-              <Image resizeMode='contain' style={styles.icon}
-                     source={require('../resource/icon-menu~iphone.png')}/>
+                   <Image resizeMode='contain' style={[styles.icon,{marginLeft:20}]}
+                          source={require('../resource/icon-menu~iphone.png')}/>
 
                 </TouchableHighlight>
 
                 <Image  resizeMode='contain' style={styles.logo}
                         source={require('../resource/logo-big.png')}/>
+
                 <TouchableHighlight
                     onPress={this._onCategory.bind(this)}
                     underlayColor='transparent'
+                    style={styles.menu}
                 >
-                    <Image  resizeMode='contain' style={styles.icon}
+                    <Image  resizeMode='contain' style={{alignSelf:'flex-end',marginRight:30,width:18}}
                             source={require('../resource/icon-category~iphone.png')}/>
                 </TouchableHighlight>
 
@@ -259,8 +263,6 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        paddingLeft:20,
-        paddingRight:20,
     },
     icon:{
         width:18,
@@ -268,6 +270,11 @@ const styles = StyleSheet.create({
     },
     logo:{
         height:15
+    },
+    menu:{
+        height:60,
+        width:100,
+        justifyContent:'center',
     }
 })
 

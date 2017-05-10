@@ -88,7 +88,9 @@ const  styles = StyleSheet.create({
     },
     backContainer:{
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        width:80,
+        alignSelf:'center'
     },
     text:{
         fontSize:15,

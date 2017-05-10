@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-audio-streamer')
     compile project(':react-native-webview-bridge')
     compile project(':react-native-sqlite-storage')
     compile project(':react-native-fs')

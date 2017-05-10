@@ -6,10 +6,10 @@ import {
     ListView,
     Image,
     Slider,
-    DeviceEventEmitter,
     InteractionManager,
-    TouchableOpacity,
-    Alert
+    TouchableHighlight,
+    Alert,
+    Navigator
 } from 'react-native';
 import MyStorage from '../../channel/MyStorage'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
@@ -18,6 +18,7 @@ import { SwipeListView,SwipeRow } from 'react-native-swipe-list-view'
 import Constants from '../../common/constants'
 import  RNFS from 'react-native-fs'
 import DownloadManager from '../../channel/DownloadManager'
+import  TimeLine from '../other/timeLine/TimeLine'
 let storage = new MyStorage()
 let downloadManager = new  DownloadManager()
 export default class DownloadList extends Component {
@@ -34,26 +35,45 @@ export default class DownloadList extends Component {
         }
         this.page = 1
     }
+    mixins: [TimerMixin]
     componentDidMount() {
         InteractionManager.runAfterInteractions(()=>{
             this.getData()
-            this.subscription = DeviceEventEmitter.addListener('download',this.downloadProgress.bind(this))
+            this.setupTimer()
         })
 
     }
-    downloadProgress(info){
-        this.setState({
-            dataSource:this.state.dataSource.cloneWithRows(this.state.AudioInfo.concat(info)),
-            downloading: downloadManager.isDownloading
-        })
+    setupTimer(){
+        if(downloadManager.isDownloading){
+            this.timer = setInterval(
+                this.getDownloadProgress.bind(this),
+                1000
+            );
+        }
     }
-
+    getDownloadProgress(){
+        console.log('getDownloadProgress')
+        if(downloadManager.isDownloading){
+            this.setState({
+                dataSource:this.state.dataSource.cloneWithRows(this.state.AudioInfo.concat(downloadManager.downloadInfo)),
+                downloading: downloadManager.isDownloading
+            })
+        }else {
+            console.log('clearTimeout')
+            this.timer && clearTimeout(this.timer);
+            this.getData()
+            this.setState({
+                downloading: false
+            })
+        }
+    }
     componentWillUnmount() {
-        this.subscription.remove();
+        this.timer && clearTimeout(this.timer);
     }
    getData(){
        storage.getAllDataForKey('AudioInfo',(res)=>{
            if(res){
+               console.log(res)
                this.setState({
                    dataSource:this.state.dataSource.cloneWithRows(res),
                    AudioInfo:res
@@ -69,6 +89,26 @@ export default class DownloadList extends Component {
         let p = (bytesWritten/contentLength) * 100
         return '下载中 ' + parseInt(p) + '%'
     }
+    _selectRow(data){
+        const {actions} = this.props
+        console.log(data.pageInfo)
+        if(data.progress){
+            return
+        }else {
+            this.props.navigator.push({
+                name:'TimeLine',
+                component:TimeLine,
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+                params: {
+                    id:data.pageInfo.id,
+                    likes_num:data.pageInfo.likes_num,
+                    loaclTimeLine:data.timeLine,
+                    localPageInfo:data.pageInfo,
+                    actions:actions
+                },
+            })
+        }
+    }
     renderRow(data,index){
      // console.log(data)
        var rawData = null
@@ -78,6 +118,11 @@ export default class DownloadList extends Component {
            rawData = data.pageInfo
        }
            return(
+               <TouchableHighlight
+                   underlayColor={'rgba(200,200,200,1)'}
+                   onPress={this._selectRow.bind(this,data)}
+                   activeOpacity={0.5}
+               >
                <View style={styles.CellContainer}>
                    <Image  style={styles.cover} source={{uri:rawData.thumb_url}}/>
                    <View style={styles.rightContent}>
@@ -97,6 +142,7 @@ export default class DownloadList extends Component {
 
                    </View>
                </View>
+               </TouchableHighlight>
            )
     }
     _onBack(){
@@ -125,9 +171,9 @@ export default class DownloadList extends Component {
         }
         return(
                     <View style={styles.rowBack}>
-                        <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={this._deleteRow.bind(this, rowId, rawData.id)}>
+                        <TouchableHighlight style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={this._deleteRow.bind(this, rowId, rawData.id)}>
                             <Text style={styles.backTextWhite}>删除</Text>
-                        </TouchableOpacity>
+                        </TouchableHighlight>
                     </View>
         )
     }
@@ -162,7 +208,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding:10,
         borderBottomColor:'#c8c8c8',
-        borderBottomWidth:1,
+        borderBottomWidth:Constants.WINDOW.onePR,
         backgroundColor: '#ffffff',
     },
     cover:{
