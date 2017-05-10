@@ -86,7 +86,7 @@ export  default  class TimeLine extends  Component {
     }
 
     componentWillReceiveProps(prop) {
-        const {pageInfo,timeLine,localPageInfo} = prop
+        const {pageInfo,timeLine,localPageInfo,loaclTimeLine} = prop
         //初始化时需要 重新在列表选择后不再需要
       if(localPageInfo && this.state.pageInfo === null){
           this.setState({
@@ -98,10 +98,20 @@ export  default  class TimeLine extends  Component {
             pageInfo:truePageInfo
          })
       }
-    //请求到数据后 把秒数 保存起来
-      if(timeLine.data.length){
+
+
+        //请求到数据后 把秒数 保存起来
+      if(loaclTimeLine){
+          if(!this.recieveTimeLine){
+              this.recieveTimeLine = true
+              for(var i = 0; i < loaclTimeLine.data.length;i++){
+                  this.rowSeconds[i] = loaclTimeLine.data.at
+              }
+          }
+      }else if(timeLine.data.length){
             if(!this.recieveTimeLine){
                 this.recieveTimeLine = true
+                console.log(timeLine)
                 for(var i = 0; i < timeLine.data.length;i++){
                     this.rowSeconds[i] = timeLine.data.at
                 }
@@ -111,7 +121,7 @@ export  default  class TimeLine extends  Component {
     /**返回cell 的y坐标 保存起来
      * */
     _shouldScroll(rowID,y){
-        // console.log('y:  '+y+ 'rowID: ' + rowID)
+        console.log('y:  '+y+ 'rowID: ' + rowID)
         let whatSeconds = this.rowSeconds[rowID]
         this.rowPositionY[whatSeconds] = y
     }
@@ -176,6 +186,7 @@ export  default  class TimeLine extends  Component {
                 break
             }
         }
+        if(!this.state.pageInfo) return
         var value = (progress/this.state.pageInfo.duration) * 100
     this.setState({
         progress:progress,

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -45,8 +46,8 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CB4BB693F5FC4645AFEA6474 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FA13A4072B44FB8FB278BF /* libRCTWeChat.a */; };
 		CFE4BDDC360C43908780162B /* libReactNativeAudioStreaming.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 714B131AFB114C12A6CFE5D2 /* libReactNativeAudioStreaming.a */; };
-		FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FBE42CFA1540A1BAB59AFC /* libRNFS.a */; };
 		F67AAD0715D9470DA081AB0F /* libRNAudioStreamer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D40F557C408D400EBF32EECE /* libRNAudioStreamer.a */; };
+		FF7A20FAA0684D53ABE2370A /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FBE42CFA1540A1BAB59AFC /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +254,13 @@
 			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
 			remoteInfo = "React-Native-Webview-Bridge";
 		};
+		4FD9C9BD1EC31C3A002DB0F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3647C317D6A744E8846D25B8 /* RNAudioStreamer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4EA3C7F71DED6DA700FF8C38;
+			remoteInfo = RNAudioStreamer;
+		};
 		4FEBF1581EBAF48B00ACCA6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */;
@@ -312,6 +320,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* GCore-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GCore-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* GCore-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GCore-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3647C317D6A744E8846D25B8 /* RNAudioStreamer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudioStreamer.xcodeproj; path = "../node_modules/react-native-audio-streamer/ios/RNAudioStreamer.xcodeproj"; sourceTree = "<group>"; };
 		38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
 		4F60AE081EB8516E003D66AE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4F60AE271EB85176003D66AE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -329,9 +338,8 @@
 		85FBE42CFA1540A1BAB59AFC /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		8FFA0A3053FE4D29A37FFD44 /* SQLite.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		9AF5E5414970442CBA2B8103 /* libSQLite.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSQLite.a; sourceTree = "<group>"; };
+		D40F557C408D400EBF32EECE /* libRNAudioStreamer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAudioStreamer.a; sourceTree = "<group>"; };
 		F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
-		3647C317D6A744E8846D25B8 /* RNAudioStreamer.xcodeproj */ = {isa = PBXFileReference; name = "RNAudioStreamer.xcodeproj"; path = "../node_modules/react-native-audio-streamer/ios/RNAudioStreamer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		D40F557C408D400EBF32EECE /* libRNAudioStreamer.a */ = {isa = PBXFileReference; name = "libRNAudioStreamer.a"; path = "libRNAudioStreamer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,6 +549,14 @@
 			isa = PBXGroup;
 			children = (
 				4FCB321D1EBC1B5000264FEE /* libReact-Native-Webview-Bridge.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FD9C99C1EC31C3A002DB0F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FD9C9BE1EC31C3A002DB0F3 /* libRNAudioStreamer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -818,6 +834,10 @@
 					ProjectRef = 38F00730917F450CA868D346 /* ReactNativeAudioStreaming.xcodeproj */;
 				},
 				{
+					ProductGroup = 4FD9C99C1EC31C3A002DB0F3 /* Products */;
+					ProjectRef = 3647C317D6A744E8846D25B8 /* RNAudioStreamer.xcodeproj */;
+				},
+				{
 					ProductGroup = 4F7EAD601EB87A7700067774 /* Products */;
 					ProjectRef = F5270F1D82C94777A93CB483 /* RNFS.xcodeproj */;
 				},
@@ -1024,6 +1044,13 @@
 			fileType = archive.ar;
 			path = "libReact-Native-Webview-Bridge.a";
 			remoteRef = 4FCB321C1EBC1B5000264FEE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FD9C9BE1EC31C3A002DB0F3 /* libRNAudioStreamer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAudioStreamer.a;
+			remoteRef = 4FD9C9BD1EC31C3A002DB0F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4FEBF1591EBAF48B00ACCA6D /* libSQLite.a */ = {

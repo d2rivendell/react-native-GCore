@@ -41,18 +41,28 @@ export  default  class TimeLinePanel extends  Component {
     }
 
     componentDidUpdate() {
-        if(!this.didUpdate){
-            this.didUpdate = true
-            const  {shouldScroll} = this.props
-            var hand = findNodeHandle(this)
-            UIManager.measure(hand,(x,y,w,h,px,py)=>{
-                if(shouldScroll){
-                    shouldScroll(y)
-                }
-            })
+        const  {shouldScroll,timeLineInfo} = this.props
+        if(timeLineInfo){
+            if(!this.didUpdate){
+                this.didUpdate = true
+                this.timer = setTimeout(//5s 后再获取坐标 否在在播放本地音频时 在该处还没有布局好
+                    () => {
+                        var hand = findNodeHandle(this)
+                        UIManager.measure(hand,(x,y,w,h,px,py)=>{
+                            if(shouldScroll){
+                                shouldScroll(y)
+                            }
+                        })
+                    },
+                    5000
+                );
+
+            }
         }
     }
-
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer);
+    }
 
     render(){
         const {timeLineInfo} = this.props
