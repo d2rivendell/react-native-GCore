@@ -10,7 +10,9 @@ import {
     TouchableHighlight,
     UIManager,
     findNodeHandle,
-    InteractionManager
+    InteractionManager,
+    Platform,
+    LayoutAnimation
 }from 'react-native'
 import MyIcon from '../../other/custom/MyIcon'
 export  default  class TimeLinePanel extends  Component {
@@ -18,6 +20,9 @@ export  default  class TimeLinePanel extends  Component {
       constructor(props) {
         super(props);
         this.didUpdate = false
+          if (Platform.OS === 'android') {
+              UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+          }
       }
     getTime(timestamp){
         var hour = Math.floor(timestamp/60)
@@ -40,7 +45,7 @@ export  default  class TimeLinePanel extends  Component {
         }
     }
 
-    componentDidUpdate() {
+      componentDidMount() {
         const  {shouldScroll,timeLineInfo} = this.props
         if(timeLineInfo){
             if(!this.didUpdate){
@@ -49,6 +54,7 @@ export  default  class TimeLinePanel extends  Component {
                     () => {
                         var hand = findNodeHandle(this)
                         UIManager.measure(hand,(x,y,w,h,px,py)=>{
+                            console.log('x: '+x +'  y:' + y )
                             if(shouldScroll){
                                 shouldScroll(y)
                             }

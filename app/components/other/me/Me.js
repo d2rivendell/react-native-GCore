@@ -21,6 +21,7 @@ import CommonNavigationBar from '../../../containers/CommonNavigationBar'
 import  Constants from '../../../common/constants'
 import MyStorage from '../../../channel/MyStorage'
 import Signin from '../../other/Signin'
+import NetTool from '../../../channel/NetTool'
 export default class Me extends Component {
 
 
@@ -48,6 +49,7 @@ export default class Me extends Component {
      _siginout(){
          const {actions} = this.props
          Alert.alert('提示','确定要退出吗',[{text:'取消',onPress:()=>{} },{text:'确定',onPress:()=>{
+             NetTool.setDevideToken()
             let storage = new MyStorage()
              storage.signout()
              actions.signout()

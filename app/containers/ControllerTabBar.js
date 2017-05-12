@@ -145,7 +145,7 @@ export default class ControllerTabBar extends Component {
 const styles = StyleSheet.create({
     container: {
         height:36,
-        width:Constants.WINDOW.width
+        width:Constants.WINDOW.width,
     },
     scroll: {
         flex:1

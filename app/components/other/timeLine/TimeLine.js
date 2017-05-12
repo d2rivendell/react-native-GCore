@@ -12,7 +12,8 @@ import {
     ListView,
     Navigator,
     InteractionManager,
-    Alert
+    Alert,
+    Platform,
 }from 'react-native'
 import {Player}  from  'react-native-audio-streaming'
 import TimeLinePanel from './TimeLinePanel'
@@ -24,6 +25,44 @@ import address from '../../../channel/address'
 import MyStorage from '../../../channel/MyStorage'
 import DownloadManager from '../../../channel/DownloadManager'
 import  RNFS from 'react-native-fs'
+
+
+
+class TimeLineHeader extends  Component {
+
+    setNativeProps(nativeProps) {
+         this.setState(nativeProps)
+    }
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            playerState:'',
+            progress:0
+        };
+
+      }
+    _getTime(timestamp){
+        var hour = Math.floor(timestamp/60)
+        var sec = timestamp - (hour * 60)
+        hour = (Array(2).join(0)+parseInt(hour)).slice(-2)
+        sec = (Array(2).join(0)+parseInt(sec)).slice(-2)
+        return  hour + ":" + sec
+    }
+    render(){
+
+        return (
+            <View ref={component => this._root = component}  {...this.props} style={styles.sectionHeader}>
+                <Text style={styles.sectionStatus}>{this.state.playerState}</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={styles.sectionTime}>{this._getTime(this.state.progress)}/</Text>
+                    <Text style={styles.sectionTime}>{this._getTime(this.props.duration)}</Text>
+                </View>
+            </View>
+        )
+    }
+}
 export  default  class TimeLine extends  Component {
 
     // 构造
@@ -34,15 +73,13 @@ export  default  class TimeLine extends  Component {
             dataSource:new ListView.DataSource({
                 rowHasChanged:(row1,row2) => row1 !== row2
             }),
-            progress:0,
-            playerState:'',
-            value:0,
             mode:'timeLine',
             pageInfo:null
         };
         this.rowPositionY = new Array()
         this.rowSeconds = []
         this.recieveTimeLine = false
+          this.playerState = null
       }
     componentDidMount() {
         const {id,actions,play,loaclTimeLine} = this.props
@@ -60,14 +97,18 @@ export  default  class TimeLine extends  Component {
                     this.audioPlayer.playAudio()
                 }
             }else {
+                if(Platform.OS !== 'ios') {
+                  this.audioPlayer.setAndroidUrl()
+                }
                 this.audioPlayer.playAudio()
             }
         })
     }
     componentWillUnmount(){
+          console.log('componentWillUnmount')
           const {actions,id} = this.props
          console.log(actions)
-          switch (this.state.playerState){
+          switch (this.playerState){
               case '播放出错':
                   actions.hidden(id)
                   break;
@@ -80,9 +121,7 @@ export  default  class TimeLine extends  Component {
               case '加载中':
                   actions.hidden(id)
                   break;
-
           }
-
     }
 
     componentWillReceiveProps(prop) {
@@ -131,7 +170,7 @@ export  default  class TimeLine extends  Component {
     _changeProgress(data){
         this.audioPlayer.seekToTime(data.at)
         if(this.rowPositionY[data.at]){
-            this.listView.scrollTo({x: 0, y: this.rowPositionY[data.at]-32, animated: true})
+            this.listView.scrollTo({x: 0, y: this.rowPositionY[data.at], animated: true})
         }
     }
 
@@ -152,17 +191,7 @@ export  default  class TimeLine extends  Component {
         sec = (Array(2).join(0)+parseInt(sec)).slice(-2)
         return  hour + ":" + sec
     }
-    _renderSectionHeader(sectionData, sectionID){
-        return (
-             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionStatus}>{this.state.playerState}</Text>
-              <View style={{flexDirection:'row'}}>
-                  <Text style={styles.sectionTime}>{this._getTime(this.state.progress)}/</Text>
-                  <Text style={styles.sectionTime}>{this._getTime(this.state.pageInfo.duration)}</Text>
-              </View>
-             </View>
-        )
-     }
+
     _getProgress(status,progress,duration){
         var ss = ''
         switch (status){
@@ -182,17 +211,18 @@ export  default  class TimeLine extends  Component {
         for(var key in this.rowPositionY){
             if(parseInt(progress) === parseInt(key)){
                 console.log('key = ' + key)
-                this.listView.scrollTo({x: 0, y: this.rowPositionY[key]-32, animated: true})
+                this.listView.scrollTo({x: 0, y: this.rowPositionY[key], animated: true})
                 break
             }
         }
         if(!this.state.pageInfo) return
-        var value = (progress/this.state.pageInfo.duration) * 100
-    this.setState({
-        progress:progress,
-        playerState:ss,
-        value:value
-    })
+        if(this.TimeLineHeader){
+            this.TimeLineHeader.setNativeProps({
+                playerState:ss,
+                progress:progress,
+            })
+        }
+        this.playerState = ss
     }
     _onList(){
         var mode = 'timeLine'
@@ -257,6 +287,7 @@ export  default  class TimeLine extends  Component {
         const {timeLine,navigator,likes_num,id,application,loaclTimeLine} = this.props
         let rTimeLine = loaclTimeLine ? loaclTimeLine:timeLine
         const uri = address.articleDetail(id)
+        console.log('render')
         return (
             <View style={styles.container}>
                 <ToolNavigationBar
@@ -270,15 +301,17 @@ export  default  class TimeLine extends  Component {
                     url = {uri}
                     type = {'dismiss'}
                 />
-
+                {this.state.pageInfo &&
+                <TimeLineHeader ref = {c=>this.TimeLineHeader = c}  duration = {this.state.pageInfo.duration}/>
+                }
                 {this.state.mode === 'timeLine' && this.state.pageInfo !== null &&
                 <ListView
                     ref = {(c)=>this.listView = c}
                     dataSource={this.state.dataSource.cloneWithRows(rTimeLine.data)}
                     renderRow={this._renderRow.bind(this)}
                     enableEmptySections={true}
-                    renderSectionHeader={this._renderSectionHeader.bind(this)}
                     stickySectionHeadersEnabled={true}
+                    removeClippedSubviews={Platform.OS === 'ios'}// android 下 要得出行高
                 />
                 }
                 {
@@ -289,7 +322,6 @@ export  default  class TimeLine extends  Component {
                     ref = {(c)=>this.audioPlayer = c}
                     pageInfo ={this.state.pageInfo}
                     getProgress = {this._getProgress.bind(this)}
-                    value={this.state.value}
                     disabled = {false}
                     maxVallue = {100}
                     onList = {this._onList.bind(this)}

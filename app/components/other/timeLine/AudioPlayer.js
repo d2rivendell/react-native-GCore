@@ -16,7 +16,14 @@ import  RNFS from 'react-native-fs'
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 import RNAudioStreamer from 'react-native-audio-streamer'
 export  default  class AudioPlayer extends  Component {
-
+   // 构造
+     constructor(props) {
+       super(props);
+       // 初始状态
+       this.state = {
+           value:0
+       };
+     }
 
     mixins: [TimerMixin]
     componentDidMount() {
@@ -27,6 +34,24 @@ export  default  class AudioPlayer extends  Component {
                  if(Platform.OS === 'ios'){
                      ReactNativeAudioStreaming.getStatus((nu,dict)=>{
                          getProgress(dict.status,dict.progress,dict.duration)
+                         if(dict.progress !== null && this.props.pageInfo){
+                             this.setState({
+                                 value:(dict.progress/this.props.pageInfo.duration) * 100
+                             })
+                         }
+                     })
+                 }else{
+                     RNAudioStreamer.currentTime((err, currentTime)=>{
+                         if(!err){
+                             RNAudioStreamer.status((err, status)=>{
+                                 if(!err){
+                                     getProgress(status,currentTime,0)
+                                     this.setState({
+                                         value:(currentTime/pageInfo.duration) * 100
+                                     })
+                                 }
+                             })
+                         }
                      })
                  }
                 },
@@ -35,6 +60,8 @@ export  default  class AudioPlayer extends  Component {
 
 
     }
+
+
 
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
@@ -60,13 +87,26 @@ export  default  class AudioPlayer extends  Component {
     }
     play(url){
         const {actions} = this.props
-        ReactNativeAudioStreaming.play(url, {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+        if(Platform.OS == 'ios'){
+            ReactNativeAudioStreaming.play(url, {showIniOSMediaCenter: true, showInAndroidNotifications: true});
+        }else{
+            RNAudioStreamer.play()
+        }
+
         actions.play(true)
     }
 
+    setAndroidUrl(){
+        const {pageInfo} = this.props
+        RNAudioStreamer.setUrl(pageInfo.media.mp3[0])
+    }
     pause(){
         const {actions} = this.props
-        ReactNativeAudioStreaming.pause()
+        if(Platform.OS === 'ios') {
+            ReactNativeAudioStreaming.pause()
+        }else {
+            RNAudioStreamer.pause()
+        }
         actions.play(false)
     }
 
@@ -79,10 +119,14 @@ export  default  class AudioPlayer extends  Component {
     _onValueChange(v){
         const {pageInfo} = this.props
         let value = pageInfo.duration * (v/100)
-        ReactNativeAudioStreaming.seekToTime(value)
+        this.seekToTime(value)
     }
     seekToTime(progress){
-        ReactNativeAudioStreaming.seekToTime(progress)
+       if(Platform.OS === 'ios'){
+           ReactNativeAudioStreaming.seekToTime(progress)
+       }else {
+           RNAudioStreamer.seekToTime(progress)
+       }
     }
     _download(){
         const {download} = this.props
@@ -138,15 +182,14 @@ export  default  class AudioPlayer extends  Component {
                   </View>
               </View>
               }
-              < Slider
-              style={styles.slider}
-              maximumValue={this.props.maxVallue}
-              disabled={false}
-              value={this.props.value}
-              thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
-              onValueChange = {this._onValueChange.bind(this)}
-              />
-
+                  < Slider
+                      style={styles.slider}
+                      maximumValue={this.props.maxVallue}
+                      disabled={false}
+                      value={this.state.value}
+                      thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
+                      onValueChange = {this._onValueChange.bind(this)}
+                  />
           </View>
       )
   }
@@ -157,6 +200,7 @@ const  styles = StyleSheet.create({
         height:60,
         backgroundColor:'white',
         width:Common.WINDOW.width,
+        overflow:'visible'
 
     },
     slider:{

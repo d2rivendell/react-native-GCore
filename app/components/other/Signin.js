@@ -15,6 +15,7 @@ import {
 import  Constants from '../../common/constants'
 import NetTool from '../../channel/NetTool'
 import MyStorage from '../../channel/MyStorage'
+import Rename from  './Rename'
 const  registerUrl = 'http://www.g-cores.com/auth/identity/register'
 const  siginUrl = 'http://www.g-cores.com/auth/identity/callback'
 export  default  class Signin extends  Component {
@@ -61,12 +62,25 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(registerUrl,fromData,(response,error)=>{
             if(response){
-                this._goto(2)
+                if(response.status === 1){
+                    var user = {...response.results.user,auth_token:response.results.auth_token}
+                    let storage = new  MyStorage()
+                    storage.saveAccount(user);
+                    actions.signin(user)
+                    NetTool.setDevideToken(user.auth_token,user.id)
+                    this.props.navigator.push({
+                        component:Rename,
+                        params: {
+                            auth_token:response.results.user.auth_token
+                      }
+                    })
+                }
             }else{
                 console.log(error)
             }
 
         })
+
     }
     _sigin(){
         const {actions} = this.props
@@ -88,6 +102,7 @@ export  default  class Signin extends  Component {
                   let storage = new  MyStorage()
                     storage.saveAccount(user);
                     actions.signin(user)
+                    NetTool.setDevideToken(user.auth_token,user.id)
                     this.props.navigator.pop()
                 }
 
@@ -97,6 +112,7 @@ export  default  class Signin extends  Component {
             }
 
         })
+
     }
     _changeName(){
         if(this.state.name.length === 0){

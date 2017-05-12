@@ -216,14 +216,12 @@ export default class AirticleDetail extends Component {
                     style={styles.webView}
                     source={{uri: this.state.uri}}
                     automaticallyAdjustContentInsets={false}
-                    allowFileAccessFromFileURLs = {true}
-                    allowUniversalAccessFromFileURLs = {true}
                     onBridgeMessage={this._onBridgeMessage.bind(this)}
                     domStorageEnabled={true}
                     javaScriptEnabled={true}
                     injectedJavaScript={injectScript}
                     onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
-                    startInLoadingState = {true}
+
                 >
                 </WebViewBridge>
 
