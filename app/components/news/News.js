@@ -5,7 +5,8 @@ import {
     View,
     ListView,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import NewsCell from './NewsCell'
 import  Common from  '../../common/constants'
@@ -39,12 +40,13 @@ export default class News extends Component {
         actions.getNews(this.page)
     }
     _onScrollEndDrag(event){
+
         const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
         let contentSizeH = contentSize.height;
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
         console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40){
+        if((viewBottomY - contentSizeH)>=40|| (Platform.OS === 'android' && parseInt(viewBottomY - contentSizeH) === 0)){
             const  {news,actions} = this.props
             if(news.isLoadMore){
                 return

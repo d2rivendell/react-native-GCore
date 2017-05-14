@@ -34,8 +34,9 @@ export  default  class CommentCell extends  Component{
         }
     }
 
-    componentDidMount() {
-        const {comment}  = this.props
+
+      componentWillReceiveProps(props) {
+        const {comment}  = props
         const {dataSource} = this.state
 
         if(comment.children){
@@ -53,13 +54,9 @@ export  default  class CommentCell extends  Component{
                 })
             }
             console.log(rows.length)
-
         }
     }
 
-      componentWillReceiveProps (props) {
-
-    }
     _fold(){
         const {dataSource} = this.state
         this.setState({

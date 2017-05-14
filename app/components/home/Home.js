@@ -81,7 +81,7 @@ export default class Home extends Component {
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
         console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40 || (Platform.OS === 'android' && (viewBottomY - contentSizeH) === 0)){
+        if((viewBottomY - contentSizeH)>=40 || (Platform.OS === 'android' && parseInt(viewBottomY - contentSizeH) === 0)){
             const  {actions,homeInfo} = this.props
             if(homeInfo.isLoadMore){
                 return

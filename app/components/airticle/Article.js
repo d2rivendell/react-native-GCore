@@ -5,7 +5,8 @@ import {
     View,
     ListView,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import Original from './Original'
  import  Common from  '../../common/constants'
@@ -42,7 +43,7 @@ export default class Airticle extends Component {
         let contentSizeH = contentSize.height;
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
         console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40){
+        if((viewBottomY - contentSizeH)>=40|| (Platform.OS === 'android' && parseInt(viewBottomY - contentSizeH) === 0)){
             const  {article,actions} = this.props
             if(article.isLoadMore){
                 return

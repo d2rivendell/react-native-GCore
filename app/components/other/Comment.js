@@ -116,7 +116,8 @@ export  default  class Comment extends  Component{
                 params:{
                     application:application,
                     actions:actions,
-                    replay:{father:father,child:child}
+                    replay:{father:father,child:child},
+                    id:id
                 }
             })
         }

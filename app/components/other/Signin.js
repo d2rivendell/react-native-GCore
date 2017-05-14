@@ -45,6 +45,8 @@ export  default  class Signin extends  Component {
         this.scrollView.scrollTo({ y: 0, x: (Constants.WINDOW.width - 100)* i, true })
     }
     _register(){
+        const {actions} = this.props
+        console.log(actions)
         if(this.state.registerEmail.length === 0 || this.state.registerPwd.length === 0 || this.state.registerConfirmPwd.length === 0){
             Alert.alert('提示','账号密码不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
             return;
@@ -62,6 +64,7 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(registerUrl,fromData,(response,error)=>{
             if(response){
+                console.log(response)
                 if(response.status === 1){
                     var user = {...response.results.user,auth_token:response.results.auth_token}
                     let storage = new  MyStorage()
@@ -71,9 +74,13 @@ export  default  class Signin extends  Component {
                     this.props.navigator.push({
                         component:Rename,
                         params: {
-                            auth_token:response.results.user.auth_token
+                            auth_token:response.results.auth_token,
+                            actions:actions,
+                            user:user
                       }
                     })
+                }else if(response.status === 0) {
+                  Alert.alert('提示',response.error,[{text:'确定',onPress:null }])
                 }
             }else{
                 console.log(error)
@@ -97,6 +104,7 @@ export  default  class Signin extends  Component {
         fromData.append('sourceType','app');
         NetTool.POST(siginUrl,fromData,(response,error)=>{
             if(response){
+                console.log(response)
                 if(response.status === 1){
                   var user = {...response.results.user,auth_token:response.results.auth_token}
                   let storage = new  MyStorage()
@@ -104,6 +112,8 @@ export  default  class Signin extends  Component {
                     actions.signin(user)
                     NetTool.setDevideToken(user.auth_token,user.id)
                     this.props.navigator.pop()
+                }else if(response.status === 0) {
+                    Alert.alert('提示',response.error,[{text:'确定',onPress:null }])
                 }
 
             }else{

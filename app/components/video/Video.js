@@ -9,7 +9,8 @@ import {
     View,
     ListView,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import Original from '../airticle/Original'
    import  Common from '../../common/constants'
@@ -46,7 +47,7 @@ export default class Video extends Component {
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
         console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40){
+        if((viewBottomY - contentSizeH)>=40|| (Platform.OS === 'android' && parseInt(viewBottomY - contentSizeH) === 0)){
             const  {video,actions} = this.props
             if(video.isLoadMore){
                 return

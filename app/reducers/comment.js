@@ -16,7 +16,8 @@ const actionHandler = {
         if(action.isLoading || action.isLoadMore){
             return Object.assign({}, state, {
                 isLoading:action.isLoading,
-                isLoadMore:action.isLoadMore
+                isLoadMore:action.isLoadMore,
+                data: [],
             })
         }
 

@@ -47,7 +47,7 @@ const  replyUrl = 'http://www.g-cores.com/api/comments'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
 import Signin from '../../components/other/Signin'
 import NetTool from '../../channel/NetTool'
-
+import Rename from  './Rename'
 export  default  class Reply extends  Component {
     // 构造
       // 构造
@@ -55,7 +55,7 @@ export  default  class Reply extends  Component {
           super(props);
           // 初始状态
           this.state = {
-              text:null
+              text:''
           };
         }
     _onBack(){
@@ -74,8 +74,21 @@ export  default  class Reply extends  Component {
             })
         }else{
             const {id,replay} = this.props
-            if(this.state.text.length === 0 ){
-                Alert.alert('提示','内容不能为空',[{text:'确定',onPress:null }])
+            if(application.user.is_fresh){
+                console.log(application.user)
+                this.props.navigator.push({
+                    component:Rename,
+                    params: {
+                        auth_token:application.user.auth_token,
+                actions:actions,
+                        user:application.user
+                    }
+                })
+                return
+            }
+
+            if(this.state.text.length < 3 ){
+                Alert.alert('提示','内容过短',[{text:'确定',onPress:null }])
                 return;
             }
 
@@ -94,14 +107,19 @@ export  default  class Reply extends  Component {
             }else {
                 fromData.append('parent_id',0);
             }
+            console.log(fromData)
+            console.log(id)
             NetTool.POST(replyUrl,fromData,(response,error)=>{
-                if(response.status === 1){
-                    // Alert.alert('提示',response,[{text:'确定',onPress:()=>{console.log(response)} }])
-                    this.props.navigator.pop()
+                if(response){
+                    if(response.status === 1){
+                        // Alert.alert('提示',response,[{text:'确定',onPress:()=>{console.log(response)} }])
+                        this.props.navigator.pop()
+                    }else if(response.status === 0){
+                        Alert.alert('提示',response.error,[{text:'确定',onPress:null }])
+                    }
                 }else{
-                    Alert.alert('提示',error,[{text:'确定',onPress:null }])
+                    console.log(error)
                 }
-
             })
 
         }
@@ -110,16 +128,16 @@ export  default  class Reply extends  Component {
     render(){
         const {id,replay} = this.props
         var title
-        if(id){
-            title = '留言'
-        }else if(replay){
+        if(replay){
             if(replay.father){
                 title = '回复给 '+replay.father.user.nickname
             }else if(replay.child){
                 title = '回复给 '+replay.child.user.nickname
             }
+        } else if(id){
+            title = '留言'
         }
-        return(
+            return(
             <View style={styles.container}>
                 <CommonNavigationBar
                     title= {title}

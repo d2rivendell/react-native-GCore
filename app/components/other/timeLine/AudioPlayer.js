@@ -42,12 +42,12 @@ export  default  class AudioPlayer extends  Component {
                      })
                  }else{
                      RNAudioStreamer.currentTime((err, currentTime)=>{
-                         if(!err){
+                         if(!err && this.props.pageInfo){
                              RNAudioStreamer.status((err, status)=>{
                                  if(!err){
                                      getProgress(status,currentTime,0)
                                      this.setState({
-                                         value:(currentTime/pageInfo.duration) * 100
+                                         value:(currentTime/this.props.pageInfo.duration) * 100
                                      })
                                  }
                              })
@@ -74,7 +74,10 @@ export  default  class AudioPlayer extends  Component {
      if(pageInfo){
          if(!play.isPlay && pageInfo.media.mp3[0]){
              if(pageInfo.localFile){
-                 var localPath = RNFS.DocumentDirectoryPath + '/' + pageInfo.id + '.mp3'
+                 var localPath = RNFS.LibraryDirectoryPath + '/' + pageInfo.id + '.mp3'
+                 if(Platform.OS === 'android'){
+                     localPath = RNFS.ExternalDirectoryPath + '/' + pageInfo.id + '.mp3'
+                 }
                  this.play(localPath)
                  console.log('播放本地音乐')
              }else{
@@ -97,8 +100,7 @@ export  default  class AudioPlayer extends  Component {
     }
 
     setAndroidUrl(){
-        const {pageInfo} = this.props
-        RNAudioStreamer.setUrl(pageInfo.media.mp3[0])
+        RNAudioStreamer.setUrl(this.props.pageInfo.media.mp3[0])
     }
     pause(){
         const {actions} = this.props
@@ -146,6 +148,16 @@ export  default  class AudioPlayer extends  Component {
 
       return(
           <View style={styles.container}>
+              {Platform.OS === 'android' &&
+              < Slider
+                  style={styles.androidSlider}
+                  maximumValue={this.props.maxVallue}
+                  disabled={false}
+                  value={this.state.value}
+                  thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
+                  onValueChange = {this._onValueChange.bind(this)}
+              />
+              }
               { pageInfo && <View style={styles.contentView}>
                   <Image style={styles.cover} source={{uri:pageInfo.thumb_url}}/>
                   <View style={styles.textView}>
@@ -182,14 +194,16 @@ export  default  class AudioPlayer extends  Component {
                   </View>
               </View>
               }
-                  < Slider
-                      style={styles.slider}
-                      maximumValue={this.props.maxVallue}
-                      disabled={false}
-                      value={this.state.value}
-                      thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
-                      onValueChange = {this._onValueChange.bind(this)}
-                  />
+              {Platform.OS === 'ios' &&
+              < Slider
+              style={styles.iosSlider}
+              maximumValue={this.props.maxVallue}
+              disabled={false}
+              value={this.state.value}
+              thumbImage={require('../../../resource/player-slider-handle~iphone.png')}
+              onValueChange = {this._onValueChange.bind(this)}
+              />
+            }
           </View>
       )
   }
@@ -197,16 +211,20 @@ export  default  class AudioPlayer extends  Component {
 const  styles = StyleSheet.create({
     container: {
         // flex: 1,
-        height:60,
+        height:Platform.OS === 'android'? 68:60,
         backgroundColor:'white',
         width:Common.WINDOW.width,
         overflow:'visible'
 
     },
-    slider:{
+    iosSlider:{
         height:16,
         position:'absolute',
         top:-8,
+        width:Common.WINDOW.width
+    },
+    androidSlider:{
+        height:16,
         width:Common.WINDOW.width
     },
     contentView:{

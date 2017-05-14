@@ -31,14 +31,26 @@ export  default  class Rename extends  Component {
 
     }
     _changeName(){
-        const {auth_token} = this.props
+        const {auth_token,user,actions} = this.props
         if(this.state.name.length === 0){
             Alert.alert('提示','昵称不能为空',[{text:'确定',onPress:()=>{console.log('sure')} }])
             return;
         }
         NetTool.defresh(this.state.name,auth_token,(res,err)=>{
+
             if(res){
-                this.props.navigator.pop()
+                console.log(res)
+                if(res.status === 0){
+                    Alert.alert('提示',res.error,[{text:'确定',onPress:()=>{console.log('sure')} }])
+                    return;
+                }else if(res.status === 1){
+                    var newUser =  {...user,is_fresh:false,
+                        nickname:this.state.name}
+                    actions.signin(newUser)
+                    NetTool.setDevideToken(newUser.auth_token,newUser.id)
+                    this.props.navigator.pop()
+                }
+
             }
         })
     }

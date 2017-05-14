@@ -41,31 +41,26 @@ const NetTool = {
         }
         fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu')
         fromData.append('device_token',device_token)
-        console.log(fromData)
        this.POST(set_device_token_url,fromData,(res,error )=>{
            console.log(res)
            console.log(error)
          if(callback){
-             if(res){
-                 console.log('set_device_token 成功')
-             }
              callback(res,error)
          }
      })
     },
 
     defresh(nickname,auth_token,callback){
+
         let fromData =   new FormData
         fromData.append('auth_token',auth_token)
         fromData.append('nickname',nickname)
         fromData.append('auth_exclusive','dpkynzs2q0wm9o5gi1r83fcabthl4eu')
-        this.POST(set_device_token_url,fromData,(res,error )=>{
+        console.log(fromData)
+        this.POST(defresh_url,fromData,(res,error )=>{
             console.log(res)
             console.log(error)
             if(callback){
-                if(res){
-                    console.log('set_device_token 成功')
-                }
                 callback(res,error)
             }
         })

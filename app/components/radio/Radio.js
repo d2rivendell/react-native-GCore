@@ -8,7 +8,8 @@ import {
     View,
     ListView,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import Original from '../airticle/Original'
 import  Common from  '../../common/constants'
@@ -45,7 +46,7 @@ export default class Radio extends Component {
         let viewBottomY = contentOffset.y + layoutMeasurement.height;
 
         console.log(viewBottomY - contentSizeH)
-        if((viewBottomY - contentSizeH)>=40){
+        if((viewBottomY - contentSizeH)>=40|| (Platform.OS === 'android' && parseInt(viewBottomY - contentSizeH) === 0)){
             const  {radio,actions} = this.props
             if(radio.isLoadMore){
                 return

@@ -94,6 +94,9 @@ export  default  class TimeLine extends  Component {
                 if(play.id !== id){
                     this.audioPlayer.pause()
                     actions.play(false)
+                    if(Platform.OS !== 'ios') {
+                        this.audioPlayer.setAndroidUrl()
+                    }
                     this.audioPlayer.playAudio()
                 }
             }else {
@@ -160,7 +163,7 @@ export  default  class TimeLine extends  Component {
     /**返回cell 的y坐标 保存起来
      * */
     _shouldScroll(rowID,y){
-        console.log('y:  '+y+ 'rowID: ' + rowID)
+        // console.log('y:  '+y+ 'rowID: ' + rowID)
         let whatSeconds = this.rowSeconds[rowID]
         this.rowPositionY[whatSeconds] = y
     }
@@ -180,6 +183,8 @@ export  default  class TimeLine extends  Component {
                shouldScroll = {this._shouldScroll.bind(this,rowID)}
                changeProgress = {this._changeProgress.bind(this,data)}
                timeLineInfo = {data}
+               collapsable={false}
+               style={{opacity: 1}}
           />)
     }
 
@@ -263,7 +268,10 @@ export  default  class TimeLine extends  Component {
 
     _download(){
         const {timeLine,} = this.props
-        var localPath = RNFS.DocumentDirectoryPath + '/' + this.state.pageInfo.id + '.mp3'
+        var localPath = RNFS.LibraryDirectoryPath + '/' + this.state.pageInfo.id + '.mp3'
+        if(Platform.OS === 'android'){
+            localPath = RNFS.ExternalDirectoryPath + '/' + this.state.pageInfo.id + '.mp3'
+        }
         let downloadManager = new DownloadManager()
 
         if(downloadManager.isDownloading ){
@@ -342,7 +350,7 @@ const styles = StyleSheet.create({
     },
     sectionHeader:{
         height:32,
-        backgroundColor:'#fdfdfd',
+        backgroundColor:'#fff',
         flexDirection:'row',
         justifyContent:'space-between',
         padding:8
