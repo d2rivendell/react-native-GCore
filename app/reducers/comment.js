@@ -17,7 +17,7 @@ const actionHandler = {
             return Object.assign({}, state, {
                 isLoading:action.isLoading,
                 isLoadMore:action.isLoadMore,
-                data: [],
+
             })
         }
 

@@ -37,50 +37,26 @@ const parse = (date) =>{
 
     let yeal_del =  now.getYear() - year
     let month_del =  now.getMonth() - month
-    let day_del =  now.getDate() - day
+    var day_del =  now.getDate() - day
     let hour_del =  now.getHours() - hour
     let min_del =  now.getMinutes() - min
 
-    // console.log((now.valueOf()/1000 - d.valueOf()/1000))
-    // const  del = now.valueOf()/1000 - d.valueOf()/1000
-    //
-    // const  s_min = 60
-    // const  s_hour = min * 60
-    // const  s_day = 24 * s_hour
-    // const  s_week = 7 * s_day
-    // const  s_month = s_day * 30
-    // const  s_year = 12 * s_month
-    //
-    // if(del >= s_year){
-    //     return `${ Math.ceil(del/s_year)}年前`
-    // }else  if(del >= s_month){
-    //     return `${ Math.ceil(del/s_month)}个月前`
-    // }else  if(del >= s_week){
-    //     return `${ Math.ceil(del/s_week)}周前`
-    // }else  if(del >= s_day){
-    //     return `${ Math.ceil(del/s_day)}天前`
-    // }else  if(del >= s_hour){
-    //     console.log('del: '+ del + '  s_hour :' + s_hour)
-    //     return `${ Math.ceil(del/s_hour)}小时前`
-    // }else  if(del >= s_min){
-    //     return `${ Math.ceil(del/s_min)}分钟前`
-    // }else {
-    //     return '刚刚'
-    // }
-
     if(now.getYear() > year){
-        if(month < 24){
+        if(yeal_del === 1){
+            month_del = 12 - month + now.getMonth()
             return `${month_del}个月前`
         }
         return `${yeal_del}年前`
     }else{//月
-         if(month_del > 0 && day_del > 30){
+         if(month_del > 1){
              return `${month_del}个月前`
-        }
-
+         }else if(month_del === 1){
+             day_del = 30 - day + now.getDate()
+         }
+        
         if(day_del >= 7){
             let we = parseInt(day_del/7)
-            return `${day_del}周前`
+            return `${we}周前`
 
         }else if(day_del >= 1 && day_del < 7 ){
             if(day_del == 1){
@@ -91,6 +67,8 @@ const parse = (date) =>{
                 return `${hour_del}小时前`
             }
             return `${day_del}天前`
+
+
         }else {//小时
 
             if(hour_del > 1 ){
