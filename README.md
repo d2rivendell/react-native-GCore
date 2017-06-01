@@ -7,12 +7,9 @@ GCore基于机核app进行开发，只做学习不做商业用途，开发基于
 而Android部分UI和功能仍有些许缺陷，如有更好方案希望提出issues一起改进和学习。
 
 ##  部分截图
-![首页](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/home.png)
-![内容](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/detail.png)
-![分类](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/category.png)
-![下载页](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/download.png)
-![电台](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/timeline.png)
-![评论](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/comment.png)
+![pictureOne](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/pic1.png)
+![pictureTwo](https://github.com/LeonHwa/react-native-GCore/blob/master/screenShot/pic2.png)
+
 
 ##  已完成功能
 可以登陆注册，进行评论，订阅和收藏喜欢的栏目，简单的下拉刷新，webView与RN交互，音频下载及本地播放
