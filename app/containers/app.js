@@ -85,7 +85,7 @@ export  class App extends Component{
             }
         })
         //org.reactjs.native.example.GCore
-        WeChat.registerApp('wx374bb4d5b3dfadcd')
+        WeChat.registerApp('wxd24e828b63e7e801')
         storage.getAudioInfo(24544,(res,err)=>{
             if(res){
                 console.log(res)

@@ -53,7 +53,7 @@ const parse = (date) =>{
          }else if(month_del === 1){
              day_del = 30 - day + now.getDate()
          }
-        
+
         if(day_del >= 7){
             let we = parseInt(day_del/7)
             return `${we}周前`

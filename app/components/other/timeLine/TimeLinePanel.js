@@ -153,6 +153,7 @@ const  styles = StyleSheet.create({
         paddingTop:30,
         alignItems:'center',
         paddingBottom:30,
+        
     },
     tagImage:{
         width:60

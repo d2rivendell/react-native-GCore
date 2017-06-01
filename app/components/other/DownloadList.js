@@ -9,7 +9,8 @@ import {
     InteractionManager,
     TouchableHighlight,
     Alert,
-    Navigator
+    Navigator,
+    Platform
 } from 'react-native';
 import MyStorage from '../../channel/MyStorage'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
@@ -149,8 +150,11 @@ export default class DownloadList extends Component {
         this.props.navigator.pop()
     }
     _deleteRow(rowId,id){
-       var path =  RNFS.DocumentDirectoryPath + '/' + id + '.mp3'
-        Alert.alert('提示',path,[{text:'确定',onPress:()=>{
+        var path = RNFS.LibraryDirectoryPath + '/' + id + '.mp3'
+        if(Platform.OS === 'android'){
+            path = RNFS.ExternalDirectoryPath + '/' + id + '.mp3'
+        }
+        Alert.alert('确定要删除吗?',path,[{text:'取消',onPress:null},{text:'确定',onPress:()=>{
             storage.removeAudioInfo(id)
             RNFS.unlink(path)
                 .then(() => {
