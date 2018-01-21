@@ -90,12 +90,12 @@ export default class ControllerTabBar extends Component {
          if(index - 1 > 0 && index < len-1){
              seq = index - 1
              const  offset = (Constants.WINDOW.width/3) * seq
-             this.scrollView.scrollTo({ y: 0, x: offset, true })
+             this.scrollView.scrollTo({ y: 0, x: offset, animated:true })
          }else if(index- 1 <= 0){
-             this.scrollView.scrollTo({ y: 0, x: 0, true })
+             this.scrollView.scrollTo({ y: 0, x: 0, animated:true })
          }else if(index === len-1){
              const  offset = (Constants.WINDOW.width/3) * (index - 2)
-             this.scrollView.scrollTo({ y: 0, x: offset, true })
+             this.scrollView.scrollTo({ y: 0, x: offset, animated:true })
          }
      }
     render() {

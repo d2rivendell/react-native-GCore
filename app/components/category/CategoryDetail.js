@@ -9,7 +9,8 @@ import {
     Image,
     ListView,
     TouchableHighlight,
-    InteractionManager
+    InteractionManager,
+    Alert
 } from 'react-native';
 import Common from '../../common/constants'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
@@ -142,6 +143,8 @@ export default class CategoryDetail extends Component {
                     console.log(err)
                 }
             })
+        }else {
+            Alert.alert('提示','请先登录',[{text:'确定',onPress:null }])
         }
 
     }

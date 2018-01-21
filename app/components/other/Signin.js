@@ -42,7 +42,7 @@ export  default  class Signin extends  Component {
         this.props.navigator.pop()
     }
     _goto(i){
-        this.scrollView.scrollTo({ y: 0, x: (Constants.WINDOW.width - 100)* i, true })
+        this.scrollView.scrollTo({ y: 0, x: (Constants.WINDOW.width - 100)* i, animated:true })
     }
     _register(){
         const {actions} = this.props

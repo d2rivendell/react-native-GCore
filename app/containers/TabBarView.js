@@ -13,7 +13,7 @@ import {
     ScrollView,
     Image,
     TouchableHighlight,
-
+    Alert
 } from 'react-native'
 
 import  ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
@@ -134,6 +134,10 @@ export default  class TabBarView extends  Component {
             case '消息':
                 break;
             case '收藏':
+                if(!application.user){
+                    Alert.alert('提示','请先登录',[{text:'确定',onPress:null }])
+                    return
+                }
                 this.props.navigator.push({
                     component:MyMark,
                     params:{
