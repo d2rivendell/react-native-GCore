@@ -3,7 +3,6 @@
  */
 import React,{ Component }from 'react'
 import {
-    Navigator,
     View,
     StyleSheet,
     PropTypes
@@ -13,7 +12,7 @@ import {bindActionCreators} from 'redux'
 import TabBarView from '../containers/TabBarView'
 import {connect} from 'react-redux'
 
-
+import {Navigator} from 'react-native-deprecated-custom-components'
 
 
 import applicationActions from '../actions/application'

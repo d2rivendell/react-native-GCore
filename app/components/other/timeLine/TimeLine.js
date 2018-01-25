@@ -10,12 +10,11 @@ import {
     TouchableHighlight,
     Button,
     ListView,
-    Navigator,
     InteractionManager,
     Alert,
     Platform,
 }from 'react-native'
-import {Player}  from  'react-native-audio-streaming'
+import TrackPlayer from 'react-native-track-player'
 import TimeLinePanel from './TimeLinePanel'
 import AudioPlayer from './AudioPlayer'
 import TimeLineList from './TimeLineList'
@@ -31,10 +30,10 @@ import  RNFS from 'react-native-fs'
 class TimeLineHeader extends  Component {
 
     setNativeProps(nativeProps) {
-         this.setState(nativeProps)
+        this.setState(nativeProps)
     }
     // 构造
-      constructor(props) {
+    constructor(props) {
         super(props);
         // 初始状态
         this.state = {
@@ -42,7 +41,7 @@ class TimeLineHeader extends  Component {
             progress:0
         };
 
-      }
+    }
     _getTime(timestamp){
         var hour = Math.floor(timestamp/60)
         var sec = timestamp - (hour * 60)
@@ -66,7 +65,7 @@ class TimeLineHeader extends  Component {
 export  default  class TimeLine extends  Component {
 
     // 构造
-      constructor(props) {
+    constructor(props) {
         super(props);
         // 初始状态
         this.state = {
@@ -79,8 +78,8 @@ export  default  class TimeLine extends  Component {
         this.rowPositionY = new Array()
         this.rowSeconds = []
         this.recieveTimeLine = false
-          this.playerState = null
-      }
+        this.playerState = null
+    }
     componentDidMount() {
         const {id,actions,play,loaclTimeLine} = this.props
         InteractionManager.runAfterInteractions(() => {
@@ -90,67 +89,68 @@ export  default  class TimeLine extends  Component {
             }
             actions.hidden(id)
         }).done(()=>{
-            if(play.isPlay === true ){
-                if(play.id !== id){
-                    this.audioPlayer.pause()
-                    actions.play(false)
-                    if(Platform.OS !== 'ios') {
-                        this.audioPlayer.setAndroidUrl()
+            TrackPlayer.setupPlayer().then(() => {
+                // The player is ready to be used
+                if(play.isPlay === true ){
+                    if(play.id !== id){
+                        this.audioPlayer.pause()
+                        actions.play(false)
+                        if(Platform.OS !== 'ios') {
+                            this.audioPlayer.setAndroidUrl()
+                        }
+                        this.audioPlayer.playAudio()
                     }
+                }else {
+                    this.audioPlayer.initializeUrl()
                     this.audioPlayer.playAudio()
                 }
-            }else {
-                if(Platform.OS !== 'ios') {
-                  this.audioPlayer.setAndroidUrl()
-                }
-                this.audioPlayer.playAudio()
-            }
+            })
         })
     }
     componentWillUnmount(){
-          console.log('componentWillUnmount')
-          const {actions,id} = this.props
-         console.log(actions)
-          switch (this.playerState){
-              case '播放出错':
-                  actions.hidden(id)
-                  break;
-              case '播放中':
-                  actions.show(id,this.state.pageInfo)
-                  break;
-              case '暂停':
-                  actions.hidden(id)
-                  break;
-              case '加载中':
-                  actions.hidden(id)
-                  break;
-          }
+        console.log('componentWillUnmount')
+        const {actions,id} = this.props
+        console.log(actions)
+        switch (this.playerState){
+            case '播放出错':
+                actions.hidden(id)
+                break;
+            case '播放中':
+                actions.show(id,this.state.pageInfo)
+                break;
+            case '暂停':
+                actions.hidden(id)
+                break;
+            case '加载中':
+                actions.hidden(id)
+                break;
+        }
     }
 
     componentWillReceiveProps(prop) {
         const {pageInfo,timeLine,localPageInfo,loaclTimeLine} = prop
         //初始化时需要 重新在列表选择后不再需要
-      if(localPageInfo && this.state.pageInfo === null){
-          this.setState({
-              pageInfo:localPageInfo
-          })
-      }else if (pageInfo && this.state.pageInfo === null) {
+        if(localPageInfo && this.state.pageInfo === null){
+            this.setState({
+                pageInfo:localPageInfo
+            })
+        }else if (pageInfo && this.state.pageInfo === null) {
             let truePageInfo = (pageInfo.data ? pageInfo.data:pageInfo)
-          this.setState({
-            pageInfo:truePageInfo
-         })
-      }
+            this.setState({
+                pageInfo:truePageInfo
+            })
+        }
 
 
         //请求到数据后 把秒数 保存起来
-      if(loaclTimeLine){
-          if(!this.recieveTimeLine){
-              this.recieveTimeLine = true
-              for(var i = 0; i < loaclTimeLine.data.length;i++){
-                  this.rowSeconds[i] = loaclTimeLine.data.at
-              }
-          }
-      }else if(timeLine.data.length){
+        if(loaclTimeLine){
+            if(!this.recieveTimeLine){
+                this.recieveTimeLine = true
+                for(var i = 0; i < loaclTimeLine.data.length;i++){
+                    this.rowSeconds[i] = loaclTimeLine.data.at
+                }
+            }
+        }else if(timeLine.data.length){
             if(!this.recieveTimeLine){
                 this.recieveTimeLine = true
                 console.log(timeLine)
@@ -158,7 +158,7 @@ export  default  class TimeLine extends  Component {
                     this.rowSeconds[i] = timeLine.data.at
                 }
             }
-      }
+        }
     }
     /**返回cell 的y坐标 保存起来
      * */
@@ -179,13 +179,13 @@ export  default  class TimeLine extends  Component {
 
     _renderRow(data, sectionID, rowID, highlightRow){
         this.rowSeconds[rowID] = data.at
-          return (<TimeLinePanel
-               shouldScroll = {this._shouldScroll.bind(this,rowID)}
-               changeProgress = {this._changeProgress.bind(this,data)}
-               timeLineInfo = {data}
-               collapsable={false}
-               style={{opacity: 1}}
-          />)
+        return (<TimeLinePanel
+            shouldScroll = {this._shouldScroll.bind(this,rowID)}
+            changeProgress = {this._changeProgress.bind(this,data)}
+            timeLineInfo = {data}
+            collapsable={false}
+            style={{opacity: 1}}
+        />)
     }
 
 
@@ -200,16 +200,19 @@ export  default  class TimeLine extends  Component {
     _getProgress(status,progress,duration){
         var ss = ''
         switch (status){
-            case 'ERROR':
-                ss = '播放出错'
+            case 'STATE_NONE':
+                ss = '未开始'
+                break
+            case 'STATE_STOPPED':
+                ss = '播放停止'
                 break;
-            case 'PLAYING':
+            case 'STATE_PLAYING':
                 ss = '播放中'
                 break;
-            case 'PAUSED':
+            case 'STATE_PAUSED':
                 ss = '暂停'
                 break;
-            case 'BUFFERING':
+            case 'STATE_BUFFERING':
                 ss = '加载中'
                 break;
         }

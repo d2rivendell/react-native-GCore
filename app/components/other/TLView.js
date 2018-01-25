@@ -5,9 +5,9 @@ import  React,{Component} from 'react'
 import {
     View,
     Text,
-    Navigator,
     StyleSheet
 }from 'react-native'
+import {Navigator} from 'react-native-deprecated-custom-components'
 import  Blank from './Blank'
 import  MusicTool from './MusicTool'
 export  default  class TLView extends  Component{

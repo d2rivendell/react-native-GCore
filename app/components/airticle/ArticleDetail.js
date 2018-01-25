@@ -9,11 +9,10 @@ import {
     View,
     Text,
     StatusBar,
-    Navigator,
     InteractionManager,
     Platform
 } from  'react-native'
-
+import {Navigator} from 'react-native-deprecated-custom-components'
 import address from '../../channel/address'
 import ToolNavigationBar from '../../containers/ToolNavigationBar'
 import BanarNavigationBar from '../../containers/BanarNavigationBar'

@@ -9,13 +9,12 @@ import {
     PropTypes,
     StyleSheet,
     DeviceEventEmitter,
-    Navigator,
     ScrollView,
     Image,
     TouchableHighlight,
     Alert
 } from 'react-native'
-
+import {Navigator} from 'react-native-deprecated-custom-components'
 import  ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
 import  Article from '../components/airticle/Article'
 import  Home from '../components/home/Home'

@@ -9,9 +9,9 @@ import {
     InteractionManager,
     TouchableHighlight,
     Alert,
-    Navigator,
     Platform
 } from 'react-native';
+import {Navigator} from 'react-native-deprecated-custom-components'
 import MyStorage from '../../channel/MyStorage'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
 import * as Progress from 'react-native-progress'

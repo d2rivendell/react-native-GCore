@@ -10,7 +10,6 @@ import {
     TouchableHighlight,
     Button,
     ListView,
-    Navigator,
     RefreshControl,
     ActivityIndicator,
     InteractionManager
@@ -20,6 +19,7 @@ import CommentCell from './CommentCell'
 import  Common from '../../common/constants'
 import Reply from '../../components/other/Reply'
 import Loading from '../other/Loading'
+import {Navigator} from 'react-native-deprecated-custom-components'
 export  default  class Comment extends  Component{
    // 构造
      constructor(props) {

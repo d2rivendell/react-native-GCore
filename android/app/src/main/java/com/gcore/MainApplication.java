@@ -3,11 +3,11 @@ package com.gcore;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
+import guichaguri.trackplayer.TrackPlayer;
+import com.zmxv.RNSound.RNSoundPackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.rnfs.RNFSPackage;
 import com.theweflex.react.WeChatPackage;
-import com.audioStreaming.ReactNativeAudioStreamingPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,11 +29,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNAudioStreamerPackage(),
+            new TrackPlayer(),
+            new RNSoundPackage(),
             new SQLitePluginPackage(),
             new RNFSPackage(),
             new WeChatPackage(),
-            new ReactNativeAudioStreamingPackage(),
             new WebViewBridgePackage()
       );
     }
