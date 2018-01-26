@@ -104,7 +104,39 @@ export  default  class TimeLine extends  Component {
                     this.audioPlayer.initializeUrl()
                     this.audioPlayer.playAudio()
                 }
+
             })
+
+            TrackPlayer.updateOptions({
+                capabilities: [
+                    TrackPlayer.CAPABILITY_PLAY,
+                    TrackPlayer.CAPABILITY_PAUSE,
+                    TrackPlayer.CAPABILITY_SEEK_TO,
+                    TrackPlayer.CAPABILITY_STOP
+
+                ],
+            });
+
+            TrackPlayer.registerEventHandler(() => {
+                return async (data) => {
+                    if (data.type == 'playback-state') {
+
+                    } else if (data.type == 'remote-play') {
+                        this.audioPlayer.playAudio()
+                        // TrackPlayer.play();
+                        console.log("play")
+                    } else if (data.type == 'remote-stop') {
+
+                        // TrackPlayer.stop();
+                        console.log("stop")
+                    } else if (data.type == 'remote-pause') {
+                        this.audioPlayer.pause()
+                        console.log("pause")
+                        // TrackPlayer.pause();
+                    }
+                };
+            });
+
         })
     }
     componentWillUnmount(){

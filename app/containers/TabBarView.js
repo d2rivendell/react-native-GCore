@@ -36,16 +36,7 @@ import Constants from '../common/constants';
 
 import ArticleDetail from '../components/airticle/ArticleDetail'
 const tabTitles = ['首页', '新闻', '文章','电台','视频']
-const tabIcons = [
-    require('../resource/ic_tab_search.png'),
-    require('../resource/ic_tab_homepage.png'),
-    require('../resource/ic_tab_my.png')
-];
-const tabSelectedIcon = [
-    require('../resource/ic_tab_search_select.png'),
-    require('../resource/ic_tab_homepage_select.png'),
-    require('../resource/ic_tab_my_select.png')
-];
+
 export default  class TabBarView extends  Component {
 
     // 构造

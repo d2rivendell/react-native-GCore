@@ -10,7 +10,8 @@ import {
     ListView,
     TouchableHighlight,
     InteractionManager,
-    Alert
+    Alert,
+    ImageBackground
 } from 'react-native';
 import Common from '../../common/constants'
 import CommonNavigationBar from '../../containers/CommonNavigationBar'
@@ -86,7 +87,7 @@ export default class CategoryDetail extends Component {
         var  subIcon = this.state.subscript ? require('../../resource/unsubscript.png'):subIcon = require('../../resource/subscript.png')
         return(
             <View style={styles.Header}>
-                { categories.sub && <Image
+                { categories.sub && <ImageBackground
                     style={styles.HeaderBg}
                     source={{uri:categories.sub.background_url}}
                 >
@@ -106,7 +107,7 @@ export default class CategoryDetail extends Component {
                         <Image style={styles.subIcon} resizeMode='contain' source={subIcon} />
                     </TouchableHighlight>
 
-                </Image>
+                </ImageBackground>
                 }
 
             </View>

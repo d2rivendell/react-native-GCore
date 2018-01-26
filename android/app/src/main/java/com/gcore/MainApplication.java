@@ -3,19 +3,16 @@ package com.gcore;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import guichaguri.trackplayer.TrackPlayer;
-import com.zmxv.RNSound.RNSoundPackage;
-import org.pgsqlite.SQLitePluginPackage;
-import com.rnfs.RNFSPackage;
 import com.theweflex.react.WeChatPackage;
+import guichaguri.trackplayer.TrackPlayer;
+import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+
 import java.util.Arrays;
 import java.util.List;
-
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,13 +26,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new TrackPlayer(),
-            new RNSoundPackage(),
-            new SQLitePluginPackage(),
-            new RNFSPackage(),
             new WeChatPackage(),
-            new WebViewBridgePackage()
+            new TrackPlayer(),
+            new RNFSPackage()
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 

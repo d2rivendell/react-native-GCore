@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Image,
     PropTypes,
-    TouchableHighlight
+    TouchableHighlight,
+    ImageBackground
 }from 'react-native'
 
 import Constants from '../../common/constants'
@@ -45,7 +46,7 @@ export default  class  Original extends Component{
                 underlayColor = 'transparent'
             >
             <View style={styles.container}>
-                <Image style={styles.Poster} source ={{uri: original.thumb_url}}>
+                <ImageBackground style={styles.Poster} source ={{uri: original.thumb_url}}>
                     { type === 'default' ? <View style={styles.typeInfo}>
                         <Image style={styles.icon} source={{uri: original.user.thumb_url}}/>
                         <View style={styles.userContainer}>
@@ -68,7 +69,7 @@ export default  class  Original extends Component{
                         </View>
                     </View>
                     { type !== 'default' && <Image resizeMode='contain' style={styles.play} source={require('../../resource/player-w~iphone.png')} />}
-                </Image>
+                </ImageBackground>
                 <Text style={styles.title}>{original.title}</Text>
                 <Text style={styles.desc}>{original.desc}</Text>
             </View>

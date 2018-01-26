@@ -10,6 +10,7 @@ import {
     ScrollView,
     Image,
     TouchableHighlight,
+    ImageBackground
 }from 'react-native'
 import Constants from '../../common/constants'
 import Commom from '../../common/constants'
@@ -98,7 +99,7 @@ const HomeNews = ({data,onPress})=>{
        underlayColor = 'transparent'
     >
     <View style={styles.bgView}>
-        <Image  style={styles.bgImage} source={{uri:data.thumb_url}}>
+        <ImageBackground  style={styles.bgImage} source={{uri:data.thumb_url}}>
 
             <View style={styles.markView}>
                 <Text style={styles.markTitle}>{data.category.name}</Text>
@@ -116,7 +117,7 @@ const HomeNews = ({data,onPress})=>{
                 </View>
 
             </View>
-        </Image>
+        </ImageBackground>
     </View>
     </TouchableHighlight>
 )

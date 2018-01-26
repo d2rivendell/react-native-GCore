@@ -7,7 +7,8 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableHighlight
+    TouchableHighlight,
+    ImageBackground
 }from 'react-native'
 import  Common from '../../common/constants'
 
@@ -29,7 +30,7 @@ export  default  class  CategoryCell extends  Component {
                 style={styles.container}
             >
                 <View style={styles.cell}>
-                    <Image style={[styles.cellBg,this.props.overStyle]} source={{uri:categorie.background_url}}>
+                    <ImageBackground style={[styles.cellBg,this.props.overStyle]} source={{uri:categorie.background_url}}>
                         <View style={styles.nameContainer}>
                             <Text style={styles.name}>{categorie.name}</Text>
                         </View>
@@ -37,7 +38,7 @@ export  default  class  CategoryCell extends  Component {
                             <Text style={styles.numText}>文章数 {categorie.originals_num}</Text>
                             <Text style={styles.numText}>订阅数 {categorie.subscriptors_num}</Text>
                         </View>
-                    </Image>
+                    </ImageBackground>
                 </View>
             </TouchableHighlight>
 

@@ -101,6 +101,7 @@ export default class Home extends Component {
     }
     render(){
          const {homeInfo} = this.props
+        console.log(homeInfo)
         const refreshWord = homeInfo.isLoading ? '正在刷新':'下拉刷新'
         return (
             <View style={styles.container}>

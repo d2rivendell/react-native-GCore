@@ -19,7 +19,6 @@ import BanarNavigationBar from '../../containers/BanarNavigationBar'
 import  Comment from '../../components/other/Comment'
 import  TimeLine from '../other/timeLine/TimeLine'
 import  Signin  from '../../components/other/Signin'
-import WebViewBridge from 'react-native-webview-bridge'
 import NetTool from '../../channel/NetTool'
 
 const unsubscriptUrl = 'http://www.g-cores.com/api/subscriptions/unsubscript'
@@ -183,7 +182,9 @@ export default class AirticleDetail extends Component {
         }
     }
 
-
+    onNavigationStateChange(navState) {
+        console.log(navState)
+    }
     render() {
         const {likes_num,navigator,id,pageInfo,application} = this.props
         console.log(this.state.uri)
@@ -210,19 +211,21 @@ export default class AirticleDetail extends Component {
                 }
 
                 { (this.state.uri && this.state.uri.length > 0 )&&
-                <WebViewBridge
+                <WebView
                     ref={(c)=>this.webView = c}
                     style={styles.webView}
                     source={{uri: this.state.uri}}
                     automaticallyAdjustContentInsets={false}
-                    onBridgeMessage={this._onBridgeMessage.bind(this)}
+                    onMessage={this._onBridgeMessage.bind(this)}
                     domStorageEnabled={true}
                     javaScriptEnabled={true}
+                    startInLoadingState = {true}
+                    // renderLoading = {func}
                     injectedJavaScript={injectScript}
                     onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
-
+                    onNavigationStateChange={this.onNavigationStateChange.bind(this)}
                 >
-                </WebViewBridge>
+                </WebView>
 
                 }
                 {
@@ -247,7 +250,7 @@ AirticleDetail.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F4F6',
     },
     webView: {
         // flex: 1,

@@ -61,7 +61,7 @@ export  default  class BanarNavigationBar extends  Component{
                     underlayColor={'transparent'}
                 >
                     <View style={styles.backContainer}>
-                        <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/navigationbar_back@2x.png')}/>
+                        <Image style={styles.backIcon} resizeMode='contain' source={require('../resource/navigationbar_back.png')}/>
                         <Text style={styles.text}>返回</Text>
                     </View>
                 </TouchableHighlight>
