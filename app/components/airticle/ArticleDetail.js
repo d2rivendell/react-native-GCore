@@ -10,7 +10,9 @@ import {
     Text,
     StatusBar,
     InteractionManager,
-    Platform
+    Platform,
+    Alert,
+    TouchableOpacity
 } from  'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
 import address from '../../channel/address'
@@ -24,26 +26,26 @@ import NetTool from '../../channel/NetTool'
 const unsubscriptUrl = 'http://www.g-cores.com/api/subscriptions/unsubscript'
 const subscriptUrl = 'http://www.g-cores.com/api/subscriptions/subscript'
 
-const injectScript = `
-  $(function () {
-         $("a").click(function(){
-           WebViewBridge.send(this.href.toString());
+const injectScript = `$(function () {
+          $("a").click(function(){
+                window.postMessage(this.href.toString());
+          });
+          $("#j_subscript").click(function(){
+                window.postMessage("android://subscript");
+          });
+          $("#j_unsubscript").click(function(){
+                window.postMessage("android://unsubscript");
+          });
+        document.addEventListener('message', function(e) {
+            if (e.data === "subscript"){
+                $("#j_subscript").hide();
+                $("#j_unsubscript").show();
+            } else if (e.data === "unsubscript") {
+                $("#j_subscript").show();
+                $("#j_unsubscript").hide();
+            }
         });
-                 if (WebViewBridge) {
-                     WebViewBridge.onMessage = function (message) {
-                     
-                        if (message === "subscript") {
-                           $("#j_subscript").hide();
-                           $("#j_unsubscript").show();
-                        }else if (message === "unsubscript") {
-                           $("#j_subscript").show();
-                           $("#j_unsubscript").hide();
-                        }
-                      };
-                 }
-                
-                  });
-`;
+});`;
 
 export default class AirticleDetail extends Component {
 
@@ -75,7 +77,6 @@ export default class AirticleDetail extends Component {
            original_id = response.split('/')[1]
            response = response.split('/')[0]
        }
-
 
        if(scheme === 'http' || scheme === 'https'){
            return true
@@ -109,6 +110,7 @@ export default class AirticleDetail extends Component {
    _subscript(action,id){
            const {application} = this.props
            var url = null
+
           if(application.user){
                if(action === 'unsubscript'){
                    url = unsubscriptUrl
@@ -124,7 +126,7 @@ export default class AirticleDetail extends Component {
               console.log('' + action + id)
                NetTool.POST(url,formData,(res,err)=>{
                    if(!err){
-                       this.webView.sendToBridge(action)
+                       this.webView.postMessage(action)
                    }else {
                        console.log(err)
                    }
@@ -171,8 +173,8 @@ export default class AirticleDetail extends Component {
 
     }
 
-    _onBridgeMessage(msg){
-        console.log(msg)
+    _onAndroidMessage(evt){
+        const msg = evt.nativeEvent.data
         if(Platform.OS === 'ios'){
             return
         }
@@ -182,8 +184,10 @@ export default class AirticleDetail extends Component {
         }
     }
 
-    onNavigationStateChange(navState) {
-        console.log(navState)
+    _injectJavaScript() {
+        if (this.webView) {
+            this.webView.injectJavaScript(injectScript);
+        }
     }
     render() {
         const {likes_num,navigator,id,pageInfo,application} = this.props
@@ -209,25 +213,26 @@ export default class AirticleDetail extends Component {
                     type = {'pop'}
                 />
                 }
-
                 { (this.state.uri && this.state.uri.length > 0 )&&
                 <WebView
                     ref={(c)=>this.webView = c}
                     style={styles.webView}
                     source={{uri: this.state.uri}}
                     automaticallyAdjustContentInsets={false}
-                    onMessage={this._onBridgeMessage.bind(this)}
+                    onMessage = {this._onAndroidMessage.bind(this)}
                     domStorageEnabled={true}
                     javaScriptEnabled={true}
                     startInLoadingState = {true}
-                    // renderLoading = {func}
-                    injectedJavaScript={injectScript}
+                    injectedJavaScript = {injectScript}
                     onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
-                    onNavigationStateChange={this.onNavigationStateChange.bind(this)}
                 >
                 </WebView>
-
                 }
+                {/*<TouchableOpacity*/}
+                    {/*onPress={this._injectJavaScript.bind(this)}*/}
+                    {/*style={[{backgroundColor: '#38acff', height:40}]}>*/}
+                    {/*<Text>脚本注入</Text>*/}
+                {/*</TouchableOpacity>*/}
                 {
                     (!likes_num && likes_num != 0)&&  <BanarNavigationBar
                         alpha = {0.8}

@@ -106,37 +106,33 @@ export  default  class TimeLine extends  Component {
                 }
 
             })
+            if(Platform.os == 'ios'){
+                TrackPlayer.updateOptions({
+                    capabilities: [
+                        TrackPlayer.CAPABILITY_PLAY,
+                        TrackPlayer.CAPABILITY_PAUSE,
+                        TrackPlayer.CAPABILITY_SEEK_TO,
+                        TrackPlayer.CAPABILITY_STOP
 
-            TrackPlayer.updateOptions({
-                capabilities: [
-                    TrackPlayer.CAPABILITY_PLAY,
-                    TrackPlayer.CAPABILITY_PAUSE,
-                    TrackPlayer.CAPABILITY_SEEK_TO,
-                    TrackPlayer.CAPABILITY_STOP
+                    ],
+                });
 
-                ],
-            });
+                TrackPlayer.registerEventHandler(() => {
+                    return async (data) => {
+                        if (data.type == 'playback-state') {
 
-            TrackPlayer.registerEventHandler(() => {
-                return async (data) => {
-                    if (data.type == 'playback-state') {
+                        } else if (data.type == 'remote-play') {
+                            this.audioPlayer.playAudio()
+                        } else if (data.type == 'remote-stop') {
+                            TrackPlayer.stop();
+                        } else if (data.type == 'remote-pause') {
+                            this.audioPlayer.pause()
+                            TrackPlayer.pause();
+                        }
+                    };
+                });
 
-                    } else if (data.type == 'remote-play') {
-                        this.audioPlayer.playAudio()
-                        // TrackPlayer.play();
-                        console.log("play")
-                    } else if (data.type == 'remote-stop') {
-
-                        // TrackPlayer.stop();
-                        console.log("stop")
-                    } else if (data.type == 'remote-pause') {
-                        this.audioPlayer.pause()
-                        console.log("pause")
-                        // TrackPlayer.pause();
-                    }
-                };
-            });
-
+            }
         })
     }
     componentWillUnmount(){

@@ -28,9 +28,6 @@ export  default  class AudioPlayer extends  Component {
     mixins: [TimerMixin]
     componentDidMount() {
         this.timer = setInterval(this.timeFunc.bind(this),1000)
-        // TrackPlayer.eventEmitter.addListener('remote-stop', this.pause.bind(this));
-        // TrackPlayer.eventEmitter.addListener('remote-play', this.playAudio.bind(this));
-        // TrackPlayer.eventEmitter.addListener('remote-seek', this.seekTo.bind(this));
 
     }
     seekTo(data){
@@ -67,7 +64,7 @@ export  default  class AudioPlayer extends  Component {
                     }else {
                         videoUrl = RNFS.LibraryDirectoryPath + '/' + pageInfo.id + '.mp3'
                     }
-                    console.log('播放本地音乐')
+                    videoUrl = "file://" + videoUrl
                 }
                 TrackPlayer.add({
                     id: 'trackId',
