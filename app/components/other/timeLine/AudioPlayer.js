@@ -30,9 +30,7 @@ export  default  class AudioPlayer extends  Component {
         this.timer = setInterval(this.timeFunc.bind(this),1000)
 
     }
-    seekTo(data){
-        TrackPlayer.seekTo(data.position);
-    }
+
     async timeFunc() {
         const {getProgress} = this.props
         if(getProgress ) {
@@ -48,7 +46,10 @@ export  default  class AudioPlayer extends  Component {
         }
     }
 
-
+    componentWillReceiveProps() {
+        const {pageInfo} = this.props
+        // console.log(pageInfo)
+    }
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
@@ -57,25 +58,30 @@ export  default  class AudioPlayer extends  Component {
         const {pageInfo,play} = this.props
         if(pageInfo){
             if(!play.isPlay && pageInfo.media.mp3[0]) {
-                var videoUrl = pageInfo.media.mp3[0]
+                var audioUrl = pageInfo.media.mp3[0]
                 if(pageInfo.localFile){
                     if(Platform.OS === 'android'){
-                        videoUrl = RNFS.ExternalDirectoryPath + '/' + pageInfo.id + '.mp3'
+                        audioUrl = RNFS.ExternalDirectoryPath + '/' + pageInfo.id + '.mp3'
                     }else {
-                        videoUrl = RNFS.LibraryDirectoryPath + '/' + pageInfo.id + '.mp3'
+                        audioUrl = RNFS.LibraryDirectoryPath + '/' + pageInfo.id + '.mp3'
                     }
-                    videoUrl = "file://" + videoUrl
+                    audioUrl = "file://" + audioUrl
                 }
-                TrackPlayer.add({
-                    id: 'trackId',
-                    url:videoUrl,
+                this.terminate()
+                let track = {
+                    id: ''+pageInfo.id,
+                    url:audioUrl,
                     title: pageInfo.title,
                     artist: pageInfo.desc,
                     artwork:pageInfo.thumb_url
-                });
+                }
+                TrackPlayer.add(track);
             }
         }
 
+    }
+    terminate(){
+        TrackPlayer.reset()
     }
     playAction(){
         const {play} = this.props
@@ -96,7 +102,9 @@ export  default  class AudioPlayer extends  Component {
         TrackPlayer.pause()
         actions.play(false)
     }
-
+    seekTo(data){
+        TrackPlayer.seekTo(data.position);
+    }
     _list(){
         const {onList} = this.props
         if(onList){

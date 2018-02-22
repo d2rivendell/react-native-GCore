@@ -27,8 +27,24 @@ const unsubscriptUrl = 'http://www.g-cores.com/api/subscriptions/unsubscript'
 const subscriptUrl = 'http://www.g-cores.com/api/subscriptions/subscript'
 
 const injectScript = `$(function () {
+
+ //---------------------处理 window.postMessage 出现bug错误---------------------
+  var originalPostMessage = window.postMessage;
+
+  var patchedPostMessage = function(message, targetOrigin, transfer) { 
+    originalPostMessage(message, targetOrigin, transfer);
+  };
+
+  patchedPostMessage.toString = function() { 
+    return String(Object.hasOwnProperty).replace('hasOwnProperty', 'postMessage'); 
+  };
+  window.postMessage = patchedPostMessage;
+  //-------------------------------end----------------------------------------
+  
+  
           $("a").click(function(){
-                window.postMessage(this.href.toString());
+                // alert(this.href.toString());
+                  window.postMessage(this.href.toString());
           });
           $("#j_subscript").click(function(){
                 window.postMessage("android://subscript");

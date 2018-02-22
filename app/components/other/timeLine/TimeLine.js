@@ -14,6 +14,7 @@ import {
     Alert,
     Platform,
 }from 'react-native'
+import {Navigator} from 'react-native-deprecated-custom-components'
 import TrackPlayer from 'react-native-track-player'
 import TimeLinePanel from './TimeLinePanel'
 import AudioPlayer from './AudioPlayer'
@@ -93,11 +94,9 @@ export  default  class TimeLine extends  Component {
                 // The player is ready to be used
                 if(play.isPlay === true ){
                     if(play.id !== id){
-                        this.audioPlayer.pause()
+                        this.audioPlayer.terminate()
                         actions.play(false)
-                        if(Platform.OS !== 'ios') {
-                            this.audioPlayer.setAndroidUrl()
-                        }
+                        this.audioPlayer.initializeUrl()
                         this.audioPlayer.playAudio()
                     }
                 }else {
@@ -106,7 +105,7 @@ export  default  class TimeLine extends  Component {
                 }
 
             })
-            if(Platform.os == 'ios'){
+            if(Platform.OS != 'android'){
                 TrackPlayer.updateOptions({
                     capabilities: [
                         TrackPlayer.CAPABILITY_PLAY,
@@ -153,6 +152,7 @@ export  default  class TimeLine extends  Component {
                 actions.hidden(id)
                 break;
         }
+
     }
 
     componentWillReceiveProps(prop) {
